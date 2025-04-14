@@ -16,7 +16,10 @@
     <div class="eBook Table">
         <table>
             <tr>
-                <th></th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Action</th>
             </tr>
         </table>
     </div>

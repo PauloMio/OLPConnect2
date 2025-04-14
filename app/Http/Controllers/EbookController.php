@@ -19,7 +19,7 @@ class EbookController extends Controller
             'description' => 'nullable|string',
             'author' => 'nullable|string|max:100',
             'coverage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
-            'pdf' => 'nullable|file|mimes:pdf|max:10240',
+            'pdf' => 'nullable|file|mimes:pdf|max:51200',
             'status' => 'nullable|in:active,inactive',
             'category' => 'nullable|in:Filipiniana,Fiction,General Reference,Encyclopedia,Senior High School,Undergraduate,Graduate School',
             'edition' => 'nullable|string|max:50',
