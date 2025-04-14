@@ -65,7 +65,6 @@
             <input type="password" name="password" placeholder="Password">
             <button type="submit">Log-In</button>
         </form>        
-        <a href="{{ route('register') }}"><button type="button">Register</button></a>
     </div>
 </body>
 </html>

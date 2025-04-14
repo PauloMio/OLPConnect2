@@ -22,7 +22,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed
-            return redirect()->route('crud');
+            return redirect()->route('edit');
         }
 
         return back()->withErrors(['email' => 'Invalid login credentials']);
@@ -56,7 +56,7 @@ class UserController extends Controller
     // Show crud page
     public function showCrud()
     {
-        return view('admin.crud');
+        return view('admin.edit');
     }
 
     // Log out
