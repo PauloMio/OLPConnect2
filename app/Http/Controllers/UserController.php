@@ -21,8 +21,8 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Authentication passed
-            return redirect()->route('edit');
+            $firstEbookId = 1; // Or fetch it dynamically
+            return redirect()->route('ebook.edit', ['id' => $firstEbookId]);
         }
 
         return back()->withErrors(['email' => 'Invalid login credentials']);

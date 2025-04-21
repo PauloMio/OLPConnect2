@@ -17,12 +17,12 @@ Route::get('admin/register', [UserController::class, 'showRegister'])->name('reg
 Route::post('admin/register', [UserController::class, 'register'])->name('register.submit');
 
 // CRUD dashboard after login
-Route::get('/admin/edit', [UserController::class, 'showCrud'])->name('admin.~edit')->middleware('auth');
+Route::get('/admin/ebooks', [UserController::class, 'showCrud'])->name('admin.edit')->middleware('auth');
 
 
-Route::get('/ebook/create', [EbookController::class, 'create'])->name('admin.create');
-Route::post('/ebook/store', [EbookController::class, 'store'])->name('ebook.store');
+Route::get('/admin/ebook/create', [EbookController::class, 'create'])->name('admin.create');
+Route::post('/admin/ebook/store', [EbookController::class, 'store'])->name('ebook.store');
 
-Route::get('/ebooks/{id}/edit', [EbookController::class, 'edit'])->name('ebook.edit');
-Route::put('/ebooks/{id}', [EbookController::class, 'update'])->name('ebook.update');
+Route::get('/admin/ebooks/{id}/edit', [EbookController::class, 'edit'])->name('ebook.edit');
+Route::put('/admin/ebooks/{id}', [EbookController::class, 'update'])->name('ebook.update');
 
