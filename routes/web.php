@@ -17,10 +17,13 @@ Route::get('admin/register', [UserController::class, 'showRegister'])->name('reg
 Route::post('admin/register', [UserController::class, 'register'])->name('register.submit');
 
 
-
+Route::get('/admin/ebook/list', [EbookController::class, 'index'])->name('admin.ebook.list');
 
 Route::get('/admin/ebook/create', [EbookController::class, 'create'])->name('admin.create');
 Route::post('/admin/ebook/store', [EbookController::class, 'store'])->name('ebook.store');
+
+Route::get('/admin/ebook/{id}/edit', [EbookController::class, 'edit'])->name('admin.ebook.edit');
+
 
 
 

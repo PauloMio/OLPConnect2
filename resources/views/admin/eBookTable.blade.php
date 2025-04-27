@@ -36,14 +36,29 @@
     </div>
     
     <div class="dataTable">
-        <table>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Category</th>
-                <th>Action</th>
-            </tr>
+        <table border="1" cellpadding="10" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($ebooks as $ebook)
+                <tr>
+                    <td>{{ $ebook->title }}</td>
+                    <td>{{ $ebook->author }}</td>
+                    <td>{{ $ebook->category }}</td>
+                    <td>
+                        <a href="{{ route('admin.ebook.edit', $ebook->id) }}">Edit</a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
+    
 </body>
 </html>

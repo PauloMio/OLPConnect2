@@ -57,7 +57,17 @@ class EbookController extends Controller
         return redirect()->back()->with('success', 'eBook uploaded successfully!');
     }
 
-    
+    public function index()
+    {
+        $ebooks = Ebook::all(); // get all ebooks
+        return view('eBookTable', compact('ebooks'));
+    }
 
+    
+    public function edit($id)
+    {
+        $ebook = Ebook::findOrFail($id);
+        return view('editEbook', compact('ebook'));
+    }
 
 }
