@@ -26,9 +26,24 @@
 
     <div>
         <label for="">Filter by Category:</label>
-        
+        <select name="" id=""></select>
+            <option value="">All Categories</option>
+            <option value="">General Collection</option>
+            <option value="">Graduate School</option>
+            <option value="">Filipiniana</option>
+            <option value="">General Reference</option>
+        <button>Apply Filters</button>
     </div>
     
-
+    <div class="dataTable">
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Action</th>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
