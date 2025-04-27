@@ -16,13 +16,11 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('admin/register', [UserController::class, 'showRegister'])->name('register');
 Route::post('admin/register', [UserController::class, 'register'])->name('register.submit');
 
-// CRUD dashboard after login
-Route::get('/admin/ebooks', [UserController::class, 'showCrud'])->name('admin.edit')->middleware('auth');
+
 
 
 Route::get('/admin/ebook/create', [EbookController::class, 'create'])->name('admin.create');
 Route::post('/admin/ebook/store', [EbookController::class, 'store'])->name('ebook.store');
 
-Route::get('/admin/ebooks/{id}/edit', [EbookController::class, 'edit'])->name('ebook.edit');
-Route::put('/admin/ebooks/{id}', [EbookController::class, 'update'])->name('ebook.update');
+
 

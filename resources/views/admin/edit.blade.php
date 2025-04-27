@@ -4,118 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>eBook Setup</title>
+    <title>edit ebook</title>
     <style>
-        /* Add some simple styling for the table and modal */
-        table {
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .Editting_form {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .left_side, .right_side {
+            display: inline-block;
+            width: 45%;
+            vertical-align: top;
+            margin-right: 5%;
+        }
+
+        .right_side {
+            margin-right: 0;
+        }
+
+        input[type="text"], input[type="number"], textarea, select {
             width: 100%;
-            border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th, td {
             padding: 10px;
-            text-align: left;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
         }
 
-        .button {
-            padding: 5px 10px;
-            cursor: pointer;
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+
+        button {
             background-color: #007BFF;
             color: white;
             border: none;
+            padding: 10px 15px;
             border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
         }
 
-        .button:hover {
+        button:hover {
             background-color: #0056b3;
         }
 
-        /* Modal Styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
+        ul {
+            padding-left: 20px;
+            color: red;
         }
 
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
+        p {
+            color: green;
         }
 
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+        /* Responsive design for smaller screens */
+        @media screen and (max-width: 768px) {
+            .left_side, .right_side {
+                width: 100%;
+                margin-right: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <h2>Update eBook</h2>
 
-    <div class="TopControl">
-        <a href="{{ route('admin.create') }}"><button type="button" class="button">Upload eBook</button></a>
-    </div>
+    <div class="Editting_form">
+        <h2>Edit eBook</h2>
 
-    <div class="eBook Table">
-        <table>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Category</th>
-                <th>Action</th>
-            </tr>
-            @foreach($ebooks as $ebook)
-            <tr>
-                <td>{{ $ebook->title }}</td>
-                <td>{{ $ebook->author }}</td>
-                <td>{{ $ebook->category }}</td>
-                <td>
-                    <button class="button" onclick="openModal({{ $ebook->id }})">Edit</button>
-                </td>
-            </tr>
-            @endforeach
-        </table>
-    </div>
+            <div class="left_side">
+                <input type="text" name="title" placeholder="Title"><br>
+                <textarea name="description" placeholder="Description"></textarea><br>
+                <input type="text" name="author" placeholder="Author"><br>
+                <select name="status" required>
+                    <option value="">Select Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select><br>
 
-    <!-- Modal for editing eBook -->
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Edit eBook</h2>
-            <form id="editForm" action="{{ route('ebook.update', 'ID_PLACEHOLDER') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-
-                <input type="hidden" id="ebookId" name="id">
-
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required><br><br>
-
-                <label for="author">Author:</label>
-                <input type="text" id="author" name="author" required><br><br>
-
-                <label for="category">Category:</label>
-                <select id="category" name="category" required>
+                <select name="category" required>
+                    <option value="">Select Category</option>
                     <option value="Filipiniana">Filipiniana</option>
                     <option value="Fiction">Fiction</option>
                     <option value="General Reference">General Reference</option>
@@ -123,63 +118,25 @@
                     <option value="Senior High School">Senior High School</option>
                     <option value="Undergraduate">Undergraduate</option>
                     <option value="Graduate School">Graduate School</option>
-                </select><br><br>
+                </select><br>
+            </div>
 
-                <label for="description">Description:</label>
-                <textarea id="description" name="description"></textarea><br><br>
-
-                <label for="pdf">Upload PDF:</label>
-                <input type="file" id="pdf" name="pdf"><br><br>
-
-                <label for="coverage">Upload Cover:</label>
-                <input type="file" id="coverage" name="coverage"><br><br>
-
-                <button type="submit" class="button">Update eBook</button>
-            </form>
-        </div>
+            <div class="right_side">
+                
+                <label for="coverage">Upload Photo Cover</label><br>
+                <input type="file" name="coverage" accept="image/*"><br>
+                
+                <label for="pdf">Upload PDF file</label><br>
+                <input type="file" name="pdf" accept="application/pdf"><br>
+    
+                <input type="text" name="edition" placeholder="Edition"><br>
+                <input type="text" name="publisher" placeholder="Publisher"><br>
+                <input type="number" name="copyrightyear" placeholder="Copyright Year"><br>
+                <input type="text" name="location" placeholder="Location"><br>
+                <button type="submit">Upload eBook</button>
+            </div>
+        
     </div>
 
-    <div class="LogOut">
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="button">Log out</button>
-        </form>
-    </div>
-
-    <script>
-        // Function to open the modal
-        function openModal(ebookId) {
-            var modal = document.getElementById("editModal");
-            var form = document.getElementById("editForm");
-
-            // Populate the modal with the current ebook's data
-            fetch(`/ebooks/${ebookId}/edit`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("ebookId").value = data.id;
-                    document.getElementById("title").value = data.title;
-                    document.getElementById("author").value = data.author;
-                    document.getElementById("category").value = data.category;
-                    document.getElementById("description").value = data.description;
-                    form.action = form.action.replace('ID_PLACEHOLDER', data.id);
-                });
-
-            modal.style.display = "block";
-        }
-
-        // Function to close the modal
-        function closeModal() {
-            var modal = document.getElementById("editModal");
-            modal.style.display = "none";
-        }
-
-        // Close modal if clicked outside of it
-        window.onclick = function(event) {
-            var modal = document.getElementById("editModal");
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 </body>
 </html>
