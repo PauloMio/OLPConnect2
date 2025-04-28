@@ -81,8 +81,6 @@
         @if($ebook->pdf)
             <iframe src="{{ asset('storage/' . $ebook->pdf) }}"></iframe>
             <br>
-            <a href="{{ asset('storage/' . $ebook->pdf) }}" download class="download-btn">Download PDF</a>
-            <button onclick="document.querySelector('iframe').contentWindow.print()" class="print-btn">Print PDF</button>
         @else
             <p>No PDF available.</p>
         @endif
