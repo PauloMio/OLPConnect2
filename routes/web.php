@@ -25,6 +25,7 @@ Route::post('/admin/ebook/store', [EbookController::class, 'store'])->name('eboo
 Route::get('/admin/ebook/{id}/edit', [EbookController::class, 'edit'])->name('admin.ebook.edit');
 Route::put('/admin/ebook/{id}/update', [EbookController::class, 'update'])->name('admin.ebook.update');
 
+Route::delete('/admin/ebook/{id}/destroy', [EbookController::class, 'destroy'])->name('admin.ebook.destroy');
 
 
 

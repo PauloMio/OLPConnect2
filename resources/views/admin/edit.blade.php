@@ -158,7 +158,16 @@
         
                 <button type="submit">Update eBook</button>
             </div>
+        
+            
         </form>
+        <!-- Delete Button -->
+        <form action="{{ route('admin.ebook.destroy', $ebook->id) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" style="background-color: red; color: white; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Delete eBook</button>
+        </form>
+        
         
         
     </div>

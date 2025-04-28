@@ -120,5 +120,25 @@ class EbookController extends Controller
         return redirect()->route('admin.ebook.list')->with('success', 'eBook updated successfully!');
     }
 
+    public function destroy($id)
+    {
+        $ebook = Ebook::findOrFail($id);
+
+        // Delete associated files from the storage
+        if ($ebook->pdf) {
+            Storage::delete('public/' . $ebook->pdf);
+        }
+
+        if ($ebook->coverage) {
+            Storage::delete('public/' . $ebook->coverage);
+        }
+
+        // Delete the ebook record
+        $ebook->delete();
+
+        return redirect()->route('admin.ebook.list')->with('success', 'eBook deleted successfully!');
+    }
+
+
 
 }
