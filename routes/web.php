@@ -35,3 +35,4 @@ Route::post('user/login', [AccountController::class, 'login'])->name('account.lo
 
 Route::get('user/ebooks', [EbookController::class, 'userView'])->name('user.ebooks');
 
+Route::get('user/ebooks/{id}', [EbookController::class, 'show'])->name('user.ebooks.show');

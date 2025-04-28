@@ -3,13 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>View Ebook</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f2f5;
             padding: 20px;
+        }
+        .search-form {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .search-form input, .search-form select, .search-form button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        .search-form button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .search-form button:hover {
+            background-color: #0056b3;
         }
         .ebook-card {
             background: white;
@@ -56,6 +76,21 @@
 
     <h1>eBooks</h1>
 
+    <form action="{{ route('user.ebooks') }}" method="GET" class="search-form">
+        <input type="text" name="search" placeholder="Search title..." value="{{ request('search') }}">
+        <select name="category">
+            <option value="">All Categories</option>
+            <option value="Filipiniana" {{ request('category') == 'Filipiniana' ? 'selected' : '' }}>Filipiniana</option>
+            <option value="Fiction" {{ request('category') == 'Fiction' ? 'selected' : '' }}>Fiction</option>
+            <option value="General Reference" {{ request('category') == 'General Reference' ? 'selected' : '' }}>General Reference</option>
+            <option value="Encyclopedia" {{ request('category') == 'Encyclopedia' ? 'selected' : '' }}>Encyclopedia</option>
+            <option value="Senior High School" {{ request('category') == 'Senior High School' ? 'selected' : '' }}>Senior High School</option>
+            <option value="Undergraduate" {{ request('category') == 'Undergraduate' ? 'selected' : '' }}>Undergraduate</option>
+            <option value="Graduate School" {{ request('category') == 'Graduate School' ? 'selected' : '' }}>Graduate School</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
     @foreach($ebooks as $ebook)
         <div class="ebook-card">
             <div>
@@ -74,7 +109,7 @@
             <p><strong>Copyright Year:</strong> {{ $ebook->copyrightyear }}</p>
             <p><strong>Location:</strong> {{ $ebook->location }}</p>
 
-            <button class="read-more-btn">Read More</button>
+            <a href="{{ route('user.ebooks.show', $ebook->id) }}" class="read-more-btn">Read More</a>
         </div>
     @endforeach
 

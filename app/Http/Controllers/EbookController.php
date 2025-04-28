@@ -141,11 +141,32 @@ class EbookController extends Controller
 
 
 
-    public function userView()
+    public function userView(Request $request)
     {
-        $ebooks = Ebook::all(); // Fetch all ebooks
+        $query = Ebook::query();
+
+        // Filter by search
+        if ($request->has('search') && $request->search != '') {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        // Filter by category
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category', $request->category);
+        }
+
+        $ebooks = $query->get(); // Finally get the filtered results
+
         return view('user.viewEbook', compact('ebooks'));
     }
+
+    public function show($id)
+    {
+        $ebook = Ebook::findOrFail($id);
+
+        return view('user.showEbook', compact('ebook'));
+    }
+    
 
 
 }
