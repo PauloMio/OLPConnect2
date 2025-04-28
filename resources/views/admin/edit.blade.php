@@ -92,6 +92,21 @@
                 margin-right: 0;
             }
         }
+
+        .Editting_form .del {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .Editting_form .del:hover {
+            background-color: #b30000;
+        }
     </style>
 </head>
 <body>
@@ -125,6 +140,9 @@
                     <option value="Undergraduate" {{ old('category', $ebook->category) == 'Undergraduate' ? 'selected' : '' }}>Undergraduate</option>
                     <option value="Graduate School" {{ old('category', $ebook->category) == 'Graduate School' ? 'selected' : '' }}>Graduate School</option>
                 </select><br>
+                <input type="text" name="edition" placeholder="Edition" value="{{ old('edition', $ebook->edition) }}"><br>
+        
+                <input type="text" name="publisher" placeholder="Publisher" value="{{ old('publisher', $ebook->publisher) }}"><br>
             </div>
         
             <div class="right_side">
@@ -148,27 +166,23 @@
                 <label for="pdf">Upload New PDF file:</label><br>
                 <input type="file" name="pdf" accept="application/pdf"><br>
         
-                <input type="text" name="edition" placeholder="Edition" value="{{ old('edition', $ebook->edition) }}"><br>
-        
-                <input type="text" name="publisher" placeholder="Publisher" value="{{ old('publisher', $ebook->publisher) }}"><br>
-        
+                
                 <input type="number" name="copyrightyear" placeholder="Copyright Year" value="{{ old('copyrightyear', $ebook->copyrightyear) }}"><br>
         
                 <input type="text" name="location" placeholder="Location" value="{{ old('location', $ebook->location) }}"><br>
         
                 <button type="submit">Update eBook</button>
+
+            </form>
+
+            <!-- Delete Button -->
+            <form action="{{ route('admin.ebook.destroy', $ebook->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="del">Delete eBook</button>
+            </form>
             </div>
-        
-            
-        </form>
-        <!-- Delete Button -->
-        <form action="{{ route('admin.ebook.destroy', $ebook->id) }}" method="POST" style="display:inline;">
-            @csrf
-            @method('DELETE')
-            <button type="submit" style="background-color: red; color: white; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Delete eBook</button>
-        </form>
-        
-        
+           
         
     </div>
 </body>

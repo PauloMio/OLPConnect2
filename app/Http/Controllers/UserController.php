@@ -21,12 +21,12 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            $firstEbookId = 1; // Or fetch it dynamically
-            return redirect()->route('ebook.edit', ['id' => $firstEbookId]);
+            return redirect()->route('admin.ebook.list'); // Redirect to the eBook Table page
         }
 
         return back()->withErrors(['email' => 'Invalid login credentials']);
     }
+
 
     // Show registration page
     public function showRegister()

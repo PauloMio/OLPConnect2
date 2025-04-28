@@ -28,5 +28,3 @@ Route::put('/admin/ebook/{id}/update', [EbookController::class, 'update'])->name
 Route::delete('/admin/ebook/{id}/destroy', [EbookController::class, 'destroy'])->name('admin.ebook.destroy');
 
 
-
-
