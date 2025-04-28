@@ -23,6 +23,8 @@ Route::get('/admin/ebook/create', [EbookController::class, 'create'])->name('adm
 Route::post('/admin/ebook/store', [EbookController::class, 'store'])->name('ebook.store');
 
 Route::get('/admin/ebook/{id}/edit', [EbookController::class, 'edit'])->name('admin.ebook.edit');
+Route::put('/admin/ebook/{id}/update', [EbookController::class, 'update'])->name('admin.ebook.update');
+
 
 
 

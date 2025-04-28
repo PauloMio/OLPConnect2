@@ -34,6 +34,12 @@
             <option value="">General Reference</option>
         <button>Apply Filters</button>
     </div>
+
+    <div>
+        <a href="{{ route('admin.create') }}">
+            <button type="button">Add New eBook</button>
+        </a>
+    </div>
     
     <div class="dataTable">
         <table border="1" cellpadding="10" cellspacing="0">
