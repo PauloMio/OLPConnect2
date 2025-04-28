@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EbookController;
+use App\Http\Controllers\AccountController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,4 +28,10 @@ Route::put('/admin/ebook/{id}/update', [EbookController::class, 'update'])->name
 
 Route::delete('/admin/ebook/{id}/destroy', [EbookController::class, 'destroy'])->name('admin.ebook.destroy');
 
+
+
+Route::get('user/login', [AccountController::class, 'showLoginForm'])->name('account.showLogin');
+Route::post('user/login', [AccountController::class, 'login'])->name('account.login');
+
+Route::get('user/ebooks', [EbookController::class, 'userView'])->name('user.ebooks');
 

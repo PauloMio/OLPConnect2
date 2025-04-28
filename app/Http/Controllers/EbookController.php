@@ -141,4 +141,11 @@ class EbookController extends Controller
 
 
 
+    public function userView()
+    {
+        $ebooks = Ebook::all(); // Fetch all ebooks
+        return view('user.viewEbook', compact('ebooks'));
+    }
+
+
 }
