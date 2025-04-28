@@ -5,44 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Update Ebook</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .eBookSearch, .eBookSort, .eBookFilter {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        input[type="text"], select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .dataTable {
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        a button {
+            background-color: #28a745;
+        }
+
+        a button:hover {
+            background-color: #218838;
+        }
+
+        td a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+
     <h2>Update eBook</h2>
+
     <div class="eBookSearch">
         <input type="text" placeholder="Search eBook">
         <button>Search</button>
     </div>
-    
-    <div class="eBookSort">
-        <label for="">Sort By:</label>
-        <select name="" id=""></select>
-            <option value="">Created At</option>
-            <option value="">Updated At</option>
 
-        <select name="" id=""></select>
-            <option value="">Ascending</option>
-            <option value="">Descending</option>
+    <div class="eBookSort">
+        <label for="sortField">Sort By:</label>
+        <select name="sortField" id="sortField">
+            <option value="created_at">Created At</option>
+            <option value="updated_at">Updated At</option>
+        </select>
+
+        <select name="sortOrder" id="sortOrder">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
     </div>
 
-    <div>
-        <label for="">Filter by Category:</label>
-        <select name="" id=""></select>
+    <div class="eBookFilter">
+        <label for="category">Filter by Category:</label>
+        <select name="category" id="category">
             <option value="">All Categories</option>
-            <option value="">General Collection</option>
-            <option value="">Graduate School</option>
-            <option value="">Filipiniana</option>
-            <option value="">General Reference</option>
+            <option value="General Collection">General Collection</option>
+            <option value="Graduate School">Graduate School</option>
+            <option value="Filipiniana">Filipiniana</option>
+            <option value="General Reference">General Reference</option>
+        </select>
         <button>Apply Filters</button>
     </div>
 
-    <div>
+    <div class="dataTable">
         <a href="{{ route('admin.create') }}">
             <button type="button">Add New eBook</button>
         </a>
-    </div>
-    
-    <div class="dataTable">
-        <table border="1" cellpadding="10" cellspacing="0">
+        <table>
             <thead>
                 <tr>
                     <th>Title</th>
@@ -65,6 +148,6 @@
             </tbody>
         </table>
     </div>
-    
+
 </body>
 </html>

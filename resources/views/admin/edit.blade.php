@@ -54,7 +54,7 @@
 
         textarea {
             resize: vertical;
-            height: 100px;
+            height: 220px;
         }
 
         input[type="file"] {
