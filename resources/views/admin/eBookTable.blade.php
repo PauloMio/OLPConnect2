@@ -112,11 +112,14 @@
     <div class="eBookFilter">
         <label for="category">Filter by Category:</label>
         <select name="category" id="category">
-            <option value="">All Categories</option>
-            <option value="General Collection">General Collection</option>
-            <option value="Graduate School">Graduate School</option>
-            <option value="Filipiniana">Filipiniana</option>
-            <option value="General Reference">General Reference</option>
+            <option value="">Select Category</option>
+                <option value="Filipiniana">Filipiniana</option>
+                <option value="Fiction">Fiction</option>
+                <option value="General Reference">General Reference</option>
+                <option value="Encyclopedia">Encyclopedia</option>
+                <option value="Senior High School">Senior High School</option>
+                <option value="Undergraduate">Undergraduate</option>
+                <option value="Graduate School">Graduate School</option>
         </select>
         <button>Apply Filters</button>
     </div>
