@@ -3,6 +3,7 @@
         font-family: Arial, sans-serif;
         margin: 0;
         background-color: #f4f4f4;
+        display: flex;
     }
 
     header {
@@ -84,12 +85,26 @@
         font-size: 0.9rem;
         color: #555;
     }
+
+    .sidebar {
+        width: 80px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
+
+    .main-content {
+        margin-left: 80px;
+        padding: 2rem;
+        flex: 1;
+    }
 </style>
 
 <body>
 @include('tab.homeSidebar')
 
-<div id="mainContent" style="margin-left: 220px; transition: margin-left 0.3s ease;">
+<div class="main-content">
     <header>
         <h1>OLPC Connect</h1>
     </header>

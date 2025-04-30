@@ -7,6 +7,7 @@
         align-items: center;
         height: 100vh;
         margin: 0;
+        display: flex;
     }
 
     .card {
@@ -57,12 +58,26 @@
     button:hover {
         background-color: #0056b3;
     }
+
+    .main-content {
+        margin-left: 80px;
+        padding: 2rem;
+        flex: 1;
+    }
+
+    .sidebar {
+        width: 80px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
 </style>
 
 <body>
 @include('tab.homeSidebar')
 
-<div id="mainContent" style="margin-left: 220px; transition: margin-left 0.3s ease;">
+<div id="mainContent">
 
 <div class="card">
     <h2>User Login</h2>
