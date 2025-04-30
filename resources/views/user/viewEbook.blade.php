@@ -74,6 +74,20 @@
 </head>
 <body>
 
+    @if(isset($account))
+        <div style="margin-bottom: 20px;">
+            <strong>Logged in as:</strong> {{ $account->firstname }} {{ $account->lastname }}
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('account.logout') }}">
+        @csrf
+        <button type="submit" style="padding: 6px 12px; background: crimson; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Logout
+        </button>
+    </form>
+    
+
     <h1>eBooks</h1>
 
     <form action="{{ route('user.ebooks') }}" method="GET" class="search-form">

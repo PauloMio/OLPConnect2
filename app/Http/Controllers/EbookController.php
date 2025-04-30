@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Ebook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Account;
+
 
 class EbookController extends Controller
 {
@@ -141,23 +143,29 @@ class EbookController extends Controller
 
 
 
+    // User side functions for viewing books
+
     public function userView(Request $request)
     {
         $query = Ebook::query();
 
-        // Filter by search
         if ($request->has('search') && $request->search != '') {
             $query->where('title', 'like', '%' . $request->search . '%');
         }
 
-        // Filter by category
         if ($request->has('category') && $request->category != '') {
             $query->where('category', $request->category);
         }
 
-        $ebooks = $query->get(); // Finally get the filtered results
+        $ebooks = $query->get();
 
-        return view('user.viewEbook', compact('ebooks'));
+        // Get account from session
+        $account = null;
+        if (session()->has('account_id')) {
+            $account = Account::find(session('account_id'));
+        }
+
+        return view('user.viewEbook', compact('ebooks', 'account'));
     }
 
     public function show($id)

@@ -9,7 +9,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Login and Register
+// Admin Routes
 Route::get('/login', [UserController::class, 'showLogin'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login.submit');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
@@ -29,10 +29,14 @@ Route::put('/admin/ebook/{id}/update', [EbookController::class, 'update'])->name
 Route::delete('/admin/ebook/{id}/destroy', [EbookController::class, 'destroy'])->name('admin.ebook.destroy');
 
 
-
+// User Routes
 Route::get('user/login', [AccountController::class, 'showLoginForm'])->name('account.showLogin');
 Route::post('user/login', [AccountController::class, 'login'])->name('account.login');
 
-Route::get('user/ebooks', [EbookController::class, 'userView'])->name('user.ebooks');
+Route::post('user/logout', [AccountController::class, 'logout'])->name('account.logout');
 
-Route::get('user/ebooks/{id}', [EbookController::class, 'show'])->name('user.ebooks.show');
+Route::middleware(['account.auth'])->group(function () {
+    Route::get('user/ebooks', [EbookController::class, 'userView'])->name('user.ebooks');
+    Route::get('user/ebooks/{id}', [EbookController::class, 'show'])->name('user.ebooks.show');
+});
+
