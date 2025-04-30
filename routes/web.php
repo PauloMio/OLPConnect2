@@ -5,18 +5,21 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\AccountController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 // Admin Routes
-Route::get('/login', [UserController::class, 'showLogin'])->name('login');
-Route::post('/login', [UserController::class, 'login'])->name('login.submit');
+Route::middleware(['admin.guest'])->group(function () {
+    Route::get('/login', [UserController::class, 'showLogin'])->name('login');
+    Route::post('/login', [UserController::class, 'login'])->name('login.submit');
+
+    Route::get('admin/register', [UserController::class, 'showRegister'])->name('register');
+    Route::post('admin/register', [UserController::class, 'register'])->name('register.submit');
+});
+
+
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
-
-Route::get('admin/register', [UserController::class, 'showRegister'])->name('register');
-Route::post('admin/register', [UserController::class, 'register'])->name('register.submit');
-
 
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/admin/ebook/list', [EbookController::class, 'index'])->name('admin.ebook.list');
@@ -39,7 +42,7 @@ Route::middleware(['account.guest'])->group(function () {
     Route::get('user/login', [AccountController::class, 'showLoginForm'])->name('account.showLogin');
     Route::post('user/login', [AccountController::class, 'login'])->name('account.login');
 
-    Route::get('user/home', function () {
+    Route::get('/', function () {
         return view('user.home');
     })->name('user.home');
 });

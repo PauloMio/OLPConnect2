@@ -7,6 +7,12 @@
     <title>Admin Accounts</title>
 </head>
 <body>
-    <a href="{{ route('register') }}"><button type="button">Register</button></a>
+    
+
+    <a href="{{ route('register') }}"><button type="button">Add New Admin</button></a>
+
+    <Table>
+
+    </Table>
 </body>
 </html>

@@ -61,12 +61,29 @@ class EbookController extends Controller
         return redirect()->route('admin.ebook.list')->with('success', 'eBook updated successfully!');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $ebooks = Ebook::all();
-        $user = Auth::user(); // gets the currently authenticated admin
+        $query = Ebook::query();
+
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Sorting
+        $sortField = $request->input('sortField', 'created_at');
+        $sortOrder = $request->input('sortOrder', 'desc');
+        $query->orderBy($sortField, $sortOrder);
+
+        $ebooks = $query->get();
+        $user = Auth::user();
+
         return view('admin.eBookTable', compact('ebooks', 'user'));
     }
+
 
 
 

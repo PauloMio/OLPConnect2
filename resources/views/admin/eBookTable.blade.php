@@ -105,39 +105,37 @@
 
     <h2>Update eBook</h2>
 
-    <div class="eBookSearch">
-        <input type="text" placeholder="Search eBook">
-        <button>Search</button>
-    </div>
-
-    <div class="eBookSort">
-        <label for="sortField">Sort By:</label>
-        <select name="sortField" id="sortField">
-            <option value="created_at">Created At</option>
-            <option value="updated_at">Updated At</option>
-        </select>
-
-        <select name="sortOrder" id="sortOrder">
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-        </select>
-    </div>
-
-    <div class="eBookFilter">
-        <label for="category">Filter by Category:</label>
-        <select name="category" id="category">
-            <option value="">Select Category</option>
-                <option value="Filipiniana">Filipiniana</option>
-                <option value="Fiction">Fiction</option>
-                <option value="General Reference">General Reference</option>
-                <option value="Encyclopedia">Encyclopedia</option>
-                <option value="Senior High School">Senior High School</option>
-                <option value="Undergraduate">Undergraduate</option>
-                <option value="Graduate School">Graduate School</option>
-        </select>
-        <button>Apply Filters</button>
-    </div>
-
+    <form method="GET" action="{{ route('admin.ebook.list') }}">
+        <div class="eBookSearch">
+            <input type="text" name="search" placeholder="Search eBook" value="{{ request('search') }}">
+            <button type="submit">Search</button>
+        </div>
+    
+        <div class="eBookSort">
+            <label for="sortField">Sort By:</label>
+            <select name="sortField" id="sortField">
+                <option value="created_at" {{ request('sortField') == 'created_at' ? 'selected' : '' }}>Created At</option>
+                <option value="updated_at" {{ request('sortField') == 'updated_at' ? 'selected' : '' }}>Updated At</option>
+            </select>
+    
+            <select name="sortOrder" id="sortOrder">
+                <option value="asc" {{ request('sortOrder') == 'asc' ? 'selected' : '' }}>Ascending</option>
+                <option value="desc" {{ request('sortOrder') == 'desc' ? 'selected' : '' }}>Descending</option>
+            </select>
+        </div>
+    
+        <div class="eBookFilter">
+            <label for="category">Filter by Category:</label>
+            <select name="category" id="category">
+                <option value="">Select Category</option>
+                @foreach(['Filipiniana', 'Fiction', 'General Reference', 'Encyclopedia', 'Senior High School', 'Undergraduate', 'Graduate School'] as $cat)
+                    <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                @endforeach
+            </select>
+            <button type="submit">Apply Filters</button>
+        </div>
+    </form>
+    
     <div class="dataTable">
         <a href="{{ route('admin.create') }}">
             <button type="button">Add New eBook</button>
