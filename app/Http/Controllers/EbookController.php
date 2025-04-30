@@ -6,6 +6,8 @@ use App\Models\Ebook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Account;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class EbookController extends Controller
@@ -61,9 +63,12 @@ class EbookController extends Controller
 
     public function index()
     {
-        $ebooks = Ebook::all(); // get all ebooks
-        return view('admin.eBookTable', compact('ebooks'));
+        $ebooks = Ebook::all();
+        $user = Auth::user(); // gets the currently authenticated admin
+        return view('admin.eBookTable', compact('ebooks', 'user'));
     }
+
+
 
     
     public function edit($id)

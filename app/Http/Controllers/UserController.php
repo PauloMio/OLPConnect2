@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
+
 class UserController extends Controller
 {
     // Show login page
@@ -21,8 +22,11 @@ class UserController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->route('admin.ebook.list'); // Redirect to the eBook Table page
+            $user = Auth::user();
+            $user->update(['status' => 'active']);
+            return redirect()->route('admin.ebook.list');
         }
+        
 
         return back()->withErrors(['email' => 'Invalid login credentials']);
     }
@@ -62,7 +66,13 @@ class UserController extends Controller
     // Log out
     public function logout()
     {
+        $user = Auth::user();
+        if ($user) {
+            $user->update(['status' => 'inactive']);
+        }
+
         Auth::logout();
         return redirect()->route('login');
     }
+
 }

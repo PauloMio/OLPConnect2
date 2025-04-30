@@ -18,15 +18,17 @@ Route::get('admin/register', [UserController::class, 'showRegister'])->name('reg
 Route::post('admin/register', [UserController::class, 'register'])->name('register.submit');
 
 
-Route::get('/admin/ebook/list', [EbookController::class, 'index'])->name('admin.ebook.list');
+Route::middleware(['auth:web'])->group(function () {
+    Route::get('/admin/ebook/list', [EbookController::class, 'index'])->name('admin.ebook.list');
 
-Route::get('/admin/ebook/create', [EbookController::class, 'create'])->name('admin.create');
-Route::post('/admin/ebook/store', [EbookController::class, 'store'])->name('ebook.store');
+    Route::get('/admin/ebook/create', [EbookController::class, 'create'])->name('admin.create');
+    Route::post('/admin/ebook/store', [EbookController::class, 'store'])->name('ebook.store');
 
-Route::get('/admin/ebook/{id}/edit', [EbookController::class, 'edit'])->name('admin.ebook.edit');
-Route::put('/admin/ebook/{id}/update', [EbookController::class, 'update'])->name('admin.ebook.update');
+    Route::get('/admin/ebook/{id}/edit', [EbookController::class, 'edit'])->name('admin.ebook.edit');
+    Route::put('/admin/ebook/{id}/update', [EbookController::class, 'update'])->name('admin.ebook.update');
 
-Route::delete('/admin/ebook/{id}/destroy', [EbookController::class, 'destroy'])->name('admin.ebook.destroy');
+    Route::delete('/admin/ebook/{id}/destroy', [EbookController::class, 'destroy'])->name('admin.ebook.destroy');
+});
 
 
 // User Routes

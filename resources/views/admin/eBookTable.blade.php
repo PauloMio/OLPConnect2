@@ -89,6 +89,20 @@
 </head>
 <body>
 
+    @if($user)
+        <div style="text-align: center; margin-bottom: 20px;">
+            <strong>Logged in as:</strong> {{ $user->username }} ({{ $user->email }})
+
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" style="margin-left: 20px; background-color: #dc3545;">Log Out</button>
+            </form>
+        </div>
+    @endif
+
+
+
+
     <h2>Update eBook</h2>
 
     <div class="eBookSearch">
