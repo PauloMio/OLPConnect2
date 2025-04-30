@@ -76,7 +76,7 @@
 
     @if(isset($account))
         <div style="margin-bottom: 20px;">
-            <strong>Logged in as:</strong> {{ $account->firstname }} {{ $account->lastname }}
+            <strong>Account:</strong> {{ $account->firstname }} {{ $account->lastname }}
         </div>
     @endif
 

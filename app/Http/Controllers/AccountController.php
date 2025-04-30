@@ -9,7 +9,7 @@ class AccountController extends Controller
 {
     public function showLoginForm()
     {
-        return view('user.logIn'); // your login.blade.php or whatever you named it
+        return view('user.logIn');
     }
 
     public function login(Request $request)
@@ -60,4 +60,33 @@ class AccountController extends Controller
         return redirect()->route('account.showLogin')->with('success', 'Logged out successfully.');
     }
     
+
+
+    // account table CRUD function...
+    public function showSignupForm()
+    {
+        return view('user.userSignUp');
+    }
+
+    public function signup(Request $request)
+    {
+        $request->validate([
+            'firstname' => 'nullable|string|max:100',
+            'lastname' => 'nullable|string|max:100',
+            'schoolid' => 'required|string|max:50|unique:account,schoolid',
+            'birthdate' => 'required|date',
+        ]);
+
+        $account = Account::create([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'schoolid' => $request->schoolid,
+            'birthdate' => $request->birthdate,
+            'status' => 'active',
+            'loggedin' => now(),
+        ]);
+
+        return redirect()->route('account.showLogin')->with('success', 'Account created!');
+    }
+
 }

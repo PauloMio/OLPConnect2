@@ -31,9 +31,13 @@ Route::delete('/admin/ebook/{id}/destroy', [EbookController::class, 'destroy'])-
 
 // User Routes
 Route::middleware(['account.guest'])->group(function () {
+    Route::get('user/signup', [AccountController::class, 'showSignupForm'])->name('account.showSignup');
+    Route::post('user/signup', [AccountController::class, 'signup'])->name('account.signup');
+
     Route::get('user/login', [AccountController::class, 'showLoginForm'])->name('account.showLogin');
     Route::post('user/login', [AccountController::class, 'login'])->name('account.login');
 });
+
 
 
 Route::post('user/logout', [AccountController::class, 'logout'])->name('account.logout');
