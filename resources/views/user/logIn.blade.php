@@ -72,6 +72,21 @@
         left: 0;
         top: 0;
     }
+
+    .login-link {
+        margin-top: 1rem;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .login-link a {
+        color: #4f46e5;
+        text-decoration: none;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <body>
@@ -96,6 +111,10 @@
 
         <button type="submit">Submit</button>
     </form>
+
+    <div class="login-link">
+        <p>Don't have an account? <a href="{{ route('account.showSignup') }}">Register here</a>.</p>
+    </div>
 </div>
 
 

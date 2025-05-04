@@ -14,10 +14,10 @@ Route::middleware(['admin.guest'])->group(function () {
     Route::get('/login', [UserController::class, 'showLogin'])->name('login');
     Route::post('/login', [UserController::class, 'login'])->name('login.submit');
 
-    Route::get('admin/register', [UserController::class, 'showRegister'])->name('register');
-    Route::post('admin/register', [UserController::class, 'register'])->name('register.submit');
 });
 
+Route::get('admin/register', [UserController::class, 'showRegister'])->name('register');
+Route::post('admin/register', [UserController::class, 'register'])->name('register.submit');
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
@@ -31,6 +31,8 @@ Route::middleware(['auth:web'])->group(function () {
     Route::put('/admin/ebook/{id}/update', [EbookController::class, 'update'])->name('admin.ebook.update');
 
     Route::delete('/admin/ebook/{id}/destroy', [EbookController::class, 'destroy'])->name('admin.ebook.destroy');
+
+    
 });
 
 
