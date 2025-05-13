@@ -37,6 +37,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::put('/admin/accounts/{id}', [UserController::class, 'updateAdmin'])->name('admin.accounts.update');
     Route::delete('/admin/accounts/{id}', [UserController::class, 'deleteAdmin'])->name('admin.accounts.delete');
 
+    Route::get('/admin/dashboard', [EbookController::class, 'dashboard'])->name('admin.dashboard');
 });
 
 

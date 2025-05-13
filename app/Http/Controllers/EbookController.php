@@ -199,4 +199,34 @@ class EbookController extends Controller
     
 
 
+    public function dashboard(Request $request)
+    {
+        $overallCount = Ebook::count();
+        // Get filters from request
+        $addedYear = $request->input('added_year');
+        $updatedYear = $request->input('updated_year');
+        $selectedCategory = $request->input('category');
+        $selectedLocation = $request->input('location');
+
+        // Counts per selection
+        $addedYearCount = $addedYear ? Ebook::whereYear('created_at', $addedYear)->count() : null;
+        $updatedYearCount = $updatedYear ? Ebook::whereYear('updated_at', $updatedYear)->count() : null;
+        $categoryCount = $selectedCategory ? Ebook::where('category', $selectedCategory)->count() : null;
+        $locationCount = $selectedLocation ? Ebook::where('location', $selectedLocation)->count() : null;
+
+        // Dropdown options
+        $addedYears = Ebook::selectRaw('YEAR(created_at) as year')->distinct()->orderBy('year', 'desc')->pluck('year');
+        $updatedYears = Ebook::selectRaw('YEAR(updated_at) as year')->distinct()->orderBy('year', 'desc')->pluck('year');
+        $categories = Ebook::select('category')->distinct()->pluck('category');
+        $locations = Ebook::select('location')->distinct()->pluck('location');
+
+        return view('admin.eBookOverview', compact(
+            'overallCount',
+            'addedYear', 'updatedYear', 'selectedCategory', 'selectedLocation',
+            'addedYearCount', 'updatedYearCount', 'categoryCount', 'locationCount',
+            'addedYears', 'updatedYears', 'categories', 'locations'
+        ));
+    }
+
+    
 }
