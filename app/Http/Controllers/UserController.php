@@ -77,4 +77,50 @@ class UserController extends Controller
 
     
 
+
+
+    // Show all admin accounts
+    public function indexAdmins()
+    {
+        $users = User::all();
+        return view('admin.AdminAcct', compact('users'));
+    }
+
+    // Show edit form for a specific admin
+    public function editAdmin($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.editAcct', compact('user'));
+    }
+
+    // Update admin
+    public function updateAdmin(Request $request, $id)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->username = $request->username;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.accounts')->with('success', 'Account updated successfully.');
+    }
+
+    // Delete admin
+    public function deleteAdmin($id)
+    {
+        User::destroy($id);
+        return redirect()->route('admin.accounts')->with('success', 'Account deleted.');
+    }
+
+
 }
