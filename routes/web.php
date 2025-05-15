@@ -38,6 +38,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::delete('/admin/accounts/{id}', [UserController::class, 'deleteAdmin'])->name('admin.accounts.delete');
 
     Route::get('/admin/dashboard', [EbookController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/ebook-overview/pdf', [EbookController::class, 'downloadPdf'])->name('admin.ebook-overview.pdf');
 });
 
 

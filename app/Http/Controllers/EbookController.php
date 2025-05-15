@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Account;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 
 
@@ -220,12 +221,72 @@ class EbookController extends Controller
         $categories = Ebook::select('category')->distinct()->pluck('category');
         $locations = Ebook::select('location')->distinct()->pluck('location');
 
+        // All updated year counts
+        $updatedYearCounts = Ebook::selectRaw('YEAR(updated_at) as year, COUNT(*) as count')
+        ->groupBy('year')
+        ->orderBy('year', 'desc')
+        ->pluck('count', 'year');
+
+        // All category counts
+        $categoryCounts = Ebook::select('category')
+        ->selectRaw('COUNT(*) as count')
+        ->groupBy('category')
+        ->orderBy('category')
+        ->pluck('count', 'category');
+
+        // All location counts
+        $locationCounts = Ebook::select('location')
+        ->selectRaw('COUNT(*) as count')
+        ->groupBy('location')
+        ->orderBy('location')
+        ->pluck('count', 'location');
+
+
         return view('admin.eBookOverview', compact(
             'overallCount',
             'addedYear', 'updatedYear', 'selectedCategory', 'selectedLocation',
             'addedYearCount', 'updatedYearCount', 'categoryCount', 'locationCount',
-            'addedYears', 'updatedYears', 'categories', 'locations'
+            'addedYears', 'updatedYears', 'categories', 'locations',
+            'updatedYearCounts', 'categoryCounts', 'locationCounts'
         ));
+        
+    }
+
+
+    public function downloadPdf(Request $request)
+    {
+        // Gather the data same as dashboard or reuse logic as needed
+        $overallCount = Ebook::count();
+
+        $addedYearCounts = Ebook::selectRaw('YEAR(created_at) as year, COUNT(*) as count')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->pluck('count', 'year');
+
+        $updatedYearCounts = Ebook::selectRaw('YEAR(updated_at) as year, COUNT(*) as count')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->pluck('count', 'year');
+
+        $categoryCounts = Ebook::select('category')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('category')
+            ->orderBy('category')
+            ->pluck('count', 'category');
+
+        $locationCounts = Ebook::select('location')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('location')
+            ->orderBy('location')
+            ->pluck('count', 'location');
+
+        $data = compact('overallCount', 'addedYearCounts', 'updatedYearCounts', 'categoryCounts', 'locationCounts');
+
+        // Load a Blade view for PDF output, pass $data
+        $pdf = PDF::loadView('admin.ebookOverviewPdf', $data);
+
+        // Return the generated PDF for download
+        return $pdf->download('ebook-overview.pdf');
     }
 
     

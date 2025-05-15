@@ -103,10 +103,22 @@
         </form>
     </div>
 
-    
+    <a href="{{ route('admin.ebook-overview.pdf') }}" class="btn btn-secondary mb-4" target="_blank">
+        Print Overview (Download PDF)
+    </a>
+
 
     {{-- Bootstrap Bundle JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    function printReport() {
+        const printContents = document.getElementById('printArea').innerHTML;
+        const originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        location.reload(); // Optional: reload the page after printing
+    }
+    </script>
 </body>
 
 </html>
