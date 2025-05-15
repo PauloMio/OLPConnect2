@@ -23,6 +23,10 @@
 <body>
     <div class="container py-4">
         <h2 class="mb-4">eBook Dashboard</h2>
+        
+        <a href="{{ route('admin.ebook-overview.pdf') }}" class="btn btn-secondary mb-4" target="_blank">
+            Print Overview (Download PDF)
+        </a>
 
         <form method="GET" action="{{ route('admin.dashboard') }}" id="filterForm">
             <div class="row g-4">
@@ -103,9 +107,7 @@
         </form>
     </div>
 
-    <a href="{{ route('admin.ebook-overview.pdf') }}" class="btn btn-secondary mb-4" target="_blank">
-        Print Overview (Download PDF)
-    </a>
+    
 
 
     {{-- Bootstrap Bundle JS --}}
