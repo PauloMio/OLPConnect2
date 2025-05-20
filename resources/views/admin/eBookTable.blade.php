@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Update Ebook</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
-            margin: 20px;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 220px;
+            background-color: #f0f0f0;
+            border-right: 1px solid #ddd;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px 10px;
+            box-sizing: border-box;
+        }
+
+        /* Main content container */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px 40px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
         }
 
         h2 {
@@ -89,79 +110,72 @@
 </head>
 <body>
 
-    @if($user)
-        <div style="text-align: center; margin-bottom: 20px;">
-            <strong>Logged in as:</strong> {{ $user->username }} ({{ $user->email }})
+    {{-- Sidebar --}}
+    <div class="sidebar">
+        @include('tab.AdminSidebar')
+    </div>
 
-            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                @csrf
-                <button type="submit" style="margin-left: 20px; background-color: #dc3545;">Log Out</button>
-            </form>
+    {{-- Main Content --}}
+    <div class="main-content">
+        <h2>Update eBook</h2>
+
+        <form method="GET" action="{{ route('admin.ebook.list') }}">
+            <div class="eBookSearch">
+                <input type="text" name="search" placeholder="Search Title..." value="{{ request('search') }}">
+                
+                <button type="submit">Search</button>
+
+                <label for="sortField">Sort By:</label>
+                <select name="sortField" id="sortField">
+                    <option value="created_at" {{ request('sortField') == 'created_at' ? 'selected' : '' }}>Created At</option>
+                    <option value="updated_at" {{ request('sortField') == 'updated_at' ? 'selected' : '' }}>Updated At</option>
+                </select>
+        
+                <select name="sortOrder" id="sortOrder">
+                    <option value="asc" {{ request('sortOrder') == 'asc' ? 'selected' : '' }}>Ascending</option>
+                    <option value="desc" {{ request('sortOrder') == 'desc' ? 'selected' : '' }}>Descending</option>
+                </select>
+            </div>
+        
+            <div class="eBookFilter">
+                <label for="category">Filter by Category:</label>
+                <select name="category" id="category">
+                    <option value="">Select Category</option>
+                    @foreach(['Filipiniana', 'Fiction', 'General Reference', 'Encyclopedia', 'Senior High School', 'Undergraduate', 'Graduate School'] as $cat)
+                        <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                    @endforeach
+                </select>
+                <button type="submit">Apply Filters</button>
+            </div>
+        </form>    
+        
+        <div class="dataTable">
+            <a href="{{ route('admin.create') }}">
+                <button type="button">Add New eBook</button>
+            </a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($ebooks as $ebook)
+                    <tr>
+                        <td>{{ $ebook->title }}</td>
+                        <td>{{ $ebook->author }}</td>
+                        <td>{{ $ebook->category }}</td>
+                        <td>
+                            <a href="{{ route('admin.ebook.edit', $ebook->id) }}">Edit</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    @endif
-
-
-
-
-    <h2>Update eBook</h2>
-
-    <form method="GET" action="{{ route('admin.ebook.list') }}">
-        <div class="eBookSearch">
-            <input type="text" name="search" placeholder="Search Title..." value="{{ request('search') }}">
-            <button type="submit">Search</button>
-        </div>
-    
-        <div class="eBookSort">
-            <label for="sortField">Sort By:</label>
-            <select name="sortField" id="sortField">
-                <option value="created_at" {{ request('sortField') == 'created_at' ? 'selected' : '' }}>Created At</option>
-                <option value="updated_at" {{ request('sortField') == 'updated_at' ? 'selected' : '' }}>Updated At</option>
-            </select>
-    
-            <select name="sortOrder" id="sortOrder">
-                <option value="asc" {{ request('sortOrder') == 'asc' ? 'selected' : '' }}>Ascending</option>
-                <option value="desc" {{ request('sortOrder') == 'desc' ? 'selected' : '' }}>Descending</option>
-            </select>
-        </div>
-    
-        <div class="eBookFilter">
-            <label for="category">Filter by Category:</label>
-            <select name="category" id="category">
-                <option value="">Select Category</option>
-                @foreach(['Filipiniana', 'Fiction', 'General Reference', 'Encyclopedia', 'Senior High School', 'Undergraduate', 'Graduate School'] as $cat)
-                    <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
-                @endforeach
-            </select>
-            <button type="submit">Apply Filters</button>
-        </div>
-    </form>
-    
-    <div class="dataTable">
-        <a href="{{ route('admin.create') }}">
-            <button type="button">Add New eBook</button>
-        </a>
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Category</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($ebooks as $ebook)
-                <tr>
-                    <td>{{ $ebook->title }}</td>
-                    <td>{{ $ebook->author }}</td>
-                    <td>{{ $ebook->category }}</td>
-                    <td>
-                        <a href="{{ route('admin.ebook.edit', $ebook->id) }}">Edit</a>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
     </div>
 
 </body>

@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Accounts</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
-            margin: 20px;
+            margin: 0; /* Remove margin from body, we'll handle spacing inside */
+            display: flex;
+            height: 100vh; /* full viewport height */
+            overflow: hidden;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 220px;
+            background-color: #f0f0f0;
+            border-right: 1px solid #ddd;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px 10px;
+            box-sizing: border-box;
+        }
+
+        /* Main content container */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px 40px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
         }
 
         h2 {
@@ -53,6 +74,7 @@
 
         .add-button {
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .add-button button {
@@ -100,46 +122,45 @@
 </head>
 <body>
 
-    <div class="header">
-        <strong>Logged in as: {{ Auth::user()->username }}</strong>
-
-        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-            @csrf
-            <button type="submit" class="logout-button">Log Out</button>
-        </form>
+    {{-- Sidebar --}}
+    <div class="sidebar">
+        @include('tab.AdminSidebar')
     </div>
 
-    <h2>Admin Accounts</h2>
+    {{-- Main Content --}}
+    <div class="main-content">
+        <h2>Admin Accounts</h2>
 
-    <div class="add-button" style="text-align: center;">
-        <a href="{{ route('register') }}">
-            <button type="button">Add New Admin</button>
-        </a>
-    </div>
+        <div class="add-button">
+            <a href="{{ route('register') }}">
+                <button type="button">Add New Admin</button>
+            </a>
+        </div>
 
-    <div class="adminTable">
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
+        <div class="adminTable">
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ $user->username }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>
-                            <a href="{{ route('admin.accounts.edit', $user->id) }}">
-                                <button type="button">Edit</button>
-                            </a>
-                        </td>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Action</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        <tr>
+                            <td>{{ $user->username }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                <a href="{{ route('admin.accounts.edit', $user->id) }}">
+                                    <button type="button">Edit</button>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </body>

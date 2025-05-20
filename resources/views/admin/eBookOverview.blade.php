@@ -1,27 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ebook Overview</title>
     {{-- Bootstrap 5.3 CSS --}}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<style>
-    body {
-        background-color: #f8f9fa;
-    }
-    .card {
-        min-height: 180px;
-    }
-    h2 {
-        margin-top: 30px;
-    }
-</style>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 220px;
+            background-color: #f0f0f0;
+            border-right: 1px solid #ddd;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px 10px;
+            box-sizing: border-box;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px 40px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+        }
+        .card {
+            min-height: 180px;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container py-4">
+
+    {{-- Sidebar --}}
+    <div class="sidebar">
+        @include('tab.AdminSidebar')
+    </div>
+
+    {{-- Main Content --}}
+    <div class="main-content container py-4">
         <h2 class="mb-4">eBook Dashboard</h2>
         
         <a href="{{ route('admin.ebook-overview.pdf') }}" class="btn btn-secondary mb-4" target="_blank">
@@ -107,20 +132,8 @@
         </form>
     </div>
 
-    
-
-
     {{-- Bootstrap Bundle JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-    function printReport() {
-        const printContents = document.getElementById('printArea').innerHTML;
-        const originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-        location.reload(); // Optional: reload the page after printing
-    }
-    </script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+</body>
 </html>
