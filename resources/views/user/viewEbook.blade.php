@@ -32,6 +32,7 @@
             background-color: #0056b3;
         }
         .ebook-card {
+            position: relative;
             background: white;
             border-radius: 10px;
             padding: 20px;
@@ -51,6 +52,17 @@
             cursor: pointer;
             color: gold;
             font-size: 24px;
+        }
+        .favorite-toggle-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: gold;
+            cursor: pointer;
+            z-index: 1;
         }
         .read-more-btn {
             background-color: #007BFF;
@@ -107,9 +119,9 @@
 
     @foreach($ebooks as $ebook)
         <div class="ebook-card">
-            <form action="{{ route('user.ebooks.favorite', $ebook->id) }}" method="POST" style="display:inline;">
+            <form action="{{ route('user.ebooks.favorite', $ebook->id) }}" method="POST" class="favorite-toggle-form">
                 @csrf
-                <button type="submit" style="background: none; border: none; cursor: pointer;">
+                <button type="submit" class="favorite-toggle-btn">
                     @if($account && $account->favorites->contains($ebook->id))
                         ⭐
                     @else
@@ -117,6 +129,7 @@
                     @endif
                 </button>
             </form>
+
 
 
             @if($ebook->coverage)
