@@ -28,4 +28,9 @@ class Account extends Model
         'loggedout' => 'datetime',
         'birthdate' => 'date',
     ];
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Ebook::class, 'account_ebook_favorite')->withTimestamps();
+    }
 }

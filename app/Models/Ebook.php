@@ -21,4 +21,10 @@ class Ebook extends Model
         'copyrightyear',
         'location',
     ];
+
+    public function favoredBy()
+    {
+        return $this->belongsToMany(Account::class, 'account_ebook_favorite')->withTimestamps();
+    }
+
 }

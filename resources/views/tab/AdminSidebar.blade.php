@@ -10,13 +10,13 @@
     </div>
     <ul>
         <li>
-            <a href="{{ route('admin.ebook.list') }}">eBook Setup</a>
+            <a href="{{ route('admin.ebook.list') }}">Update eBook</a>
         </li>
         <li>
-            <a href="{{ route('admin.accounts') }}">Admin Setup</a>
+            <a href="{{ route('admin.accounts') }}">Admin Accounts</a>
         </li>
         <li>
-            <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+            <a href="{{ route('admin.dashboard') }}">eBook Dashboard</a>
         </li>
     </ul>
 </div>

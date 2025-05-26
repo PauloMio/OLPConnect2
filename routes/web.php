@@ -64,3 +64,7 @@ Route::middleware(['account.auth'])->group(function () {
     Route::get('user/ebooks/{id}', [EbookController::class, 'show'])->name('user.ebooks.show');
 });
 
+Route::middleware(['account.auth'])->group(function () {
+    Route::post('user/ebooks/{id}/favorite', [EbookController::class, 'toggleFavorite'])->name('user.ebooks.favorite');
+    Route::get('user/favorites', [EbookController::class, 'viewFavorites'])->name('user.favorites');
+});

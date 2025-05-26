@@ -107,9 +107,17 @@
 
     @foreach($ebooks as $ebook)
         <div class="ebook-card">
-            <div>
-                <span class="favorite-toggle">&#9734;</span> <!-- Star icon -->
-            </div>
+            <form action="{{ route('user.ebooks.favorite', $ebook->id) }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit" style="background: none; border: none; cursor: pointer;">
+                    @if($account && $account->favorites->contains($ebook->id))
+                        ⭐
+                    @else
+                        ☆
+                    @endif
+                </button>
+            </form>
+
 
             @if($ebook->coverage)
                 <img src="{{ asset('storage/' . $ebook->coverage) }}" alt="Cover Image" class="cover-image">

@@ -170,6 +170,11 @@ class EbookController extends Controller
 
     public function userView(Request $request)
     {
+        // Load account with favorites if session has account_id
+        $account = session()->has('account_id') 
+            ? Account::with('favorites')->find(session('account_id')) 
+            : null;
+
         $query = Ebook::query();
 
         if ($request->has('search') && $request->search != '') {
@@ -182,14 +187,9 @@ class EbookController extends Controller
 
         $ebooks = $query->get();
 
-        // Get account from session
-        $account = null;
-        if (session()->has('account_id')) {
-            $account = Account::find(session('account_id'));
-        }
-
         return view('user.viewEbook', compact('ebooks', 'account'));
     }
+
 
     public function show($id)
     {
@@ -288,6 +288,37 @@ class EbookController extends Controller
         // Return the generated PDF for download
         return $pdf->download('ebook-overview.pdf');
     }
+
+    public function toggleFavorite($id)
+    {
+        if (!session()->has('account_id')) {
+            return redirect()->route('account.showLogin')->with('error', 'You must be logged in to favorite.');
+        }
+
+        $account = Account::find(session('account_id'));
+        $ebook = Ebook::findOrFail($id);
+
+        if ($account->favorites()->where('ebook_id', $id)->exists()) {
+            $account->favorites()->detach($id);
+            return back()->with('success', 'Removed from favorites.');
+        } else {
+            $account->favorites()->attach($id);
+            return back()->with('success', 'Added to favorites.');
+        }
+    }
+
+    public function viewFavorites()
+    {
+        if (!session()->has('account_id')) {
+            return redirect()->route('account.showLogin')->with('error', 'You must be logged in to view favorites.');
+        }
+
+        $account = Account::find(session('account_id'));
+        $favorites = $account->favorites()->get();
+
+        return view('user.favorites', compact('favorites', 'account'));
+    }
+
 
     
 }
