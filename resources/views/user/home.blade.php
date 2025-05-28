@@ -108,8 +108,6 @@
     <header>
         <h1>OLPC Connect</h1>
     </header>
-    <body>
-@include('tab.homeSidebar')
     
 <!-- Image Carousel -->
 <div class="carousel">
@@ -165,4 +163,17 @@
 
 
 </div>
+
+<script>
+        // Adjust margin based on sidebar open/closed
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        const resizeObserver = new ResizeObserver(() => {
+            const width = sidebar.offsetWidth;
+            mainContent.style.marginLeft = width + 'px';
+        });
+
+        resizeObserver.observe(sidebar);
+    </script>
 </body>

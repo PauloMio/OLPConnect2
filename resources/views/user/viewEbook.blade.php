@@ -86,18 +86,12 @@
 </head>
 <body>
 
-    @if(isset($account))
-        <div style="margin-bottom: 20px;">
-            <strong>Account:</strong> {{ $account->firstname }} {{ $account->lastname }}
-        </div>
-    @endif
 
-    <form method="POST" action="{{ route('account.logout') }}">
-        @csrf
-        <button type="submit" style="padding: 6px 12px; background: crimson; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Logout
-        </button>
-    </form>
+@include('tab.userSidebar')
+
+<div style="margin-left: 80px;" id="main-content">
+    @yield('content')
+</div>
     
 
     <h1>eBooks</h1>
@@ -147,6 +141,20 @@
             <a href="{{ route('user.ebooks.show', $ebook->id) }}" class="read-more-btn">Read More</a>
         </div>
     @endforeach
+
+
+    <script>
+        // Adjust margin based on sidebar width
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        const resizeObserver = new ResizeObserver(() => {
+            const width = sidebar.offsetWidth;
+            mainContent.style.marginLeft = width + 'px';
+        });
+
+        resizeObserver.observe(sidebar);
+    </script>
 
 </body>
 </html>

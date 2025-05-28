@@ -15,6 +15,13 @@
 </head>
 <body>
 
+    @include('tab.userSidebar')
+
+    <div style="margin-left: 80px;" id="main-content">
+        @yield('content')
+    </div>
+
+
     <h1>Your Favorite eBooks</h1>
 
     @foreach($favorites as $ebook)
@@ -46,6 +53,19 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        // Adjust margin based on sidebar width
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        const resizeObserver = new ResizeObserver(() => {
+            const width = sidebar.offsetWidth;
+            mainContent.style.marginLeft = width + 'px';
+        });
+
+        resizeObserver.observe(sidebar);
+    </script>
 
 </body>
 </html>

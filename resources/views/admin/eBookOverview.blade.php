@@ -41,8 +41,10 @@
 <body>
 
     {{-- Sidebar --}}
-    <div class="sidebar">
-        @include('tab.AdminSidebar')
+    @include('tab.AdminSidebar')
+
+    <div style="margin-left: 80px;" id="main-content">
+        @yield('content')
     </div>
 
     {{-- Main Content --}}
@@ -134,6 +136,18 @@
 
     {{-- Bootstrap Bundle JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Adjust margin based on sidebar open/closed
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        const resizeObserver = new ResizeObserver(() => {
+            const width = sidebar.offsetWidth;
+            mainContent.style.marginLeft = width + 'px';
+        });
+
+        resizeObserver.observe(sidebar);
+    </script>
 
 </body>
 </html>
