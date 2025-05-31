@@ -52,7 +52,7 @@
 <body>
 @include('tab.homeSidebar')
 
-<div class="main-content">
+<div style="margin-left: 80px;" id="main-content" class="main-content">
 <div class="Log_in">
     <form action="{{ route('login.submit') }}" method="POST">
         @csrf
@@ -63,4 +63,17 @@
     </form>        
 </div>
 </div>
+
+<script>
+        // Adjust margin based on sidebar width
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        const resizeObserver = new ResizeObserver(() => {
+            const width = sidebar.offsetWidth;
+            mainContent.style.marginLeft = width + 'px';
+        });
+
+        resizeObserver.observe(sidebar);
+</script>
 </body>

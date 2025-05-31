@@ -91,7 +91,11 @@
 <body>
 @include('tab.homeSidebar')
 
-<div class="signup-container">
+<div style="margin-left: 80px;" id="main-content">
+    @yield('content')
+
+
+    <div class="signup-container">
     <h1>Create User Account</h1>
 
     @if ($errors->any())
@@ -127,6 +131,20 @@
     </div>
 </div>
 
+</div>
 
+
+<script>
+    // Adjust margin based on sidebar width
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+
+        const resizeObserver = new ResizeObserver(() => {
+            const width = sidebar.offsetWidth;
+            mainContent.style.marginLeft = width + 'px';
+        });
+
+        resizeObserver.observe(sidebar);
+</script>
 
 </body>

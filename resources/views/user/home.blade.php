@@ -104,76 +104,79 @@
 <body>
 @include('tab.homeSidebar')
 
-<div class="main-content">
+<div style="margin-left: 80px;" class="main-content" id="main-content">
+    @yield('content')
+
+
     <header>
         <h1>OLPC Connect</h1>
     </header>
     
-<!-- Image Carousel -->
-<div class="carousel">
-    <div class="slides">
-        <div class="slide"><img src="{{ asset('storage/images/LOTR3.jpg') }}" alt="Slide 1"></div>
-        <div class="slide"><img src="{{ asset('storage/images/LOTR4.jpg') }}" alt="Slide 2"></div>
-        <div class="slide"><img src="{{ asset('storage/images/LOTR5.jpg') }}" alt="Slide 3"></div>
-        <div class="slide"><img src="{{ asset('storage/images/LOTR6.jpg') }}" alt="Slide 4"></div>
-    </div>
-</div>
-
-<!-- Members Section -->
-<section class="section">
-    <h2>Meet Our Members</h2>
-    <div class="members">
-        <div class="card">
-            <img src="{{ asset('storage/members/Librarian.jpg') }}" alt="Member 1">
-            <h3>Runo Misaki</h3>
-            <p>Librarian</p>
+        <!-- Image Carousel -->
+        <div class="carousel">
+            <div class="slides">
+                <div class="slide"><img src="{{ asset('storage/images/LOTR3.jpg') }}" alt="Slide 1"></div>
+                <div class="slide"><img src="{{ asset('storage/images/LOTR4.jpg') }}" alt="Slide 2"></div>
+                <div class="slide"><img src="{{ asset('storage/images/LOTR5.jpg') }}" alt="Slide 3"></div>
+                <div class="slide"><img src="{{ asset('storage/images/LOTR6.jpg') }}" alt="Slide 4"></div>
+            </div>
         </div>
-        <div class="card">
-            <img src="{{ asset('storage/members/Tech.jpg') }}" alt="Member 2">
-            <h3>Paulo Mio Panopio</h3>
-            <p>Developer</p>
-        </div>
-        <div class="card">
-            <img src="{{ asset('storage/members/Frodo.jpg') }}" alt="Member 3">
-            <h3>Mike Johnson</h3>
-            <p>Project Manager</p>
-        </div>
-    </div>
-</section>
 
-<!-- Services Section -->
-<section class="section" style="background-color: #eef2ff;">
-    <h2>Our Services</h2>
-    <div class="services">
-        <div class="card">
-            <h3>Web Design</h3>
-            <p>Clean and responsive websites.</p>
-        </div>
-        <div class="card">
-            <h3>App Development</h3>
-            <p>Mobile apps for iOS and Android.</p>
-        </div>
-        <div class="card">
-            <h3>Consulting</h3>
-            <p>Tech strategy and planning.</p>
-        </div>
-    </div>
-</section>
+        <!-- Members Section -->
+        <section class="section">
+            <h2>Meet Our Members</h2>
+            <div class="members">
+                <div class="card">
+                    <img src="{{ asset('storage/members/Librarian.jpg') }}" alt="Member 1">
+                    <h3>Runo Misaki</h3>
+                    <p>Librarian</p>
+                </div>
+                <div class="card">
+                    <img src="{{ asset('storage/members/Tech.jpg') }}" alt="Member 2">
+                    <h3>Paulo Mio Panopio</h3>
+                    <p>Developer</p>
+                </div>
+                <div class="card">
+                    <img src="{{ asset('storage/members/Frodo.jpg') }}" alt="Member 3">
+                    <h3>Mike Johnson</h3>
+                    <p>Project Manager</p>
+                </div>
+            </div>
+        </section>
 
+        <!-- Services Section -->
+        <section class="section" style="background-color: #eef2ff;">
+            <h2>Our Services</h2>
+            <div class="services">
+                <div class="card">
+                    <h3>Web Design</h3>
+                    <p>Clean and responsive websites.</p>
+                </div>
+                <div class="card">
+                    <h3>App Development</h3>
+                    <p>Mobile apps for iOS and Android.</p>
+                </div>
+                <div class="card">
+                    <h3>Consulting</h3>
+                    <p>Tech strategy and planning.</p>
+                </div>
+            </div>
+        </section>
 
+    <script>
+            // Adjust margin based on sidebar open/closed
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
 
-</div>
+            const resizeObserver = new ResizeObserver(() => {
+                const width = sidebar.offsetWidth;
+                mainContent.style.marginLeft = width + 'px';
+            });
 
-<script>
-        // Adjust margin based on sidebar open/closed
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
-
-        const resizeObserver = new ResizeObserver(() => {
-            const width = sidebar.offsetWidth;
-            mainContent.style.marginLeft = width + 'px';
-        });
-
-        resizeObserver.observe(sidebar);
+            resizeObserver.observe(sidebar);
     </script>
+
+</div>
+
+
 </body>

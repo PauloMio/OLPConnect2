@@ -92,31 +92,44 @@
 <body>
 @include('tab.homeSidebar')
 
-<div id="mainContent">
+<div style="margin-left: 80px;" id="main-content">
+    @yield('content')
 
-<div class="card">
-    <h2>User Login</h2>
-    <form action="{{ route('account.login') }}" method="POST">
-        @csrf
 
-        <div class="form-group">
-            <label for="schoolid">School ID:</label>
-            <input type="text" name="schoolid" id="schoolid" placeholder="Enter School ID">
+    <div class="card">
+        <h2>User Login</h2>
+        <form action="{{ route('account.login') }}" method="POST">
+            @csrf
+
+            <div class="form-group">
+                <label for="schoolid">School ID:</label>
+                <input type="text" name="schoolid" id="schoolid" placeholder="Enter School ID">
+            </div>
+
+            <div class="form-group">
+                <label for="birthdate">Birthdate:</label>
+                <input type="date" name="birthdate" id="birthdate">
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="login-link">
+            <p>Don't have an account? <a href="{{ route('account.showSignup') }}">Register here</a>.</p>
         </div>
-
-        <div class="form-group">
-            <label for="birthdate">Birthdate:</label>
-            <input type="date" name="birthdate" id="birthdate">
-        </div>
-
-        <button type="submit">Submit</button>
-    </form>
-
-    <div class="login-link">
-        <p>Don't have an account? <a href="{{ route('account.showSignup') }}">Register here</a>.</p>
-    </div>
 </div>
 
+<script>
+    // Adjust margin based on sidebar width
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
 
+        const resizeObserver = new ResizeObserver(() => {
+            const width = sidebar.offsetWidth;
+            mainContent.style.marginLeft = width + 'px';
+        });
+
+        resizeObserver.observe(sidebar);
+</script>
 
 </body>
