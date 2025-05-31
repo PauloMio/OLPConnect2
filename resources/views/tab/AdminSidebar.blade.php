@@ -11,6 +11,12 @@
 
     <ul class="menu">
         <li>
+            <a href="{{ route('admin.dashboard') }}">
+                <img src="{{ asset('storage/icons/dashboard.png') }}" class="icon" alt="">
+                <span class="label">Dashboard</span>
+            </a>
+        </li>
+        <li>
             <a href="{{ route('admin.ebook.list') }}">
                 <img src="{{ asset('storage/icons/Books.png') }}" class="icon" alt="">
                 <span class="label">eBook Setup</span>
@@ -23,9 +29,9 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset('storage/icons/dashboard.png') }}" class="icon" alt="">
-                <span class="label">Dashboard</span>
+            <a href="{{ route('admin.useraccounts.index') }}">
+                <img src="{{ asset('storage/icons/user_setup.png') }}" class="icon" alt="">
+                <span class="label">User Accounts</span>
             </a>
         </li>
     </ul>

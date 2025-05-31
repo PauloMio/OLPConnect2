@@ -39,6 +39,11 @@ Route::middleware(['auth:web'])->group(function () {
 
     Route::get('/admin/dashboard', [EbookController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/ebook-overview/pdf', [EbookController::class, 'downloadPdf'])->name('admin.ebook-overview.pdf');
+
+    Route::get('/admin/useraccounts', [AccountController::class, 'index'])->name('admin.useraccounts.index');
+    Route::post('/admin/useraccounts', [AccountController::class, 'store'])->name('admin.useraccounts.store');
+    Route::put('/admin/useraccounts/{id}', [AccountController::class, 'update'])->name('admin.useraccounts.update');
+    Route::delete('/admin/useraccounts/{id}', [AccountController::class, 'destroy'])->name('admin.useraccounts.delete');
 });
 
 

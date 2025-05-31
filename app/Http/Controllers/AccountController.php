@@ -89,4 +89,61 @@ class AccountController extends Controller
         return redirect()->route('account.showLogin')->with('success', 'Account created!');
     }
 
+    public function index(Request $request)
+    {
+        $query = Account::query();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('firstname', 'LIKE', "%$search%")
+                ->orWhere('lastname', 'LIKE', "%$search%")
+                ->orWhere('schoolid', 'LIKE', "%$search%");
+            });
+        }
+
+        $accounts = $query->get();
+
+        return view('admin.accountTable', compact('accounts'));
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'firstname' => 'nullable|string|max:100',
+            'lastname' => 'nullable|string|max:100',
+            'schoolid' => 'required|string|max:50|unique:account,schoolid',
+            'birthdate' => 'required|date',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        Account::create($request->all());
+        return redirect()->route('admin.useraccounts.index')->with('success', 'Account added successfully.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $account = Account::findOrFail($id);
+
+        $request->validate([
+            'firstname' => 'nullable|string|max:100',
+            'lastname' => 'nullable|string|max:100',
+            'schoolid' => 'required|string|max:50|unique:account,schoolid,' . $id,
+            'birthdate' => 'required|date',
+            'status' => 'required|in:active,inactive',
+        ]);
+
+        $account->update($request->all());
+        return redirect()->route('admin.useraccounts.index')->with('success', 'Account updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $account = Account::findOrFail($id);
+        $account->delete();
+        return redirect()->route('admin.useraccounts.index')->with('success', 'Account deleted successfully.');
+    }
+
+
 }
