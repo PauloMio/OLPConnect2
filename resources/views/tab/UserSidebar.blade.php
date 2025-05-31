@@ -14,6 +14,12 @@
 
     <ul class="menu">
         <li>
+            <a href="{{ route('user.ebooks') }}">
+                <img src="{{ asset('storage/icons/Books.png') }}" class="icon" alt="">
+                <span class="label">eBooks</span>
+            </a>
+        </li>
+        <li>
             <a href="{{ route('user.favorites') }}">
                 <img src="{{ asset('storage/icons/favorite.png') }}" class="icon" alt="">
                 <span class="label">Favorites</span>
@@ -134,6 +140,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     toggleBtn.addEventListener('click', () => {
         sidebar.classList.toggle('collapsed');
+        updateMainContentMargin();
     });
+
+    function updateMainContentMargin() {
+        const mainContent = document.getElementById('main-content');
+        const sidebarWidth = document.getElementById('sidebar').offsetWidth;
+        if (mainContent) {
+            mainContent.style.marginLeft = sidebarWidth + 'px';
+        }
+    }
+
 });
 </script>

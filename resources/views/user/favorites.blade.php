@@ -19,17 +19,15 @@
 
     <div style="margin-left: 80px;" id="main-content">
         @yield('content')
-    </div>
 
-
-    <h1>Your Favorite eBooks</h1>
+        <h1>Your Favorite eBooks</h1>
 
     @foreach($favorites as $ebook)
         <div class="card card1">
             @if($ebook->coverage)
                 <img src="{{ asset('storage/' . $ebook->coverage) }}" alt="Cover Photo" class="cover-photo">
             @else
-                <img src="{{ asset('default_cover.jpg') }}" alt="Default Cover" class="cover-photo">
+                <img src="{{ asset('storage/icons/defaultcover.png') }}" alt="Default Cover" class="cover-photo">
             @endif
 
             <div class="details">
@@ -67,5 +65,9 @@
         resizeObserver.observe(sidebar);
     </script>
 
+    </div>
+
+
+    
 </body>
 </html>

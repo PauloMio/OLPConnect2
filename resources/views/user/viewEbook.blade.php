@@ -91,8 +91,6 @@
 
 <div style="margin-left: 80px;" id="main-content">
     @yield('content')
-</div>
-    
 
     <h1>eBooks</h1>
 
@@ -129,7 +127,7 @@
             @if($ebook->coverage)
                 <img src="{{ asset('storage/' . $ebook->coverage) }}" alt="Cover Image" class="cover-image">
             @else
-                <img src="{{ asset('default_cover.jpg') }}" alt="Default Cover" class="cover-image">
+                <img src="{{ asset('storage/icons/favorite.png') }}" alt="Default Cover" class="cover-image">
             @endif
 
             <h3>{{ $ebook->title }}</h3>
@@ -155,6 +153,10 @@
 
         resizeObserver.observe(sidebar);
     </script>
+</div>
+    
+
+    
 
 </body>
 </html>
