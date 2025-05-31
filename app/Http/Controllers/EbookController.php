@@ -67,7 +67,12 @@ class EbookController extends Controller
         $query = Ebook::query();
 
         if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%');
+            // $query->where('title', 'like', '%' . $request->search . '%');
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%$search%")
+                ->orWhere('author', 'like', "%$search%");
+            });
         }
 
         if ($request->filled('category')) {
@@ -178,7 +183,11 @@ class EbookController extends Controller
         $query = Ebook::query();
 
         if ($request->has('search') && $request->search != '') {
-            $query->where('title', 'like', '%' . $request->search . '%');
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%$search%")
+                ->orWhere('author', 'like', "%$search%");
+            });
         }
 
         if ($request->has('category') && $request->category != '') {

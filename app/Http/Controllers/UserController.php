@@ -24,7 +24,7 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $user->update(['status' => 'active']);
-            return redirect()->route('admin.ebook.list');
+            return redirect()->route('admin.dashboard');
         }
         
 
@@ -80,11 +80,23 @@ class UserController extends Controller
 
 
     // Show all admin accounts
-    public function indexAdmins()
+    public function indexAdmins(Request $request)
     {
-        $users = User::all();
+        $query = User::query();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('username', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%");
+            });
+        }
+
+        $users = $query->get();
+
         return view('admin.AdminAcct', compact('users'));
     }
+
 
     // Show edit form for a specific admin
     public function editAdmin($id)

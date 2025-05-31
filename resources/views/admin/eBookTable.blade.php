@@ -123,7 +123,7 @@
 
         <form method="GET" action="{{ route('admin.ebook.list') }}">
             <div class="eBookSearch">
-                <input type="text" name="search" placeholder="Search Title..." value="{{ request('search') }}">
+                <input type="text" name="search" placeholder="Search Title or Author..." value="{{ request('search') }}">
                 
                 <button type="submit">Search</button>
 

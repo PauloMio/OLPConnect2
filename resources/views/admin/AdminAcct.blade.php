@@ -133,6 +133,15 @@
     <div class="main-content">
         <h2>Admin Accounts</h2>
 
+        <div class="search-form" style="margin-bottom: 20px; text-align: center;">
+            <form method="GET" action="{{ route('admin.accounts') }}">
+                <input type="text" name="search" placeholder="Search by name or email"
+                    value="{{ request('search') }}"
+                    style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 5px;" />
+                <button type="submit" style="padding: 8px 12px;">Search</button>
+            </form>
+        </div>
+
         <div class="add-button">
             <a href="{{ route('register') }}">
                 <button type="button">Add New Admin</button>
@@ -162,6 +171,13 @@
                     @endforeach
                 </tbody>
             </table>
+
+            @if($users->isEmpty())
+                <div style="text-align: center; margin-top: 20px;">
+                    <strong>No matching users found.</strong>
+                </div>
+            @endif
+
         </div>
     </div>
 
