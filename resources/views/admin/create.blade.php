@@ -126,8 +126,11 @@
 
                 <select name="category" required>
                     <option value="">Select Category</option>
-                    
+                    @foreach($categories as $category)
+                        <option value="{{ $category->category }}">{{ $category->category }}</option>
+                    @endforeach
                 </select><br>
+
             </div>
 
             <div class="right_side">
@@ -141,7 +144,14 @@
                 <input type="text" name="edition" placeholder="Edition"><br>
                 <input type="text" name="publisher" placeholder="Publisher"><br>
                 <input type="number" name="copyrightyear" placeholder="Copyright Year"><br>
-                <input type="text" name="location" placeholder="Location"><br>
+                
+                <select name="location" required>
+                    <option value="">Select Location</option>
+                    @foreach($locations as $location)
+                        <option value="{{ $location->location }}">{{ $location->location }}</option>
+                    @endforeach
+                </select><br>
+
                 <button type="submit">Upload eBook</button>
             </div>
 

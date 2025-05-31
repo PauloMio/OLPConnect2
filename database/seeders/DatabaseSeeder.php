@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\EbookCategory;
 use App\Models\User;
-use EbookCategorySeeder;
-use EbookLocationSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

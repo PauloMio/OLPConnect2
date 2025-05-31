@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Account;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use App\Models\EbookCategory;
+use App\Models\EbookLocation;
 
 
 
@@ -15,11 +17,16 @@ class EbookController extends Controller
 {
     public function create()
     {
-        return view('admin.create');
+        $categories = EbookCategory::all();
+        $locations = EbookLocation::all();
+
+        return view('admin.create', compact('categories', 'locations'));
     }
 
     public function store(Request $request)
     {
+        $validLocations = EbookLocation::pluck('location')->toArray();
+        
         $request->validate([
             'title' => 'nullable|string|max:200',
             'description' => 'nullable|string',
@@ -27,7 +34,7 @@ class EbookController extends Controller
             'coverage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'pdf' => 'nullable|file|mimes:pdf|max:51200',
             'status' => 'nullable|in:active,inactive',
-            'category' => 'nullable|in:Filipiniana,Fiction,General Reference,Encyclopedia,Senior High School,Undergraduate,Graduate School',
+            'category' => 'nullable|string|max:100',
             'edition' => 'nullable|string|max:50',
             'publisher' => 'nullable|string|max:100',
             'copyrightyear' => 'nullable|integer',
