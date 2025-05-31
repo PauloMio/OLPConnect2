@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\EbookCategoryController;
+use App\Http\Controllers\EbookLocationController;
 
 //Route::get('/', function () {
 //    return view('welcome');
@@ -44,6 +46,18 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/admin/useraccounts', [AccountController::class, 'store'])->name('admin.useraccounts.store');
     Route::put('/admin/useraccounts/{id}', [AccountController::class, 'update'])->name('admin.useraccounts.update');
     Route::delete('/admin/useraccounts/{id}', [AccountController::class, 'destroy'])->name('admin.useraccounts.delete');
+    
+    // ✅ Ebook Categories Routes
+    Route::get('/admin/ebook-categories', [EbookCategoryController::class, 'index'])->name('admin.ebook_categories.index');
+    Route::get('/admin/ebook-categories/create', [EbookCategoryController::class, 'create'])->name('admin.ebook_categories.create');
+    Route::post('/admin/ebook-categories/store', [EbookCategoryController::class, 'store'])->name('admin.ebook_categories.store');
+    Route::delete('/admin/ebook-categories/{id}', [EbookCategoryController::class, 'destroy'])->name('admin.ebook_categories.destroy');
+
+    // ✅ Ebook Locations Routes
+    Route::get('/admin/ebook-locations', [EbookLocationController::class, 'index'])->name('admin.ebook_locations.index');
+    Route::get('/admin/ebook-locations/create', [EbookLocationController::class, 'create'])->name('admin.ebook_locations.create');
+    Route::post('/admin/ebook-locations/store', [EbookLocationController::class, 'store'])->name('admin.ebook_locations.store');
+    Route::delete('/admin/ebook-locations/{id}', [EbookLocationController::class, 'destroy'])->name('admin.ebook_locations.destroy');
 });
 
 

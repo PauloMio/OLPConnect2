@@ -126,13 +126,7 @@
 
                 <select name="category" required>
                     <option value="">Select Category</option>
-                    <option value="Filipiniana">Filipiniana</option>
-                    <option value="Fiction">Fiction</option>
-                    <option value="General Reference">General Reference</option>
-                    <option value="Encyclopedia">Encyclopedia</option>
-                    <option value="Senior High School">Senior High School</option>
-                    <option value="Undergraduate">Undergraduate</option>
-                    <option value="Graduate School">Graduate School</option>
+                    
                 </select><br>
             </div>
 

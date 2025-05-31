@@ -34,6 +34,17 @@
                 <span class="label">User Accounts</span>
             </a>
         </li>
+
+        <li class="dropdown">
+        <a href="javascript:void(0);" class="dropdown-toggle">
+            <img src="{{ asset('storage/icons/Setup.png') }}" class="icon" alt="">
+            <span class="label">Setup</span>
+        </a>
+        <ul class="submenu">
+                <li><a href="{{ route('admin.ebook_categories.index') }}">eBook Category</a></li>
+                <li><a href="{{ route('admin.ebook_locations.index') }}">eBook Location</a></li>
+            </ul>
+        </li>
     </ul>
 </div>
 
@@ -141,15 +152,69 @@
     opacity: 0;
     margin-left: -9999px;
 }
+
+/* Dropdown Styles */
+.dropdown .submenu {
+    display: none;
+    flex-direction: column;
+    padding-left: 2.5rem;
+    background-color: #34495e;
+    transition: all 0.3s ease;
+}
+
+.dropdown .submenu li a {
+    padding: 0.5rem 1rem;
+    color: #ecf0f1;
+    font-size: 14px;
+}
+
+.dropdown.open .submenu {
+    display: flex;
+}
+
+.dropdown-toggle::after {
+    content: '▼';
+    margin-left: auto;
+    font-size: 12px;
+    color: white;
+}
+
+.sidebar.collapsed .dropdown .submenu {
+    display: none !important;
+}
+
+.sidebar.collapsed .dropdown.open .submenu {
+    display: none !important;
+}
+
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('toggleSidebar');
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
     toggleBtn.addEventListener('click', () => {
         sidebar.classList.toggle('collapsed');
+
+        // When collapsed, close all open dropdowns
+        if (sidebar.classList.contains('collapsed')) {
+            document.querySelectorAll('.dropdown.open').forEach(dropdown => {
+                dropdown.classList.remove('open');
+            });
+        }
+    });
+
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            const dropdown = toggle.closest('.dropdown');
+
+            // Prevent toggle if sidebar is collapsed
+            if (!sidebar.classList.contains('collapsed')) {
+                dropdown.classList.toggle('open');
+            }
+        });
     });
 });
 </script>
