@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use App\Models\ProgramUser;
 
 class AccountController extends Controller
 {
@@ -89,7 +90,9 @@ class AccountController extends Controller
         return redirect()->route('account.showLogin')->with('success', 'Account created!');
     }
 
-    public function index(Request $request)
+
+
+public function index(Request $request)
     {
         $query = Account::query();
 
@@ -104,8 +107,12 @@ class AccountController extends Controller
 
         $accounts = $query->get();
 
-        return view('admin.accountTable', compact('accounts'));
+        // Fetch all programs to pass to the view
+        $programs = ProgramUser::all();
+
+        return view('admin.accountTable', compact('accounts', 'programs'));
     }
+
 
 
     public function store(Request $request)
@@ -114,6 +121,7 @@ class AccountController extends Controller
             'firstname' => 'nullable|string|max:100',
             'lastname' => 'nullable|string|max:100',
             'schoolid' => 'required|string|max:50|unique:account,schoolid',
+            'program' => 'nullable|string|max:255',
             'birthdate' => 'required|date',
             'status' => 'required|in:active,inactive',
         ]);
@@ -130,6 +138,7 @@ class AccountController extends Controller
             'firstname' => 'nullable|string|max:100',
             'lastname' => 'nullable|string|max:100',
             'schoolid' => 'required|string|max:50|unique:account,schoolid,' . $id,
+            'program' => 'nullable|string|max:255',
             'birthdate' => 'required|date',
             'status' => 'required|in:active,inactive',
         ]);

@@ -21,6 +21,7 @@ class AccountSeeder extends Seeder
             'loggedin' => Carbon::now()->subHours(2),
             'loggedout' => Carbon::now(),
             'schoolid' => '201080009',
+            'program' => 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY',
             'birthdate' => '2001-12-30',
             'status' => 'inactive',
         ]);
@@ -33,6 +34,7 @@ class AccountSeeder extends Seeder
             'loggedin' => Carbon::now()->subHours(2),
             'loggedout' => Carbon::now(),
             'schoolid' => '123',
+            'program' => 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY',
             'birthdate' => '2001-05-27',
             'status' => 'inactive',
         ]);
@@ -44,6 +46,7 @@ class AccountSeeder extends Seeder
             'loggedin' => Carbon::now()->subHours(2),
             'loggedout' => Carbon::now(),
             'schoolid' => '201080005',
+            'program' => 'BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY',
             'birthdate' => '2001-10-10',
             'status' => 'inactive',
         ]);

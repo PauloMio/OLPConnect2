@@ -41,6 +41,7 @@
                 <td>{{ $account->credit }}</td>
                 <td>{{ $account->schoolid }}</td>
                 <td>{{ $account->status }}</td>
+                <td>{{ $account->program }}</td>
                 <td>{{ $account->birthdate }}</td>
                 <td>
                     <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ $account->id }}">Edit</button>
@@ -63,6 +64,16 @@
                                 <input type="text" name="firstname" class="form-control mb-2" value="{{ $account->firstname }}" placeholder="Firstname">
                                 <input type="text" name="lastname" class="form-control mb-2" value="{{ $account->lastname }}" placeholder="Lastname">
                                 <input type="text" name="schoolid" class="form-control mb-2" value="{{ $account->schoolid }}" placeholder="School ID">
+
+                                <select name="program" class="form-control mb-2">
+                                    <option value="">Select Program</option>
+                                    @foreach($programs as $program)
+                                        <option value="{{ $program->program }}" {{ $program->program == $account->program ? 'selected' : '' }}>
+                                            {{ $program->program }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
                                 <input type="date" name="birthdate" class="form-control mb-2" value="{{ $account->birthdate ? $account->birthdate->format('Y-m-d') : '' }}">
                                 <select name="status" class="form-control mb-2">
                                     <option value="active" {{ $account->status == 'active' ? 'selected' : '' }}>Active</option>
@@ -119,6 +130,14 @@
                     <input type="text" name="firstname" class="form-control mb-2" placeholder="Firstname">
                     <input type="text" name="lastname" class="form-control mb-2" placeholder="Lastname">
                     <input type="text" name="schoolid" class="form-control mb-2" placeholder="School ID">
+
+                    <select name="program" class="form-control mb-2">
+                        <option value="">Select Program</option>
+                        @foreach($programs as $program)
+                            <option value="{{ $program->program }}">{{ $program->program }}</option>
+                        @endforeach
+                    </select>
+
                     <input type="date" name="birthdate" class="form-control mb-2">
                     <select name="status" class="form-control mb-2">
                         <option value="inactive">Inactive</option>

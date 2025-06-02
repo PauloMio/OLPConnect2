@@ -178,7 +178,7 @@ class EbookController extends Controller
 
 
 
-    // User side functions for viewing books
+    // User side functions for viewing books----------------------------------------------------------------------------------------------------------
 
     public function userView(Request $request)
     {

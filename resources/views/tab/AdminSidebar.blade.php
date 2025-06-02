@@ -63,6 +63,7 @@
     transition: all 0.3s ease;
     z-index: 1000;
     overflow: hidden;
+    overflow-y: auto;
 }
 
 .sidebar.collapsed {
@@ -113,6 +114,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    overflow-y: auto; /* Optional but useful for large menus */
     flex-grow: 1;
 }
 

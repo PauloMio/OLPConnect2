@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('loggedin')->nullable();
             $table->dateTime('loggedout')->nullable();
             $table->string('schoolid', 50)->nullable();
+            $table->string('program')->nullable();
             $table->date('birthdate')->nullable();
             $table->enum('status', ['inactive', 'active'])->nullable();
             $table->timestamps();

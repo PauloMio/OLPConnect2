@@ -18,6 +18,7 @@ class Account extends Model
         'loggedin',
         'loggedout',
         'schoolid',
+        'program',
         'birthdate',
         'status',
     ];

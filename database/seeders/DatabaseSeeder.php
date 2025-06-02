@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AccountSeeder::class);
         $this->call(EbookCategorySeeder::class);
         $this->call(EbookLocationSeeder::class);
+        $this->call(ProgramUserSeeder::class);
     }
 }
