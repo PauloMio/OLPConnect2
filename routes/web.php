@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\ProgramUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EbookCategoryController;
 use App\Http\Controllers\EbookLocationController;
+use App\Models\ProgramUser;
 
 //Route::get('/', function () {
 //    return view('welcome');
@@ -58,6 +60,12 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/admin/ebook-locations/create', [EbookLocationController::class, 'create'])->name('admin.ebook_locations.create');
     Route::post('/admin/ebook-locations/store', [EbookLocationController::class, 'store'])->name('admin.ebook_locations.store');
     Route::delete('/admin/ebook-locations/{id}', [EbookLocationController::class, 'destroy'])->name('admin.ebook_locations.destroy');
+
+    // Program User Routes
+    Route::get('/admin/program-user', [ProgramUserController::class, 'index'])->name('admin.program_user.index');
+    Route::get('/admin/program-user/create', [ProgramUserController::class, 'create'])->name('admin.program_user.create');
+    Route::post('/admin/program-user/store', [ProgramUserController::class, 'store'])->name('admin.program_user.store');
+    Route::delete('/admin/program-user/{id}', [ProgramUserController::class, 'destroy'])->name('admin.program_user.destroy');   
 });
 
 
