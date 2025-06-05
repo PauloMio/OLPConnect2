@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Announcements</title>
-</head>
-<body>
+@extends('layouts.category_app')
+
+@section('title', 'Ebook Categories')
+
+@section('content')
+
+
+{{-- Sidebar --}}
+@include('tab.AdminSidebar')
+
+<div style="margin-left: 80px;" id="main-content" class="container mt-4">
     <h2>Upload Announcement Image</h2>
 
     @if (session('success'))
@@ -29,5 +34,18 @@
             </li>
         @endforeach
     </ul>
-</body>
-</html>
+
+</div>
+
+<script>
+    // Adjust margin based on sidebar open/closed
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
+
+    const resizeObserver = new ResizeObserver(() => {
+        const width = sidebar.offsetWidth;
+        mainContent.style.marginLeft = width + 'px';
+    });
+
+    resizeObserver.observe(sidebar);
+</script>

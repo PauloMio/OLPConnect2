@@ -3,6 +3,11 @@
 @section('title', 'Ebook Categories')
 
 @section('content')
+{{-- Sidebar --}}
+@include('tab.AdminSidebar')
+
+<div style="margin-left: 80px;" id="main-content" class="container mt-4">
+
     <h1>Programs</h1>
 
     <a href="{{ route('admin.program_user.create') }}" class="btn">Add New Program</a>
@@ -24,3 +29,19 @@
         @endforeach
     </ul>
 @endsection
+
+
+</div>
+
+<script>
+    // Adjust margin based on sidebar open/closed
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
+
+    const resizeObserver = new ResizeObserver(() => {
+        const width = sidebar.offsetWidth;
+        mainContent.style.marginLeft = width + 'px';
+    });
+
+    resizeObserver.observe(sidebar);
+</script>

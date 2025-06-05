@@ -44,6 +44,7 @@
                 <li><a href="{{ route('admin.ebook_categories.index') }}">eBook Category</a></li>
                 <li><a href="{{ route('admin.ebook_locations.index') }}">eBook Location</a></li>
                 <li><a href="{{ route('admin.program_user.index') }}">User Program</a></li>
+                <li><a href="{{ route('announcements.index') }}">Announcement</a></li>
             </ul>
         </li>
     </ul>

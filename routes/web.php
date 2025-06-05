@@ -63,7 +63,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::delete('/admin/ebook-locations/{id}', [EbookLocationController::class, 'destroy'])->name('admin.ebook_locations.destroy');
 
     // Program User Routes
-    Route::get('/admin/program-user', [ProgramUserController::class, 'index'])->name('admin.program_user.index');
+    Route::get('/admin/program-user', action: [ProgramUserController::class, 'index'])->name('admin.program_user.index');
     Route::get('/admin/program-user/create', [ProgramUserController::class, 'create'])->name('admin.program_user.create');
     Route::post('/admin/program-user/store', [ProgramUserController::class, 'store'])->name('admin.program_user.store');
     Route::delete('/admin/program-user/{id}', [ProgramUserController::class, 'destroy'])->name('admin.program_user.destroy');   
