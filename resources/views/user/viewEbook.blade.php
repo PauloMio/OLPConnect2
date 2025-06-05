@@ -35,13 +35,12 @@
             position: relative;
             background: white;
             border-radius: 10px;
-            padding: 20px;
+            padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            width: 300px;
+            margin: 10px;
+            width: 22%; /* Adjusted to fit 4 per row with some spacing */
             display: inline-block;
             vertical-align: top;
-            margin-right: 20px;
             text-align: center;
         }
         .ebook-card h3 {
@@ -109,36 +108,39 @@
         <button type="submit">Search</button>
     </form>
 
-    @foreach($ebooks as $ebook)
-        <div class="ebook-card">
-            <form action="{{ route('user.ebooks.favorite', $ebook->id) }}" method="POST" class="favorite-toggle-form">
-                @csrf
-                <button type="submit" class="favorite-toggle-btn">
-                    @if($account && $account->favorites->contains($ebook->id))
-                        ⭐
-                    @else
-                        ☆
-                    @endif
-                </button>
-            </form>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+        @foreach($ebooks as $ebook)
+            <div class="ebook-card">
+                <form action="{{ route('user.ebooks.favorite', $ebook->id) }}" method="POST" class="favorite-toggle-form">
+                    @csrf
+                    <button type="submit" class="favorite-toggle-btn">
+                        @if($account && $account->favorites->contains($ebook->id))
+                            ⭐
+                        @else
+                            ☆
+                        @endif
+                    </button>
+                </form>
 
 
 
-            @if($ebook->coverage)
-                <img src="{{ asset('storage/' . $ebook->coverage) }}" alt="Cover Image" class="cover-image">
-            @else
-                <img src="{{ asset('storage/icons/defaultcover.png') }}" alt="Default Cover" class="cover-image">
-            @endif
+                @if($ebook->coverage)
+                    <img src="{{ asset('storage/' . $ebook->coverage) }}" alt="Cover Image" class="cover-image">
+                @else
+                    <img src="{{ asset('storage/icons/defaultcover.png') }}" alt="Default Cover" class="cover-image">
+                @endif
 
-            <h3>{{ $ebook->title }}</h3>
-            <p><strong>Author:</strong> {{ $ebook->author }}</p>
-            <p><strong>Publisher:</strong> {{ $ebook->publisher }}</p>
-            <p><strong>Copyright Year:</strong> {{ $ebook->copyrightyear }}</p>
-            <p><strong>Location:</strong> {{ $ebook->location }}</p>
+                <h3>{{ $ebook->title }}</h3>
+                <p><strong>Author:</strong> {{ $ebook->author }}</p>
+                <p><strong>Publisher:</strong> {{ $ebook->publisher }}</p>
+                <p><strong>Copyright Year:</strong> {{ $ebook->copyrightyear }}</p>
+                <p><strong>Location:</strong> {{ $ebook->location }}</p>
 
-            <a href="{{ route('user.ebooks.show', $ebook->id) }}" class="read-more-btn">Read More</a>
-        </div>
-    @endforeach
+                <a href="{{ route('user.ebooks.show', $ebook->id) }}" class="read-more-btn">Read More</a>
+            </div>
+        @endforeach
+    </div>
+    
 
 
     <script>
