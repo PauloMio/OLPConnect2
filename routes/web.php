@@ -7,6 +7,7 @@ use App\Http\Controllers\EbookController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EbookCategoryController;
 use App\Http\Controllers\EbookLocationController;
+use App\Http\Controllers\AnnouncementController;
 use App\Models\ProgramUser;
 
 //Route::get('/', function () {
@@ -66,6 +67,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/admin/program-user/create', [ProgramUserController::class, 'create'])->name('admin.program_user.create');
     Route::post('/admin/program-user/store', [ProgramUserController::class, 'store'])->name('admin.program_user.store');
     Route::delete('/admin/program-user/{id}', [ProgramUserController::class, 'destroy'])->name('admin.program_user.destroy');   
+
+    Route::get('/admin/announcement',[AnnouncementController::class, 'index'])->name('announcements.index');
+    Route::post('/admin/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
+    Route::delete('/admin/announcements/{id}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
 });
 
 
