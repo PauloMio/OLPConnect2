@@ -35,4 +35,11 @@ class AnnouncementController extends Controller
 
         return redirect()->back()->with('success', 'Image deleted successfully!');
     }
+
+    public function home()
+    {
+        $announcements = \App\Models\Announcement::latest()->get();
+        return view('user.home', compact('announcements'));
+    }
+
 }

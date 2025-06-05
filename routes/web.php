@@ -82,9 +82,7 @@ Route::middleware(['account.guest'])->group(function () {
     Route::get('user/login', [AccountController::class, 'showLoginForm'])->name('account.showLogin');
     Route::post('user/login', [AccountController::class, 'login'])->name('account.login');
 
-    Route::get('/', function () {
-        return view('user.home');
-    })->name('user.home');
+    Route::get('/', [AnnouncementController::class, 'home'])->name('user.home');
 });
 
 

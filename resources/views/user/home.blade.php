@@ -1,105 +1,115 @@
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        background-color: #f4f4f4;
-        display: flex;
-    }
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            display: flex;
+        }
 
-    header {
-        padding: 1rem;
-        text-align: center;
-    }
+        header {
+            padding: 1rem;
+            text-align: center;
+        }
 
-    .carousel {
-        position: relative;
-        width: 90%;               
-        max-width: 960px;         
-        height: 540px;            
-        overflow: hidden;
-        margin: 2rem auto;        
-        border-radius: 12px;      
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-    }
+        .carousel {
+            position: relative;
+            width: 90%;               
+            max-width: 960px;         
+            height: 540px;            
+            overflow: hidden;
+            margin: 2rem auto;        
+            border-radius: 12px;      
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+        }
 
-    .slides {
-        display: flex;
-        width: 400%;              /* 4 slides */
-        animation: slide 16s infinite;
-    }
+        .slides {
+            display: flex;
+            width: 400%;              /* 4 slides */
+            animation: slide 16s infinite;
+        }
 
-    .slide {
-        flex: 1 0 100%;
-        height: 100%;
-    }
+        .slide {
+            flex: 1 0 100%;
+            height: 100%;
+        }
 
-    .slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    @keyframes slide {
-        0%   { margin-left: 0; }
-        25%  { margin-left: -100%; }
-        50%  { margin-left: -200%; }
-        75%  { margin-left: -300%; }
-        100% { margin-left: 0; }
-    }
+        @keyframes slide {
+            0%   { margin-left: 0; }
+            25%  { margin-left: -100%; }
+            50%  { margin-left: -200%; }
+            75%  { margin-left: -300%; }
+            100% { margin-left: 0; }
+        }
 
-    .section {
-        padding: 2rem;
-        text-align: center;
-    }
+        .section {
+            padding: 2rem;
+            text-align: center;
+        }
 
-    .members, .services {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1.5rem;
-    }
+        .members, .services {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
 
-    .card {
-        background: white;
-        padding: 1rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        width: 200px;
-    }
+        .card {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 200px;
+        }
 
-    .card img {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 50%; /* Makes the image a perfect circle */
-        margin: 0 auto;
-        display: block;
-    }
+        .card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%; /* Makes the image a perfect circle */
+            margin: 0 auto;
+            display: block;
+        }
 
-    .card h3 {
-        margin: 0.5rem 0 0.2rem;
-    }
+        .card h3 {
+            margin: 0.5rem 0 0.2rem;
+        }
 
-    .card p {
-        margin: 0;
-        font-size: 0.9rem;
-        color: #555;
-    }
+        .card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
 
-    .sidebar {
-        width: 80px;
-        height: 100vh;
-        position: fixed;
-        left: 0;
-        top: 0;
-    }
+        .sidebar {
+            width: 80px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
 
-    .main-content {
-        margin-left: 80px;
-        padding: 2rem;
-        flex: 1;
-    }
-</style>
+        .main-content {
+            margin-left: 80px;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .carousel-item img {
+            height: 400px;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+
 
 <body>
 @include('tab.homeSidebar')
@@ -113,14 +123,28 @@
     </header>
     
         <!-- Image Carousel -->
-        <div class="carousel">
-            <div class="slides">
-                <div class="slide"><img src="{{ asset('storage/images/LOTR3.jpg') }}" alt="Slide 1"></div>
-                <div class="slide"><img src="{{ asset('storage/images/LOTR4.jpg') }}" alt="Slide 2"></div>
-                <div class="slide"><img src="{{ asset('storage/images/LOTR5.jpg') }}" alt="Slide 3"></div>
-                <div class="slide"><img src="{{ asset('storage/images/LOTR6.jpg') }}" alt="Slide 4"></div>
+        @if($announcements->count())
+        <div id="announcementCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach($announcements as $index => $announcement)
+                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                        <img src="{{ asset('storage/' . $announcement->image_path) }}" class="d-block w-100" alt="Announcement Image">
+                    </div>
+                @endforeach
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#announcementCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#announcementCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+        @else
+            <p>No announcements available.</p>
+        @endif
+
 
         <!-- Members Section -->
         <section class="section">
@@ -179,4 +203,5 @@
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
