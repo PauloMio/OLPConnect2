@@ -24,23 +24,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
         }
 
-        .slides {
-            display: flex;
-            width: 400%;              /* 4 slides */
-            animation: slide 16s infinite;
-        }
-
-        .slide {
-            flex: 1 0 100%;
-            height: 100%;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         @keyframes slide {
             0%   { margin-left: 0; }
             25%  { margin-left: -100%; }
@@ -103,10 +86,12 @@
         }
 
         .carousel-item img {
-            height: 400px;
-            object-fit: cover;
+            width: 100%;
+            height: auto;
+            max-height: 540px;
+            object-fit: contain;
+            border-radius: 12px;
         }
-
     </style>
 </head>
 
@@ -123,28 +108,25 @@
     </header>
     
         <!-- Image Carousel -->
-        @if($announcements->count())
-        <div id="announcementCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                @foreach($announcements as $index => $announcement)
-                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                        <img src="{{ asset('storage/' . $announcement->image_path) }}" class="d-block w-100" alt="Announcement Image">
-                    </div>
-                @endforeach
+        <div class="container mt-4">
+            <div id="announcementCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach($announcements as $index => $announcement)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                            <img src="{{ asset('storage/' . $announcement->image_path) }}" class="d-block w-100" alt="Announcement Image">
+                        </div>
+                    @endforeach
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#announcementCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#announcementCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#announcementCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#announcementCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
-        @else
-            <p>No announcements available.</p>
-        @endif
-
 
         <!-- Members Section -->
         <section class="section">
