@@ -38,7 +38,7 @@
             padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             margin: 10px;
-            width: 22%; /* Adjusted to fit 4 per row with some spacing */
+            width: 20%; /* Adjusted to fit 4 per row with some spacing */
             display: inline-block;
             vertical-align: top;
             text-align: center;
