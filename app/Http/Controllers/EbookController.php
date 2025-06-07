@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use PDF;
 use App\Models\EbookCategory;
 use App\Models\EbookLocation;
+use App\Models\GuestLog;
 
 
 
@@ -224,60 +225,87 @@ class EbookController extends Controller
 
         return view('user.showEbook', compact('ebook'));
     }
+
+    public function toggleFavorite($id)
+    {
+        if (!session()->has('account_id')) {
+            return redirect()->route('account.showLogin')->with('error', 'You must be logged in to favorite.');
+        }
+
+        $account = Account::find(session('account_id'));
+        $ebook = Ebook::findOrFail($id);
+
+        if ($account->favorites()->where('ebook_id', $id)->exists()) {
+            $account->favorites()->detach($id);
+            return back()->with('success', 'Removed from favorites.');
+        } else {
+            $account->favorites()->attach($id);
+            return back()->with('success', 'Added to favorites.');
+        }
+    }
+
+    public function viewFavorites()
+    {
+        if (!session()->has('account_id')) {
+            return redirect()->route('account.showLogin')->with('error', 'You must be logged in to view favorites.');
+        }
+
+        $account = Account::find(session('account_id'));
+        $favorites = $account->favorites()->get();
+
+        return view('user.favorites', compact('favorites', 'account'));
+    }
     
 
-
+// Dashboard------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public function dashboard(Request $request)
     {
-        $overallCount = Ebook::count();
-        // Get filters from request
-        $addedYear = $request->input('added_year');
-        $updatedYear = $request->input('updated_year');
-        $selectedCategory = $request->input('category');
-        $selectedLocation = $request->input('location');
+        // Validate input dates or set defaults
+        $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+        ]);
 
-        // Counts per selection
-        $addedYearCount = $addedYear ? Ebook::whereYear('created_at', $addedYear)->count() : null;
-        $updatedYearCount = $updatedYear ? Ebook::whereYear('updated_at', $updatedYear)->count() : null;
-        $categoryCount = $selectedCategory ? Ebook::where('category', $selectedCategory)->count() : null;
-        $locationCount = $selectedLocation ? Ebook::where('location', $selectedLocation)->count() : null;
+        $startDate = $request->input('start_date') ? $request->input('start_date') . ' 00:00:00' : null;
+        $endDate = $request->input('end_date') ? $request->input('end_date') . ' 23:59:59' : null;
 
-        // Dropdown options
-        $addedYears = Ebook::selectRaw('YEAR(created_at) as year')->distinct()->orderBy('year', 'desc')->pluck('year');
-        $updatedYears = Ebook::selectRaw('YEAR(updated_at) as year')->distinct()->orderBy('year', 'desc')->pluck('year');
-        $categories = Ebook::select('category')->distinct()->pluck('category');
-        $locations = Ebook::select('location')->distinct()->pluck('location');
+        // Base queries
+        $ebookQuery = \App\Models\Ebook::query();
+        $accountQuery = \App\Models\Account::query();
+        $guestlogQuery = \App\Models\GuestLog::query();
 
-        // All updated year counts
-        $updatedYearCounts = Ebook::selectRaw('YEAR(updated_at) as year, COUNT(*) as count')
-        ->groupBy('year')
-        ->orderBy('year', 'desc')
-        ->pluck('count', 'year');
+        if ($startDate && $endDate) {
+            $ebookQuery->whereBetween('created_at', [$startDate, $endDate]);
+            $accountQuery->whereBetween('created_at', [$startDate, $endDate]);
+            $guestlogQuery->whereBetween('created_at', [$startDate, $endDate]);
+        }
 
-        // All category counts
-        $categoryCounts = Ebook::select('category')
-        ->selectRaw('COUNT(*) as count')
-        ->groupBy('category')
-        ->orderBy('category')
-        ->pluck('count', 'category');
+        // Counts
+        $overallCount = $ebookQuery->count();
+        $usersCount = $accountQuery->count();
+        $guestsCount = $guestlogQuery->count();
 
-        // All location counts
-        $locationCounts = Ebook::select('location')
-        ->selectRaw('COUNT(*) as count')
-        ->groupBy('location')
-        ->orderBy('location')
-        ->pluck('count', 'location');
+        // Category counts for pie chart
+        $categoryCounts = $ebookQuery->select('category')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('category')
+            ->orderBy('category')
+            ->pluck('count', 'category')->toArray();
 
+        // Location counts for pie chart
+        $locationCounts = $ebookQuery->select('location')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('location')
+            ->orderBy('location')
+            ->pluck('count', 'location')->toArray();
 
         return view('admin.eBookOverview', compact(
-            'overallCount',
-            'addedYear', 'updatedYear', 'selectedCategory', 'selectedLocation',
-            'addedYearCount', 'updatedYearCount', 'categoryCount', 'locationCount',
-            'addedYears', 'updatedYears', 'categories', 'locations',
-            'updatedYearCounts', 'categoryCounts', 'locationCounts'
+            'startDate', 'endDate',
+            'overallCount', 'usersCount', 'guestsCount',
+            'categoryCounts', 'locationCounts'
         ));
-        
     }
+
 
 
     public function downloadPdf(Request $request)
@@ -316,35 +344,7 @@ class EbookController extends Controller
         return $pdf->download('ebook-overview.pdf');
     }
 
-    public function toggleFavorite($id)
-    {
-        if (!session()->has('account_id')) {
-            return redirect()->route('account.showLogin')->with('error', 'You must be logged in to favorite.');
-        }
-
-        $account = Account::find(session('account_id'));
-        $ebook = Ebook::findOrFail($id);
-
-        if ($account->favorites()->where('ebook_id', $id)->exists()) {
-            $account->favorites()->detach($id);
-            return back()->with('success', 'Removed from favorites.');
-        } else {
-            $account->favorites()->attach($id);
-            return back()->with('success', 'Added to favorites.');
-        }
-    }
-
-    public function viewFavorites()
-    {
-        if (!session()->has('account_id')) {
-            return redirect()->route('account.showLogin')->with('error', 'You must be logged in to view favorites.');
-        }
-
-        $account = Account::find(session('account_id'));
-        $favorites = $account->favorites()->get();
-
-        return view('user.favorites', compact('favorites', 'account'));
-    }
+    
 
 
     

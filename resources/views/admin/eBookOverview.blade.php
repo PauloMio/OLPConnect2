@@ -3,151 +3,184 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ebook Overview</title>
-    {{-- Bootstrap 5.3 CSS --}}
+    <title>eBook Dashboard</title>
+    {{-- Bootstrap CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {{-- Chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
             background-color: #f8f9fa;
-            margin: 0;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .sidebar {
-            width: 220px;
-            background-color: #f0f0f0;
-            border-right: 1px solid #ddd;
-            height: 100vh;
-            overflow-y: auto;
-            padding: 20px 10px;
-            box-sizing: border-box;
-        }
-        .main-content {
-            flex-grow: 1;
-            padding: 20px 40px;
-            overflow-y: auto;
-            background-color: #f8f9fa;
+            padding: 20px;
+            font-family: Arial, sans-serif;
         }
         .card {
-            min-height: 180px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
         }
-        h2 {
-            margin-top: 30px;
+        .card-body h5 {
+            font-weight: 600;
+        }
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .date-inputs {
+            max-width: 400px;
         }
     </style>
 </head>
 <body>
 
-    {{-- Sidebar --}}
-    @include('tab.AdminSidebar')
+<div class="container">
 
-    <div style="margin-left: 80px;" id="main-content">
-        @yield('content')
-    </div>
+    <h1 class="mb-4">eBook Dashboard</h1>
 
-    {{-- Main Content --}}
-    <div class="main-content container py-4">
-        <h2 class="mb-4">eBook Dashboard</h2>
-        
-        <a href="{{ route('admin.ebook-overview.pdf') }}" class="btn btn-secondary mb-4" target="_blank">
-            Print Overview (Download PDF)
-        </a>
+    {{-- Date Range Filter --}}
+    <form method="GET" action="{{ route('admin.dashboard') }}" class="mb-5 d-flex gap-3 align-items-end date-inputs">
+        <div class="form-group flex-grow-1">
+            <label for="start_date" class="form-label">Starting Date</label>
+            <input 
+                type="date" 
+                id="start_date" 
+                name="start_date" 
+                class="form-control" 
+                value="{{ request()->input('start_date') ?? '' }}" />
+        </div>
 
-        <form method="GET" action="{{ route('admin.dashboard') }}" id="filterForm">
-            <div class="row g-4">
-                {{-- Card 1: Overall Count --}}
-                <div class="col-md-4">
-                    <div class="card text-white bg-primary shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">Overall eBooks</h5>
-                            <p class="fs-3">{{ $overallCount }}</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="form-group flex-grow-1">
+            <label for="end_date" class="form-label">Ending Date</label>
+            <input 
+                type="date" 
+                id="end_date" 
+                name="end_date" 
+                class="form-control" 
+                value="{{ request()->input('end_date') ?? '' }}" />
+        </div>
 
-                {{-- Added Year --}}
-                <div class="col-md-4">
-                    <div class="card text-white bg-success shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">eBooks Added by Year</h5>
-                            <select name="added_year" class="form-select mb-2" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">Select Year</option>
-                                @foreach($addedYears as $year)
-                                    <option value="{{ $year }}" {{ $addedYear == $year ? 'selected' : '' }}>{{ $year }}</option>
-                                @endforeach
-                            </select>
-                            <p class="fs-3">{{ $addedYearCount !== null ? $addedYearCount : '--' }}</p>
-                        </div>
-                    </div>
-                </div>
+        <button type="submit" class="btn btn-primary px-4">Filter</button>
+    </form>
 
-                {{-- Updated Year --}}
-                <div class="col-md-4">
-                    <div class="card text-dark bg-warning shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">eBooks Updated by Year</h5>
-                            <select name="updated_year" class="form-select mb-2" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">Select Year</option>
-                                @foreach($updatedYears as $year)
-                                    <option value="{{ $year }}" {{ $updatedYear == $year ? 'selected' : '' }}>{{ $year }}</option>
-                                @endforeach
-                            </select>
-                            <p class="fs-3">{{ $updatedYearCount !== null ? $updatedYearCount : '--' }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Category --}}
-                <div class="col-md-6">
-                    <div class="card text-white bg-info shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">eBooks by Category</h5>
-                            <select name="category" class="form-select mb-2" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">Select Category</option>
-                                @foreach($categories as $cat)
-                                    <option value="{{ $cat }}" {{ $selectedCategory == $cat ? 'selected' : '' }}>{{ $cat }}</option>
-                                @endforeach
-                            </select>
-                            <p class="fs-3">{{ $categoryCount !== null ? $categoryCount : '--' }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Location --}}
-                <div class="col-md-6">
-                    <div class="card text-white bg-secondary shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">eBooks by Location</h5>
-                            <select name="location" class="form-select mb-2" onchange="document.getElementById('filterForm').submit()">
-                                <option value="">Select Location</option>
-                                @foreach($locations as $loc)
-                                    <option value="{{ $loc }}" {{ $selectedLocation == $loc ? 'selected' : '' }}>{{ $loc }}</option>
-                                @endforeach
-                            </select>
-                            <p class="fs-3">{{ $locationCount !== null ? $locationCount : '--' }}</p>
-                        </div>
-                    </div>
-                </div>
+    {{-- Stats --}}
+    <div class="row text-center mb-5">
+        <div class="col-md-4">
+            <div class="card p-4">
+                <h5>Overall eBooks</h5>
+                <div class="stats-number text-primary">{{ $overallCount }}</div>
             </div>
-        </form>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4">
+                <h5>Users (Accounts)</h5>
+                <div class="stats-number text-success">{{ $usersCount }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4">
+                <h5>Guests (Guest Logs)</h5>
+                <div class="stats-number text-warning">{{ $guestsCount }}</div>
+            </div>
+        </div>
     </div>
 
-    {{-- Bootstrap Bundle JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Adjust margin based on sidebar open/closed
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
+    {{-- Pie Charts --}}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h5 class="mb-3">eBook Categories</h5>
+                <canvas id="categoryChart" height="300"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h5 class="mb-3">eBook Locations</h5>
+                <canvas id="locationChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 
-        const resizeObserver = new ResizeObserver(() => {
-            const width = sidebar.offsetWidth;
-            mainContent.style.marginLeft = width + 'px';
-        });
+<script>
+    // Prepare data for charts from PHP variables
+    const categoryData = @json($categoryCounts);
+    const locationData = @json($locationCounts);
 
-        resizeObserver.observe(sidebar);
-    </script>
+    // Convert objects to arrays for Chart.js labels and values
+    function parseData(dataObj) {
+        return {
+            labels: Object.keys(dataObj),
+            counts: Object.values(dataObj),
+        };
+    }
+
+    const categoryParsed = parseData(categoryData);
+    const locationParsed = parseData(locationData);
+
+    // Generate random colors for charts
+    function generateColors(count) {
+        const colors = [];
+        for (let i = 0; i < count; i++) {
+            colors.push(`hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`);
+        }
+        return colors;
+    }
+
+    // Category Pie Chart
+    new Chart(document.getElementById('categoryChart').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: categoryParsed.labels,
+            datasets: [{
+                data: categoryParsed.counts,
+                backgroundColor: generateColors(categoryParsed.labels.length),
+                borderWidth: 1,
+                borderColor: '#fff',
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                title: {
+                    display: false,
+                }
+            }
+        }
+    });
+
+    // Location Pie Chart
+    new Chart(document.getElementById('locationChart').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: locationParsed.labels,
+            datasets: [{
+                data: locationParsed.counts,
+                backgroundColor: generateColors(locationParsed.labels.length),
+                borderWidth: 1,
+                borderColor: '#fff',
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                title: {
+                    display: false,
+                }
+            }
+        }
+    });
+</script>
+
+{{-- Bootstrap JS Bundle --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
