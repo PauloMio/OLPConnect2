@@ -140,6 +140,9 @@
                     <option value="Undergraduate" {{ old('category', $ebook->category) == 'Undergraduate' ? 'selected' : '' }}>Undergraduate</option>
                     <option value="Graduate School" {{ old('category', $ebook->category) == 'Graduate School' ? 'selected' : '' }}>Graduate School</option>
                 </select><br>
+
+                <input type="text" name="class" placeholder="Class" value="{{ old('class', $ebook->class) }}"><br>
+
                 <input type="text" name="edition" placeholder="Edition" value="{{ old('edition', $ebook->edition) }}"><br>
         
                 <input type="text" name="publisher" placeholder="Publisher" value="{{ old('publisher', $ebook->publisher) }}"><br>
@@ -170,6 +173,9 @@
                 <input type="number" name="copyrightyear" placeholder="Copyright Year" value="{{ old('copyrightyear', $ebook->copyrightyear) }}"><br>
         
                 <input type="text" name="location" placeholder="Location" value="{{ old('location', $ebook->location) }}"><br>
+
+
+                <input type="text" name="subject" placeholder="Subject" value="{{ old('subject', $ebook->subject) }}"><br>                
         
                 <button type="submit">Update eBook</button>
 

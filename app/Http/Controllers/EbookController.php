@@ -39,6 +39,8 @@ class EbookController extends Controller
             'publisher' => 'nullable|string|max:100',
             'copyrightyear' => 'nullable|integer',
             'location' => 'nullable|string|max:100',
+            'class' => 'nullable|string|max:255',
+            'subject' => 'nullable|string|max:255',
         ]);
 
         $pdfPath = null;
@@ -64,7 +66,10 @@ class EbookController extends Controller
             'publisher' => $request->publisher,
             'copyrightyear' => $request->copyrightyear,
             'location' => $request->location,
+            'class' => $request->class,
+            'subject' => $request->subject,
         ]);
+
 
         return redirect()->route('admin.ebook.list')->with('success', 'eBook updated successfully!');
     }
@@ -123,10 +128,12 @@ class EbookController extends Controller
             'publisher' => 'nullable|string|max:100',
             'copyrightyear' => 'nullable|integer',
             'location' => 'nullable|string|max:100',
+            'class' => 'nullable|string|max:255',
+            'subject' => 'nullable|string|max:255',
         ]);
 
+        // Handle file updates
         if ($request->hasFile('pdf')) {
-            // Delete old PDF if exists
             if ($ebook->pdf) {
                 Storage::disk('public')->delete($ebook->pdf);
             }
@@ -134,15 +141,14 @@ class EbookController extends Controller
         }
 
         if ($request->hasFile('coverage')) {
-            // Delete old coverage if exists
             if ($ebook->coverage) {
                 Storage::disk('public')->delete($ebook->coverage);
             }
             $ebook->coverage = $request->file('coverage')->store('coverage', 'public');
         }
 
-        // Update the other fields
-        $ebook->update([
+        // Fill all other fields
+        $ebook->fill([
             'title' => $request->title,
             'description' => $request->description,
             'author' => $request->author,
@@ -152,10 +158,15 @@ class EbookController extends Controller
             'publisher' => $request->publisher,
             'copyrightyear' => $request->copyrightyear,
             'location' => $request->location,
+            'class' => $request->class,
+            'subject' => $request->subject,
         ]);
+
+        $ebook->save();
 
         return redirect()->route('admin.ebook.list')->with('success', 'eBook updated successfully!');
     }
+
 
     public function destroy($id)
     {

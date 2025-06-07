@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('publisher', 100)->nullable();
             $table->integer('copyrightyear')->nullable();
             $table->string('location', 100)->nullable();
+            $table->string('class')->nullable();
+            $table->string('subject')->nullable();
             $table->timestamps();
         });
     }

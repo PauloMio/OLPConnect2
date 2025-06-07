@@ -131,6 +131,8 @@
                     @endforeach
                 </select><br>
 
+                <input type="text" name="class" placeholder="Class"><br>
+
             </div>
 
             <div class="right_side">
@@ -151,6 +153,8 @@
                         <option value="{{ $location->location }}">{{ $location->location }}</option>
                     @endforeach
                 </select><br>
+
+                <input type="text" name="subject" placeholder="Subject"><br>
 
                 <button type="submit">Upload eBook</button>
             </div>

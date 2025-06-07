@@ -116,6 +116,7 @@
 
         <div class="login-link">
             <p>Don't have an account? <a href="{{ route('account.showSignup') }}">Register here</a>.</p>
+            <p>Do you want login as guest?<a href="{{ route('guest.login') }}">Click here</a>.</p>
         </div>
 </div>
 

@@ -20,6 +20,8 @@ class Ebook extends Model
         'publisher',
         'copyrightyear',
         'location',
+        'class',
+        'subject',
     ];
 
     public function favoredBy()

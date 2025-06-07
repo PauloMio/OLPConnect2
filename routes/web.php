@@ -8,7 +8,9 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EbookCategoryController;
 use App\Http\Controllers\EbookLocationController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\GuestLogController;
 use App\Models\ProgramUser;
+
 
 //Route::get('/', function () {
 //    return view('welcome');
@@ -98,3 +100,12 @@ Route::middleware(['account.auth'])->group(function () {
     Route::post('user/ebooks/{id}/favorite', [EbookController::class, 'toggleFavorite'])->name('user.ebooks.favorite');
     Route::get('user/favorites', [EbookController::class, 'viewFavorites'])->name('user.favorites');
 });
+
+
+
+Route::get('/guest/login', [GuestLogController::class, 'showForm'])->name('guest.login');
+Route::post('/guest/login', [GuestLogController::class, 'store'])->name('guest.login.submit');
+Route::get('/guest/ebooks', [GuestLogController::class, 'viewEbooks'])->name('guest.ebooks');
+Route::get('/guest/ebooks/{id}', [GuestLogController::class, 'showEbook'])->name('guest.ebooks.show');
+
+
