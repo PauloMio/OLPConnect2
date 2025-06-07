@@ -9,6 +9,7 @@ use App\Http\Controllers\EbookCategoryController;
 use App\Http\Controllers\EbookLocationController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\GuestLogController;
+use App\Http\Controllers\ResearchController;
 use App\Models\ProgramUser;
 
 
@@ -70,9 +71,16 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/admin/program-user/store', [ProgramUserController::class, 'store'])->name('admin.program_user.store');
     Route::delete('/admin/program-user/{id}', [ProgramUserController::class, 'destroy'])->name('admin.program_user.destroy');   
 
+    // Announcement Routes
     Route::get('/admin/announcement',[AnnouncementController::class, 'index'])->name('announcements.index');
     Route::post('/admin/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
     Route::delete('/admin/announcements/{id}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
+
+    // ✅ Research CRUD Routes
+    Route::get('/admin/research', [ResearchController::class, 'index'])->name('admin.research.index');
+    Route::post('/admin/research', [ResearchController::class, 'store'])->name('admin.research.store');
+    Route::put('/admin/research/{research}', [ResearchController::class, 'update'])->name('admin.research.update');
+    Route::delete('/admin/research/{research}', [ResearchController::class, 'destroy'])->name('admin.research.destroy');
 });
 
 

@@ -34,6 +34,13 @@
                 <span class="label">User Accounts</span>
             </a>
         </li>
+            <a href="{{ route('admin.research.index') }}">
+                <img src="{{ asset('storage/icons/research.png') }}" class="icon" alt="">
+                <span class="label">Research</span>
+            </a>
+        <li>
+
+        </li>
 
         <li class="dropdown">
         <a href="javascript:void(0);" class="dropdown-toggle">
@@ -47,6 +54,7 @@
                 <li><a href="{{ route('announcements.index') }}">Announcement</a></li>
             </ul>
         </li>
+
     </ul>
 </div>
 

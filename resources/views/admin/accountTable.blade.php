@@ -4,7 +4,9 @@
 {{-- Sidebar --}}
 @include('tab.AdminSidebar')
 
-<div style="margin-left: 80px;" id="main-content" class="container mt-4">
+<div style="margin-left: 80px;" id="main-content">
+        @yield('content')
+        <div class="container mt-4">
     <h2>User Account</h2>
 
     @if(session('success'))
@@ -152,6 +154,9 @@
         </form>
     </div>
 </div>
+
+    </div>
+
 
 <script>
     // Adjust margin based on sidebar open/closed

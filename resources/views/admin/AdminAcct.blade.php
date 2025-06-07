@@ -127,9 +127,8 @@
 
     <div style="margin-left: 80px;" id="main-content">
         @yield('content')
-    </div>
 
-    {{-- Main Content --}}
+        {{-- Main Content --}}
     <div class="main-content">
         <h2>Admin Accounts</h2>
 
@@ -179,6 +178,7 @@
             @endif
 
         </div>
+    </div>
     </div>
 
     <script>
