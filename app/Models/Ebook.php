@@ -12,8 +12,6 @@ class Ebook extends Model
         'title',
         'description',
         'author',
-        'coverage',
-        'pdf',
         'status',
         'category',
         'edition',
@@ -22,6 +20,9 @@ class Ebook extends Model
         'location',
         'class',
         'subject',
+        'doi',
+        'pdf',
+        'coverage',
     ];
 
     public function favoredBy()

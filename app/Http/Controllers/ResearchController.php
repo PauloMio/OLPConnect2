@@ -37,7 +37,8 @@ class ResearchController extends Controller
     public function store(Request $request)
     {
         Research::create($request->all());
-        return redirect()->back()->with('success', 'Research added.');
+       return redirect()->back()->with('success', 'Research added.');
+
     }
 
     public function update(Request $request, Research $research)

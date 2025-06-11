@@ -44,6 +44,7 @@
                 <th>Category</th>
                 <th>Department</th>
                 <th>Actions</th>
+                <th>Accession No</th>
             </tr>
         </thead>
         <tbody>
@@ -54,6 +55,7 @@
                 <td>{{ $research->year }}</td>
                 <td>{{ $research->category }}</td>
                 <td>{{ $research->Department }}</td>
+                <td>{{ $research->accession_no }}</td>
                 <td>
                     <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ $research->id }}">Edit</button>
                     <form method="POST" action="{{ route('admin.research.destroy', $research->id) }}" class="d-inline" onsubmit="return confirm('Delete this research?');">
@@ -96,7 +98,7 @@
 <!-- Add Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form method="POST" action="{{ route('admin.research.store') }}">
+    <form method="POST" action="{{ route('admin.research.store') }}" id="addResearchForm">
         @csrf
         <div class="modal-content">
           <div class="modal-header">
@@ -104,7 +106,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
-            @include('admin.research.research_form')
+           @include('admin.research.research_form', ['research' => null])
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-success">Add</button>
@@ -113,19 +115,28 @@
     </form>
   </div>
 </div>
+
     </div>
 
-    <script>
-        // Adjust margin based on sidebar open/closed
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
+   <script>
+    // Adjust margin based on sidebar open/closed
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
 
-        const resizeObserver = new ResizeObserver(() => {
-            const width = sidebar.offsetWidth;
-            mainContent.style.marginLeft = width + 'px';
-        });
+    const resizeObserver = new ResizeObserver(() => {
+        const width = sidebar.offsetWidth;
+        mainContent.style.marginLeft = width + 'px';
+    });
 
-        resizeObserver.observe(sidebar);
-    </script>
+    resizeObserver.observe(sidebar);
+
+    // Clear Add Research form when modal opens
+    const addModal = document.getElementById('addModal');
+    addModal.addEventListener('show.bs.modal', function () {
+        const form = document.getElementById('addResearchForm');
+        form.reset();
+    });
+</script>
+
 
 @endsection

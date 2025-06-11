@@ -10,13 +10,19 @@ class EbookCategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-            'Filipiniana',
+            'Generalities',
+            'Philosophy & Psychology',
+            'Relogion',
+            'Social Sciences',
+            'Language',
+            'Natural Sciences',
+            'Applied Sciences',
+            'Arts',
+            'Literature & Rhetorics',
+            'History & Geography',
+            'Senior Highschool Books',
             'Fiction',
-            'General Reference',
-            'Encyclopedia',
-            'Senior High School',
-            'Undergraduate',
-            'Graduate School'
+            'Graduate',
         ];
 
         foreach ($categories as $category) {

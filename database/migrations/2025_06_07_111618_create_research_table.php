@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('year')->nullable();
             $table->string('category')->nullable();
             $table->string('Department')->nullable();
+            $table->string('accession_no')->nullable();
             $table->timestamps();
         });
     }

@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('location', 100)->nullable();
             $table->string('class')->nullable();
             $table->string('subject')->nullable();
+            $table->string('doi')->nullable();
+
             $table->timestamps();
         });
     }

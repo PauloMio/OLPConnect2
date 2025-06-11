@@ -12,11 +12,6 @@ use App\Http\Controllers\GuestLogController;
 use App\Http\Controllers\ResearchController;
 use App\Models\ProgramUser;
 
-
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
 // Admin Routes
 Route::middleware(['admin.guest'])->group(function () {
     Route::get('/login', [UserController::class, 'showLogin'])->name('login');

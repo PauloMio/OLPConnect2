@@ -1,21 +1,28 @@
 @php
     $isEdit = isset($research);
+    $clearForm = session('success') && !$isEdit;
 @endphp
 
 <div class="mb-3">
     <label class="form-label">Title</label>
-    <input type="text" name="title" class="form-control" value="{{ $isEdit ? $research->title : old('title') }}" required>
+    <input type="text" name="title" class="form-control" value="{{ $isEdit ? $research->title : ($clearForm ? '' : old('title')) }}" required>
 </div>
 
 <div class="mb-3">
     <label class="form-label">Author</label>
-    <input type="text" name="author" class="form-control" value="{{ $isEdit ? $research->author : old('author') }}">
+    <input type="text" name="author" class="form-control" value="{{ $isEdit ? $research->author : ($clearForm ? '' : old('author')) }}">
 </div>
 
 <div class="mb-3">
     <label class="form-label">Year</label>
-    <input type="text" name="year" class="form-control" value="{{ $isEdit ? $research->year : old('year') }}">
+    <input type="text" name="year" class="form-control" value="{{ $isEdit ? $research->year : ($clearForm ? '' : old('year')) }}">
 </div>
+
+<div class="mb-3">
+    <label class="form-label">Accession No</label>
+    <input type="text" name="accession_no" class="form-control" value="{{ $isEdit ? $research->accession_no : ($clearForm ? '' : old('accession_no')) }}">
+</div>
+
 
 <div class="mb-3">
     <label class="form-label">Category</label>

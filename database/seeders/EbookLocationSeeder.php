@@ -10,13 +10,11 @@ class EbookLocationSeeder extends Seeder
     public function run()
     {
         $locations = [
-            'Filipiniana',
             'Fiction',
             'General Reference',
-            'Encyclopedia',
-            'Senior High School',
-            'Undergraduate',
-            'Graduate School'
+            'Thesis',
+            'Filipiniana',
+            'Foreign',
         ];
 
         foreach ($locations as $location) {

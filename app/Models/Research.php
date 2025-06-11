@@ -14,5 +14,6 @@ class Research extends Model
         'year',
         'category',
         'Department',
+        'accession_no',
     ];
 }

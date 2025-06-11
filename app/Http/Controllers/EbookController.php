@@ -18,10 +18,7 @@ class EbookController extends Controller
 {
     public function create()
     {
-        $categories = EbookCategory::all();
-        $locations = EbookLocation::all();
-
-        return view('admin.create', compact('categories', 'locations'));
+        return view('admin.eBookTable');
     }
 
     public function store(Request $request)
@@ -42,6 +39,7 @@ class EbookController extends Controller
             'location' => 'nullable|string|max:100',
             'class' => 'nullable|string|max:255',
             'subject' => 'nullable|string|max:255',
+            'doi' => 'nullable|string|max:255',
         ]);
 
         $pdfPath = null;
@@ -69,6 +67,7 @@ class EbookController extends Controller
             'location' => $request->location,
             'class' => $request->class,
             'subject' => $request->subject,
+            'doi' => $request->doi,
         ]);
 
 
@@ -77,6 +76,9 @@ class EbookController extends Controller
 
     public function index(Request $request)
     {
+        $categories = EbookCategory::all();
+        $locations = EbookLocation::all();
+
         $query = Ebook::query();
 
         if ($request->filled('search')) {
@@ -93,14 +95,14 @@ class EbookController extends Controller
         }
 
         // Sorting
-        $sortField = $request->input('sortField', 'created_at');
         $sortOrder = $request->input('sortOrder', 'desc');
-        $query->orderBy($sortField, $sortOrder);
+        $query->orderBy('created_at', $sortOrder);
+
 
         $ebooks = $query->get();
         $user = Auth::user();
 
-        return view('admin.eBookTable', compact('ebooks', 'user'));
+        return view('admin.eBookTable', compact('ebooks', 'user', 'categories', 'locations'));
     }
 
 
@@ -110,7 +112,10 @@ class EbookController extends Controller
     public function edit($id)
     {
         $ebook = Ebook::findOrFail($id);
-        return view('admin.edit', compact('ebook'));
+        $categories = EbookCategory::all();
+        $locations = EbookLocation::all();
+
+        return view('admin.edit', compact('ebook', 'categories', 'locations'));
     }
 
     public function update(Request $request, $id)
@@ -124,13 +129,15 @@ class EbookController extends Controller
             'coverage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'pdf' => 'nullable|file|mimes:pdf|max:51200',
             'status' => 'nullable|in:active,inactive',
-            'category' => 'nullable|in:Filipiniana,Fiction,General Reference,Encyclopedia,Senior High School,Undergraduate,Graduate School',
+            'category' => 'nullable|string|max:100',
             'edition' => 'nullable|string|max:50',
             'publisher' => 'nullable|string|max:100',
             'copyrightyear' => 'nullable|integer',
             'location' => 'nullable|string|max:100',
             'class' => 'nullable|string|max:255',
             'subject' => 'nullable|string|max:255',
+            'doi' => 'nullable|string|max:255',
+
         ]);
 
         // Handle file updates
@@ -161,6 +168,7 @@ class EbookController extends Controller
             'location' => $request->location,
             'class' => $request->class,
             'subject' => $request->subject,
+            'doi' => $request->doi,
         ]);
 
         $ebook->save();
@@ -175,11 +183,11 @@ class EbookController extends Controller
 
         // Delete associated files from the storage
         if ($ebook->pdf) {
-            Storage::delete('public/' . $ebook->pdf);
+            Storage::disk('public')->delete($ebook->pdf);
         }
 
         if ($ebook->coverage) {
-            Storage::delete('public/' . $ebook->coverage);
+            Storage::disk('public')->delete($ebook->coverage);
         }
 
         // Delete the ebook record
