@@ -43,8 +43,9 @@
                 <th>Year</th>
                 <th>Category</th>
                 <th>Department</th>
-                <th>Actions</th>
                 <th>Accession No</th>
+                <th>Actions</th>
+                
             </tr>
         </thead>
         <tbody>
