@@ -68,6 +68,8 @@
 
     <h1>Available eBooks for Guests</h1>
 
+    <a href="{{ route('guest.research') }}">Rsearch List</a>
+
     <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
         @foreach($ebooks as $ebook)
             <div class="ebook-card">

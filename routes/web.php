@@ -102,6 +102,7 @@ Route::middleware(['account.auth'])->group(function () {
 Route::middleware(['account.auth'])->group(function () {
     Route::post('user/ebooks/{id}/favorite', [EbookController::class, 'toggleFavorite'])->name('user.ebooks.favorite');
     Route::get('user/favorites', [EbookController::class, 'viewFavorites'])->name('user.favorites');
+    Route::get('user/research', [ResearchController::class, 'userView'])->name('user.research');
 });
 
 
@@ -110,5 +111,7 @@ Route::get('/guest/login', [GuestLogController::class, 'showForm'])->name('guest
 Route::post('/guest/login', [GuestLogController::class, 'store'])->name('guest.login.submit');
 Route::get('/guest/ebooks', [GuestLogController::class, 'viewEbooks'])->name('guest.ebooks');
 Route::get('/guest/ebooks/{id}', [GuestLogController::class, 'showEbook'])->name('guest.ebooks.show');
+Route::get('/guest/research', [ResearchController::class, 'guestView'])->name('guest.research');
+
 
 

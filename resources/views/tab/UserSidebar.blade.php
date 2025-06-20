@@ -26,9 +26,9 @@
             </a>
         </li>
         <li>
-            <a>
-                <img src="{{ asset('storage/icons/login.png') }}" class="icon" alt="">
-                <span class="label">User Edit</span>
+            <a href="{{ route('user.research') }}">
+                <img src="{{ asset('storage/icons/research.png') }}" class="icon" alt="">
+                <span class="label">Research</span>
             </a>
         </li>
     </ul>

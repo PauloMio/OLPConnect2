@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Research;
+use App\Models\Account;
 
 class ResearchController extends Controller
 {
@@ -52,4 +53,56 @@ class ResearchController extends Controller
         $research->delete();
         return redirect()->back()->with('success', 'Research deleted.');
     }
+
+    public function userView(Request $request)
+    {
+        $query = Research::query();
+
+        // Filter by category
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Search by title or author
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                ->orWhere('author', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $researches = $query->latest()->paginate(10);
+
+        return view('user.research_table', [
+            'researches' => $researches,
+            'selectedCategory' => $request->category,
+            'searchTerm' => $request->search,
+        ]);
+    }
+
+    public function guestView(Request $request)
+    {
+        $query = Research::query();
+
+        // Filter
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // Search
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                ->orWhere('author', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $researches = $query->latest()->paginate(10);
+
+        return view('guest.research_table', [
+            'researches' => $researches,
+        ]);
+    }
+
+
 }
