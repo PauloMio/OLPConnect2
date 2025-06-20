@@ -10,6 +10,7 @@ use App\Http\Controllers\EbookLocationController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\GuestLogController;
 use App\Http\Controllers\ResearchController;
+use App\Http\Controllers\DepartmentController;
 use App\Models\ProgramUser;
 
 // Admin Routes
@@ -76,6 +77,12 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/admin/research', [ResearchController::class, 'store'])->name('admin.research.store');
     Route::put('/admin/research/{research}', [ResearchController::class, 'update'])->name('admin.research.update');
     Route::delete('/admin/research/{research}', [ResearchController::class, 'destroy'])->name('admin.research.destroy');
+
+    // Department Routes
+    Route::get('/admin/department', [DepartmentController::class, 'index'])->name('admin.department.index');
+    Route::get('/admin/department/create', [DepartmentController::class, 'create'])->name('admin.department.create');
+    Route::post('/admin/department/store', [DepartmentController::class, 'store'])->name('admin.department.store');
+    Route::delete('admin/department/{id}', [DepartmentController::class, 'destroy'])->name('admin.department.destroy');
 });
 
 
