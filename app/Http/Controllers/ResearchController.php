@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Research;
+use App\Models\Department;
 use App\Models\Account;
 
 class ResearchController extends Controller
@@ -21,25 +22,45 @@ class ResearchController extends Controller
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
-                  ->orWhere('author', 'like', '%' . $request->search . '%');
+                ->orWhere('author', 'like', '%' . $request->search . '%');
             });
         }
 
         $researches = $query->latest()->paginate(10);
+        $departments = \App\Models\Department::all(); // ← Add this
 
         return view('admin.research.index', [
             'researches' => $researches,
+            'departments' => $departments, // ← Pass it to the view
             'selectedCategory' => $request->category,
             'searchTerm' => $request->search,
         ]);
     }
 
 
+    public function create()
+    {
+        $departments = Department::all(); // or orderBy('department')->get()
+
+        return view('admin.research.index', [ // or whatever view
+            'departments' => $departments,
+        ]);
+    }
+
     public function store(Request $request)
     {
         Research::create($request->all());
        return redirect()->back()->with('success', 'Research added.');
 
+    }
+
+    public function edit()
+    {
+        $departments = Department::all(); // or orderBy('department')->get()
+
+        return view('admin.research.index', [ // or whatever view
+            'departments' => $departments,
+        ]);
     }
 
     public function update(Request $request, Research $research)

@@ -44,5 +44,14 @@
 
 <div class="mb-3">
     <label class="form-label">Department</label>
-    <input type="text" name="Department" class="form-control" value="{{ $isEdit ? $research->Department : old('Department') }}">
+    <select name="Department" class="form-select" required>
+        <option value="">-- Select Department --</option>
+        @foreach($departments as $dept)
+            <option value="{{ $dept->department }}"
+                {{ ($isEdit && $research->Department == $dept->department) ? 'selected' : (old('Department') == $dept->department ? 'selected' : '') }}>
+                {{ $dept->department }}
+            </option>
+        @endforeach
+    </select>
 </div>
+
