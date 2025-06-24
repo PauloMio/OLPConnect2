@@ -54,7 +54,7 @@ class UserController extends Controller
             'status' => 'active',
         ]);
 
-        return redirect()->route('login')->with('success', 'Registration successful. Please log in.');
+        return redirect()->route('admin.accounts')->with('success', 'Registration successful. Please log in.');
     }
 
     // Show crud page
