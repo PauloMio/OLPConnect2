@@ -83,6 +83,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/admin/department/create', [DepartmentController::class, 'create'])->name('admin.department.create');
     Route::post('/admin/department/store', [DepartmentController::class, 'store'])->name('admin.department.store');
     Route::delete('admin/department/{id}', [DepartmentController::class, 'destroy'])->name('admin.department.destroy');
+
+    // Guest Log Routes
+    Route::get('/admin/guest/logs', [GuestLogController::class, 'viewGuestLogs'])->name('guest.logs');
+
 });
 
 

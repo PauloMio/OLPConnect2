@@ -40,4 +40,11 @@ class GuestLogController extends Controller
         $ebook = \App\Models\Ebook::findOrFail($id); // Adjust the model name if needed
         return view('guest.open_ebook', compact('ebook'));
     }
+
+    public function viewGuestLogs()
+    {
+        $guestLogs = \App\Models\GuestLog::latest()->get();
+        return view('admin.view_guestlogs', compact('guestLogs'));
+    }
+
 }

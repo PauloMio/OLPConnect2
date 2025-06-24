@@ -40,6 +40,12 @@
             </a>
         <li>
 
+        <li><a href="{{ route('guest.logs') }}">
+                <img src="{{ asset('storage/icons/log.png') }}" class="icon" alt="">
+                <span class="label">Guest Log</span>
+            </a>
+        </li>
+
         </li>
 
         <li class="dropdown">
