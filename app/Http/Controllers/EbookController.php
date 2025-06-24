@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use PDF;
 use App\Models\EbookCategory;
 use App\Models\EbookLocation;
+use App\Models\Research;
 use App\Models\GuestLog;
 
 
@@ -281,11 +282,13 @@ class EbookController extends Controller
         $ebookQuery = \App\Models\Ebook::query();
         $accountQuery = \App\Models\Account::query();
         $guestlogQuery = \App\Models\GuestLog::query();
+        $researchQuery = \App\Models\Research::query();
 
         if ($startDate && $endDate) {
             $ebookQuery->whereBetween('created_at', [$startDate, $endDate]);
             $accountQuery->whereBetween('created_at', [$startDate, $endDate]);
             $guestlogQuery->whereBetween('created_at', [$startDate, $endDate]);
+            $researchQuery->whereBetween('created_at', [$startDate, $endDate]); // ✅ Filter Research too
         }
 
         // Counts
@@ -293,26 +296,36 @@ class EbookController extends Controller
         $usersCount = $accountQuery->count();
         $guestsCount = $guestlogQuery->count();
 
-        // Category counts for pie chart
+        // Category counts (filtered)
         $categoryCounts = $ebookQuery->select('category')
             ->selectRaw('COUNT(*) as count')
             ->groupBy('category')
             ->orderBy('category')
             ->pluck('count', 'category')->toArray();
 
-        // Location counts for pie chart
-        $locationCounts = $ebookQuery->select('location')
+        // Location counts (unfiltered — all-time)
+        $locationCounts = \App\Models\Ebook::select('location')
             ->selectRaw('COUNT(*) as count')
             ->groupBy('location')
             ->orderBy('location')
             ->pluck('count', 'location')->toArray();
 
+        // Department counts (now filtered ✅)
+        $departmentCounts = $researchQuery->select('Department')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('Department')
+            ->orderBy('Department')
+            ->pluck('count', 'Department')
+            ->toArray();
+
         return view('admin.eBookOverview', compact(
             'startDate', 'endDate',
             'overallCount', 'usersCount', 'guestsCount',
-            'categoryCounts', 'locationCounts'
+            'categoryCounts', 'locationCounts',
+            'departmentCounts'
         ));
     }
+
 
 
 

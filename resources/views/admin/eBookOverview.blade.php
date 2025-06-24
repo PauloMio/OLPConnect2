@@ -106,6 +106,13 @@
                 <canvas id="locationChart" height="300"></canvas>
             </div>
         </div>
+
+        <div class="col-md-12 mt-5">
+            <div class="card p-4">
+                <h5 class="mb-3">Research Count by Department</h5>
+                <canvas id="departmentBarChart" height="100"></canvas>
+            </div>
+        </div>
     </div>
 </div>
     </div>
@@ -186,6 +193,49 @@
             }
         }
     });
+
+    const departmentData = @json($departmentCounts);
+
+        // Department Bar Chart
+    const departmentParsed = parseData(departmentData);
+
+    new Chart(document.getElementById('departmentBarChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: departmentParsed.labels,
+            datasets: [{
+                label: 'Number of Researches',
+                data: departmentParsed.counts,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Count'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Department'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
 
 
     // Adjust margin based on sidebar open/closed
