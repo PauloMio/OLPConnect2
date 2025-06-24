@@ -42,6 +42,7 @@
                 <th>Author</th>
                 <th>Year</th>
                 <th>Category</th>
+                <th>Program</th>
                 <th>Department</th>
                 <th>Accession No</th>
                 <th>Actions</th>
@@ -55,6 +56,7 @@
                 <td>{{ $research->author }}</td>
                 <td>{{ $research->year }}</td>
                 <td>{{ $research->category }}</td>
+                <td>{{ $research->program }}</td>
                 <td>{{ $research->Department }}</td>
                 <td>{{ $research->accession_no }}</td>
                 <td>

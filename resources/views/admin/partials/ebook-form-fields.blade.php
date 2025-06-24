@@ -64,9 +64,9 @@
 </style>
 
 <div class="form-grid">
-    <div class="form-group">
+    <div class="form-group-full">
         <label>Title</label>
-        <input type="text" name="title">
+        <textarea name="title" rows="3"></textarea>
     </div>
 
     <div class="form-group">

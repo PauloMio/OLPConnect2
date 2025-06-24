@@ -43,6 +43,11 @@
 </div>
 
 <div class="mb-3">
+    <label class="form-label">Program</label>
+    <input type="text" name="program" class="form-control" value="{{ $isEdit ? $research->program : ($clearForm ? '' : old('program')) }}" required>
+</div>
+
+<div class="mb-3">
     <label class="form-label">Department</label>
     <select name="Department" class="form-select" required>
         <option value="">-- Select Department --</option>

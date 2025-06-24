@@ -13,6 +13,7 @@ class Research extends Model
         'author',
         'year',
         'category',
+        'program',
         'Department',
         'accession_no',
     ];
