@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Research;
 use App\Models\Department;
-use App\Models\Account;
+use App\Models\ResearchCategory;
+use App\Models\ProgramUser;
 
 class ResearchController extends Controller
 {
@@ -13,7 +14,7 @@ class ResearchController extends Controller
     {
         $query = Research::query();
 
-        // Filter by category
+        // Filter by selected category
         if ($request->filled('category')) {
             $query->where('category', $request->category);
         }
@@ -22,44 +23,56 @@ class ResearchController extends Controller
         if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
-                ->orWhere('author', 'like', '%' . $request->search . '%');
+                  ->orWhere('author', 'like', '%' . $request->search . '%');
             });
         }
 
         $researches = $query->latest()->paginate(10);
-        $departments = \App\Models\Department::all(); // ← Add this
+        $departments = Department::all();
+        $categories = ResearchCategory::all();
+        $programs = ProgramUser::all();
 
         return view('admin.research.index', [
             'researches' => $researches,
-            'departments' => $departments, // ← Pass it to the view
+            'departments' => $departments,
+            'categories' => $categories,
+            'programs' => $programs,
             'selectedCategory' => $request->category,
             'searchTerm' => $request->search,
         ]);
     }
 
-
     public function create()
     {
-        $departments = Department::all(); // or orderBy('department')->get()
+        $departments = Department::all();
+        $categories = ResearchCategory::all();
+        $programs = ProgramUser::all();
 
-        return view('admin.research.index', [ // or whatever view
+        return view('admin.research.create', [
             'departments' => $departments,
+            'categories' => $categories,
+            'programs' => $programs,
         ]);
     }
 
     public function store(Request $request)
     {
         Research::create($request->all());
-       return redirect()->back()->with('success', 'Research added.');
-
+        return redirect()->back()->with('success', 'Research added.');
     }
 
-    public function edit()
+    public function edit($id)
     {
-        $departments = Department::all(); // or orderBy('department')->get()
+        $research = Research::findOrFail($id);
+        $departments = Department::all();
+        $categories = ResearchCategory::all();
+        $programs = ProgramUser::all();
 
-        return view('admin.research.index', [ // or whatever view
+        return view('admin.research.edit', [
+            'research' => $research,
             'departments' => $departments,
+            'categories' => $categories,
+            'programs' => $programs,
         ]);
     }
 
@@ -79,23 +92,23 @@ class ResearchController extends Controller
     {
         $query = Research::query();
 
-        // Filter by category
         if ($request->filled('category')) {
             $query->where('category', $request->category);
         }
 
-        // Search by title or author
         if ($request->filled('search')) {
-            $query->where(function($q) use ($request) {
+            $query->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
                 ->orWhere('author', 'like', '%' . $request->search . '%');
             });
         }
 
         $researches = $query->latest()->paginate(10);
+        $categories = ResearchCategory::all(); // ✅ Add this
 
         return view('user.research_table', [
             'researches' => $researches,
+            'categories' => $categories, // ✅ Pass it to the view
             'selectedCategory' => $request->category,
             'searchTerm' => $request->search,
         ]);
@@ -105,12 +118,10 @@ class ResearchController extends Controller
     {
         $query = Research::query();
 
-        // Filter
         if ($request->filled('category')) {
             $query->where('category', $request->category);
         }
 
-        // Search
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
@@ -119,11 +130,14 @@ class ResearchController extends Controller
         }
 
         $researches = $query->latest()->paginate(10);
+        $categories = ResearchCategory::all(); // ✅ Add this
 
         return view('guest.research_table', [
             'researches' => $researches,
+            'categories' => $categories, // ✅ Pass to the view
+            'selectedCategory' => $request->category,
+            'searchTerm' => $request->search,
         ]);
     }
-
 
 }

@@ -28,23 +28,27 @@
     <label class="form-label">Category</label>
     <select name="category" class="form-select" required>
         <option value="">-- Select Category --</option>
-        @foreach([
-            'Employee Research Output',
-            'Undergraduate Students’ Output',
-            'Master’s Research Output',
-            'Doctoral Dissertation Output',
-            'Externally Published Research'
-        ] as $cat)
-            <option value="{{ $cat }}" {{ ($isEdit && $research->category == $cat) ? 'selected' : '' }}>
-                {{ $cat }}
+        @foreach ($categories as $category)
+            <option value="{{ $category->category }}"
+                {{ ($isEdit && $research->category == $category->category) ? 'selected' : (old('category') == $category->category ? 'selected' : '') }}>
+                {{ $category->category }}
             </option>
         @endforeach
     </select>
 </div>
 
+
 <div class="mb-3">
     <label class="form-label">Program</label>
-    <input type="text" name="program" class="form-control" value="{{ $isEdit ? $research->program : ($clearForm ? '' : old('program')) }}" required>
+    <select name="program" class="form-select" required>
+        <option value="">-- Select Program --</option>
+        @foreach($programs as $prog)
+            <option value="{{ $prog->program }}"
+                {{ ($isEdit && $research->program == $prog->program) ? 'selected' : (old('program') == $prog->program ? 'selected' : '') }}>
+                {{ $prog->program }}
+            </option>
+        @endforeach
+    </select>
 </div>
 
 <div class="mb-3">

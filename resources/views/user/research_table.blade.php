@@ -20,12 +20,13 @@
             <div class="col-md-4">
                 <select name="category" onchange="this.form.submit()" class="form-select">
                     <option value="">All Categories</option>
-                    <option value="Employee Research Output" {{ request('category') == 'Employee Research Output' ? 'selected' : '' }}>Employee Research Output</option>
-                    <option value="Undergraduate Students’ Output" {{ request('category') == 'Undergraduate Students’ Output' ? 'selected' : '' }}>Undergraduate Students’ Output</option>
-                    <option value="Master’s Research Output" {{ request('category') == 'Master’s Research Output' ? 'selected' : '' }}>Master’s Research Output</option>
-                    <option value="Doctoral Dissertation Output" {{ request('category') == 'Doctoral Dissertation Output' ? 'selected' : '' }}>Doctoral Dissertation Output</option>
-                    <option value="Externally Published Research" {{ request('category') == 'Externally Published Research' ? 'selected' : '' }}>Externally Published Research</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->category }}" {{ request('category') == $category->category ? 'selected' : '' }}>
+                            {{ $category->category }}
+                        </option>
+                    @endforeach
                 </select>
+
             </div>
 
             <div class="col-md-5">
@@ -45,6 +46,7 @@
                     <th>Author</th>
                     <th>Year</th>
                     <th>Category</th>
+                    <th>Program</th>
                     <th>Department</th>
                     <th>Accession No</th>
                 </tr>
@@ -56,6 +58,7 @@
                     <td>{{ $research->author }}</td>
                     <td>{{ $research->year }}</td>
                     <td>{{ $research->category }}</td>
+                    <td>{{ $research->program }}</td>
                     <td>{{ $research->Department }}</td>
                     <td>{{ $research->accession_no }}</td>
                 </tr>

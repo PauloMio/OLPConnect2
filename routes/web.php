@@ -11,7 +11,9 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\GuestLogController;
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\ResearchCategoryController;
 use App\Models\ProgramUser;
+use App\Models\Research;
 
 // Admin Routes
 Route::middleware(['admin.guest'])->group(function () {
@@ -87,6 +89,11 @@ Route::middleware(['auth:web'])->group(function () {
     // Guest Log Routes
     Route::get('/admin/guest/logs', [GuestLogController::class, 'viewGuestLogs'])->name('guest.logs');
 
+    // Research Category User Routes
+    Route::get('/admin/research-category', action: [ResearchCategoryController::class, 'index'])->name('admin.research-category.index');
+    Route::get('/admin/research-category/create', [ResearchCategoryController::class, 'create'])->name('admin.research-category.create');
+    Route::post('/admin/research-category/store', [ResearchCategoryController::class, 'store'])->name('admin.research-category.store');
+    Route::delete('/admin/research-category/{id}', [ResearchCategoryController::class, 'destroy'])->name('admin.research-category.destroy');   
 });
 
 

@@ -59,6 +59,7 @@
                 <li><a href="{{ route('admin.program_user.index') }}">User Program</a></li>
                 <li><a href="{{ route('admin.department.index') }}">Department</a></li>
                 <li><a href="{{ route('announcements.index') }}">Announcement</a></li>
+                <li><a href="{{ route('admin.research-category.index') }}">Research Category</a></li>
                 
             </ul>
         </li>

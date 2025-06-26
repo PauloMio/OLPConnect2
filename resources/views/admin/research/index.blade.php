@@ -18,13 +18,15 @@
 
     <form method="GET" action="{{ route('admin.research.index') }}" class="flex gap-4 items-center mb-4">
         <select name="category" onchange="this.form.submit()" class="border rounded px-3 py-2">
-            <option value="">All Categories</option>
-            <option value="Employee Research Output" {{ request('category') == 'Employee Research Output' ? 'selected' : '' }}>Employee Research Output</option>
-            <option value="Undergraduate Students’ Output" {{ request('category') == 'Undergraduate Students’ Output' ? 'selected' : '' }}>Undergraduate Students’ Output</option>
-            <option value="Master’s Research Output" {{ request('category') == 'Master’s Research Output' ? 'selected' : '' }}>Master’s Research Output</option>
-            <option value="Doctoral Dissertation Output" {{ request('category') == 'Doctoral Dissertation Output' ? 'selected' : '' }}>Doctoral Dissertation Output</option>
-            <option value="Externally Published Research" {{ request('category') == 'Externally Published Research' ? 'selected' : '' }}>Externally Published Research</option>
-        </select>
+          <option value="">All Categories</option>
+          @foreach ($categories as $category)
+              <option value="{{ $category->category }}" {{ request('category') == $category->category ? 'selected' : '' }}>
+                  {{ $category->category }}
+              </option>
+          @endforeach
+      </select>
+
+
 
         <input type="text" name="search" value="{{ request('search') }}" placeholder="Search title or author" class="border rounded px-3 py-2" />
         
