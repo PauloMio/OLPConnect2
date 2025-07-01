@@ -1,4 +1,5 @@
-<div id="sidebar" class="sidebar collapsed">
+<!-- Sidebar Component -->
+<div id="sidebar" class="sidebar">
     <button id="toggleSidebar" class="toggle-btn" aria-label="Toggle Sidebar">☰</button>
 
     <div class="profile">
@@ -10,82 +11,72 @@
     </div>
 
     <ul class="menu">
-        <li>
-            <a href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset('storage/icons/dashboard.png') }}" class="icon" alt="">
-                <span class="label">Dashboard</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('admin.ebook.list') }}">
-                <img src="{{ asset('storage/icons/Books.png') }}" class="icon" alt="">
-                <span class="label">eBook Setup</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('admin.accounts') }}">
-                <img src="{{ asset('storage/icons/admin_setup.png') }}" class="icon" alt="">
-                <span class="label">Admin Accounts</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('admin.useraccounts.index') }}">
-                <img src="{{ asset('storage/icons/user_setup.png') }}" class="icon" alt="">
-                <span class="label">User Accounts</span>
-            </a>
-        </li>
-            <a href="{{ route('admin.research.index') }}">
-                <img src="{{ asset('storage/icons/research.png') }}" class="icon" alt="">
-                <span class="label">Research</span>
-            </a>
-        <li>
+        <li><a href="{{ route('admin.dashboard') }}">
+            <img src="{{ asset('storage/icons/dashboard.png') }}" class="icon" alt="">
+            <span class="label">Dashboard</span>
+        </a></li>
+
+        <li><a href="{{ route('admin.ebook.list') }}">
+            <img src="{{ asset('storage/icons/Books.png') }}" class="icon" alt="">
+            <span class="label">eBook Setup</span>
+        </a></li>
+
+        <li><a href="{{ route('admin.accounts') }}">
+            <img src="{{ asset('storage/icons/admin_setup.png') }}" class="icon" alt="">
+            <span class="label">Admin Accounts</span>
+        </a></li>
+
+        <li><a href="{{ route('admin.useraccounts.index') }}">
+            <img src="{{ asset('storage/icons/user_setup.png') }}" class="icon" alt="">
+            <span class="label">User Accounts</span>
+        </a></li>
+
+        <li><a href="{{ route('admin.research.index') }}">
+            <img src="{{ asset('storage/icons/research.png') }}" class="icon" alt="">
+            <span class="label">Research</span>
+        </a></li>
 
         <li><a href="{{ route('guest.logs') }}">
-                <img src="{{ asset('storage/icons/log.png') }}" class="icon" alt="">
-                <span class="label">Guest Log</span>
-            </a>
-        </li>
+            <img src="{{ asset('storage/icons/log.png') }}" class="icon" alt="">
+            <span class="label">Guest Log</span>
+        </a></li>
 
-        </li>
-
+        <!-- Dropdown -->
         <li class="dropdown">
-        <a href="javascript:void(0);" class="dropdown-toggle">
-            <img src="{{ asset('storage/icons/Setup.png') }}" class="icon" alt="">
-            <span class="label">Setup</span>
-        </a>
-        <ul class="submenu">
+            <a href="javascript:void(0);" class="dropdown-toggle">
+                <img src="{{ asset('storage/icons/Setup.png') }}" class="icon" alt="">
+                <span class="label">Setup</span>
+            </a>
+            <ul class="submenu">
                 <li><a href="{{ route('admin.ebook_categories.index') }}">eBook Category</a></li>
                 <li><a href="{{ route('admin.ebook_locations.index') }}">eBook Location</a></li>
                 <li><a href="{{ route('admin.program_user.index') }}">User Program</a></li>
                 <li><a href="{{ route('admin.department.index') }}">Department</a></li>
                 <li><a href="{{ route('announcements.index') }}">Announcement</a></li>
                 <li><a href="{{ route('admin.research-category.index') }}">Research Category</a></li>
-                
             </ul>
         </li>
-
     </ul>
 </div>
 
 <style>
-/* Sidebar Core */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    width: 220px;
+    width: 240px;
     background-color: #2c3e50;
+    color: white;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease;
+    transition: width 0.3s ease;
     z-index: 1000;
-    overflow: hidden;
     overflow-y: auto;
 }
 
 .sidebar.collapsed {
-    width: 80px;
+    width: 70px;
 }
 
 /* Toggle Button */
@@ -93,17 +84,16 @@
     background: none;
     border: none;
     color: white;
-    font-size: 28px;
-    cursor: pointer;
+    font-size: 26px;
     padding: 1rem;
+    cursor: pointer;
     text-align: left;
 }
 
-/* Profile Section */
+/* Profile */
 .profile {
     padding: 1rem;
-    color: white;
-    border-bottom: none;
+    border-bottom: 1px solid #34495e;
 }
 
 .sidebar.collapsed .profile {
@@ -112,32 +102,28 @@
 
 /* Logout Button */
 .logout-btn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
     width: 100%;
-    transition: background 0.2s;
+    background-color: #dc3545;
+    border: none;
+    padding: 8px 0;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
 }
 
 .logout-btn:hover {
     background-color: #b02a37;
 }
 
-/* Menu */
+/* Menu Items */
 .menu {
     list-style: none;
     padding: 0;
     margin: 0;
-    overflow-y: auto; /* Optional but useful for large menus */
-    flex-grow: 1;
 }
 
 .menu li {
-    margin: 0.5rem 0;
+    margin: 0;
 }
 
 .menu a {
@@ -153,20 +139,17 @@
     background-color: #34495e;
 }
 
-/* Icons */
 .icon {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     filter: brightness(0) invert(1);
     flex-shrink: 0;
 }
 
-/* Labels */
 .label {
     margin-left: 1rem;
     white-space: nowrap;
     transition: opacity 0.2s ease, margin 0.2s ease;
-    opacity: 1;
 }
 
 .sidebar.collapsed .label {
@@ -174,19 +157,12 @@
     margin-left: -9999px;
 }
 
-/* Dropdown Styles */
+/* Dropdown */
 .dropdown .submenu {
     display: none;
     flex-direction: column;
-    padding-left: 2.5rem;
     background-color: #34495e;
-    transition: all 0.3s ease;
-}
-
-.dropdown .submenu li a {
-    padding: 0.5rem 1rem;
-    color: #ecf0f1;
-    font-size: 14px;
+    padding-left: 2rem;
 }
 
 .dropdown.open .submenu {
@@ -197,17 +173,11 @@
     content: '▼';
     margin-left: auto;
     font-size: 12px;
-    color: white;
 }
 
 .sidebar.collapsed .dropdown .submenu {
     display: none !important;
 }
-
-.sidebar.collapsed .dropdown.open .submenu {
-    display: none !important;
-}
-
 </style>
 
 <script>
@@ -219,21 +189,16 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleBtn.addEventListener('click', () => {
         sidebar.classList.toggle('collapsed');
 
-        // When collapsed, close all open dropdowns
         if (sidebar.classList.contains('collapsed')) {
-            document.querySelectorAll('.dropdown.open').forEach(dropdown => {
-                dropdown.classList.remove('open');
-            });
+            document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
         }
     });
 
     dropdownToggles.forEach(toggle => {
-        toggle.addEventListener('click', (e) => {
-            const dropdown = toggle.closest('.dropdown');
-
-            // Prevent toggle if sidebar is collapsed
+        toggle.addEventListener('click', () => {
+            const parent = toggle.closest('.dropdown');
             if (!sidebar.classList.contains('collapsed')) {
-                dropdown.classList.toggle('open');
+                parent.classList.toggle('open');
             }
         });
     });

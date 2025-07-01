@@ -7,6 +7,7 @@ use App\Models\Research;
 use App\Models\Department;
 use App\Models\ResearchCategory;
 use App\Models\ProgramUser;
+use App\Models\Account;
 
 class ResearchController extends Controller
 {
@@ -104,15 +105,23 @@ class ResearchController extends Controller
         }
 
         $researches = $query->latest()->paginate(10);
-        $categories = ResearchCategory::all(); // ✅ Add this
+        $categories = ResearchCategory::all();
+
+        // ✅ Load account (Assuming you're using session to store the user ID)
+        $account = null;
+        if (session()->has('account_id')) {
+            $account = Account::find(session('account_id'));
+        }
 
         return view('user.research_table', [
             'researches' => $researches,
-            'categories' => $categories, // ✅ Pass it to the view
+            'categories' => $categories,
             'selectedCategory' => $request->category,
             'searchTerm' => $request->search,
+            'account' => $account, // ✅ Pass the account to the view
         ]);
     }
+
 
     public function guestView(Request $request)
     {

@@ -1,10 +1,10 @@
-<div id="sidebar" class="sidebar collapsed">
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
     <button id="toggleSidebar" class="toggle-btn" aria-label="Toggle Sidebar">☰</button>
 
     @if(isset($account))
         <div class="profile">
             <p><strong>Account:</strong> {{ $account->firstname }} {{ $account->lastname }}</p>
-
             <form method="POST" action="{{ route('account.logout') }}" style="margin-top: 10px;">
                 @csrf
                 <button type="submit" class="logout-btn">Logout</button>
@@ -15,58 +15,59 @@
     <ul class="menu">
         <li>
             <a href="{{ route('user.ebooks') }}">
-                <img src="{{ asset('storage/icons/Books.png') }}" class="icon" alt="">
+                <img src="{{ asset('storage/icons/Books.png') }}" class="icon" alt="eBooks">
                 <span class="label">eBooks</span>
             </a>
         </li>
         <li>
             <a href="{{ route('user.favorites') }}">
-                <img src="{{ asset('storage/icons/favorite.png') }}" class="icon" alt="">
+                <img src="{{ asset('storage/icons/favorite.png') }}" class="icon" alt="Favorites">
                 <span class="label">Favorites</span>
             </a>
         </li>
         <li>
             <a href="{{ route('user.research') }}">
-                <img src="{{ asset('storage/icons/research.png') }}" class="icon" alt="">
+                <img src="{{ asset('storage/icons/research.png') }}" class="icon" alt="Research">
                 <span class="label">Research</span>
             </a>
         </li>
     </ul>
 </div>
 
+<!-- Style -->
 <style>
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    width: 220px;
+    width: 240px;
     background-color: #2c3e50;
+    color: white;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease;
+    transition: width 0.3s ease;
     z-index: 1000;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .sidebar.collapsed {
-    width: 80px;
+    width: 70px;
 }
 
 .toggle-btn {
     background: none;
     border: none;
     color: white;
-    font-size: 28px;
-    cursor: pointer;
+    font-size: 26px;
     padding: 1rem;
+    cursor: pointer;
     text-align: left;
 }
 
 .profile {
     padding: 1rem;
-    color: white;
-    border-bottom: none;
+    border-bottom: 1px solid #34495e;
 }
 
 .sidebar.collapsed .profile {
@@ -74,15 +75,14 @@
 }
 
 .logout-btn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
     width: 100%;
-    transition: background 0.2s;
+    background-color: #dc3545;
+    border: none;
+    padding: 8px 0;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .logout-btn:hover {
@@ -97,7 +97,7 @@
 }
 
 .menu li {
-    margin: 0.5rem 0;
+    margin: 0;
 }
 
 .menu a {
@@ -114,8 +114,8 @@
 }
 
 .icon {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     filter: brightness(0) invert(1);
     flex-shrink: 0;
 }
@@ -133,6 +133,7 @@
 }
 </style>
 
+<!-- Script -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
@@ -145,11 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateMainContentMargin() {
         const mainContent = document.getElementById('main-content');
-        const sidebarWidth = document.getElementById('sidebar').offsetWidth;
+        const sidebarWidth = sidebar.offsetWidth;
         if (mainContent) {
             mainContent.style.marginLeft = sidebarWidth + 'px';
         }
     }
 
+    // Set initial main content margin
+    updateMainContentMargin();
 });
 </script>

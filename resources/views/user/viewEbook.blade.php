@@ -38,11 +38,14 @@
             padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             margin: 10px;
-            width: 20%; /* Adjusted to fit 4 per row with some spacing */
-            display: inline-block;
-            vertical-align: top;
+            width: 20%; /* REMOVE THIS */
+            display: inline-block; /* REMOVE THIS */
+            vertical-align: top; /* REMOVE THIS */
             text-align: center;
+            flex: 1 1 250px; /* ADD THIS */
+            max-width: 300px;     /* ADD THIS (optional for layout control) */
         }
+
         .ebook-card h3 {
             margin-top: 10px;
         }
@@ -108,7 +111,7 @@
         <button type="submit">Search</button>
     </form>
 
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
         @foreach($ebooks as $ebook)
             <div class="ebook-card">
                 <form action="{{ route('user.ebooks.favorite', $ebook->id) }}" method="POST" class="favorite-toggle-form">
