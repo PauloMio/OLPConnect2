@@ -38,13 +38,13 @@
             padding: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             margin: 10px;
-            width: 20%; /* REMOVE THIS */
-            display: inline-block; /* REMOVE THIS */
-            vertical-align: top; /* REMOVE THIS */
+            flex: 1 1 calc(25% - 40px); /* 25% width minus margins */
+            max-width: calc(25% - 40px);
+            min-width: 200px; /* Ensure a decent min width for small screens */
+            box-sizing: border-box;
             text-align: center;
-            flex: 1 1 250px; /* ADD THIS */
-            max-width: 300px;     /* ADD THIS (optional for layout control) */
         }
+
 
         .ebook-card h3 {
             margin-top: 10px;
