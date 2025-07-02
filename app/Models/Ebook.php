@@ -12,7 +12,6 @@ class Ebook extends Model
         'title',
         'description',
         'author',
-        'status',
         'category',
         'edition',
         'publisher',

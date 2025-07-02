@@ -256,7 +256,6 @@
             form.querySelector('[name="class"]').value = ebook.class || '';
             form.querySelector('[name="subject"]').value = ebook.subject || '';
             form.querySelector('[name="doi"]').value = ebook.doi || '';
-            form.querySelector('[name="status"]').value = ebook.status || '';
 
             openModal('editModal');
         }

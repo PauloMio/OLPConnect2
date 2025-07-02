@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('author', 100)->nullable();
             $table->string('coverage', 255)->nullable();
             $table->string('pdf', 255)->nullable();
-            $table->enum('status', ['inactive', 'active'])->nullable();
             $table->string('category', 100)->nullable();
             $table->string('edition', 50)->nullable();
             $table->string('publisher', 100)->nullable();

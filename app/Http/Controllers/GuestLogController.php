@@ -29,11 +29,30 @@ class GuestLogController extends Controller
         return redirect()->route('guest.ebooks');
     }
 
-    public function viewEbooks()
+    public function viewEbooks(Request $request)
     {
-        $ebooks = \App\Models\Ebook::all(); // Adjust if you're using a different model name
+        $query = \App\Models\Ebook::query();
+
+        // Filter by search (title or author)
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%$search%")
+                ->orWhere('author', 'like', "%$search%");
+            });
+        }
+
+        // Filter by category
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        // You can also add pagination here if needed
+        $ebooks = $query->get();
+
         return view('guest.view_ebooks', compact('ebooks'));
     }
+
 
     public function showEbook($id)
     {

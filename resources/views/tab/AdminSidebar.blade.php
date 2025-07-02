@@ -78,6 +78,9 @@
 .sidebar.collapsed {
     width: 70px;
 }
+.sidebar.collapsed .dropdown {
+    display: none;
+}
 
 /* Toggle Button */
 .toggle-btn {

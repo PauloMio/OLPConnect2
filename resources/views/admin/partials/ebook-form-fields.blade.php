@@ -69,14 +69,14 @@
         <textarea name="title" rows="3"></textarea>
     </div>
 
-    <div class="form-group">
+    <div class="form-group-full">
         <label>Author</label>
-        <input type="text" name="author">
+        <textarea name="author" rows="3"></textarea>
     </div>
 
     <div class="form-group">
         <label>Category</label>
-        <select name="category">
+        <select name="category" required>
             <option value="">Select</option>
             @foreach($categories as $cat)
                 <option value="{{ $cat->category }}">{{ $cat->category }}</option>
@@ -101,7 +101,7 @@
 
     <div class="form-group">
         <label>Location</label>
-        <select name="location">
+        <select name="location" required>
             <option value="">Select</option>
             @foreach($locations as $loc)
                 <option value="{{ $loc->location }}">{{ $loc->location }}</option>
@@ -119,13 +119,6 @@
         <input type="text" name="subject">
     </div>
 
-    <div class="form-group">
-        <label>Status</label>
-        <select name="status">
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-        </select>
-    </div>
 
     <div class="form-group">
         <label>PDF File</label>
