@@ -97,7 +97,7 @@
     <h1>eBooks</h1>
 
     <form action="{{ route('user.ebooks') }}" method="GET" class="search-form">
-        <input type="text" name="search" placeholder="Search title..." value="{{ request('search') }}">
+        <input type="text" name="search" placeholder="Title or Author..." value="{{ request('search') }}">
         <select name="category">
             <option value="">All Categories</option>
             <option value="Filipiniana" {{ request('category') == 'Filipiniana' ? 'selected' : '' }}>Filipiniana</option>

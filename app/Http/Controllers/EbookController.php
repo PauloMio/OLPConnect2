@@ -318,11 +318,19 @@ class EbookController extends Controller
             ->pluck('count', 'Department')
             ->toArray();
 
+        $researchCategoryCounts = $researchQuery->select('category')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('category')
+            ->orderBy('category')
+            ->pluck('count', 'category')
+            ->toArray();
+
+
         return view('admin.eBookOverview', compact(
             'startDate', 'endDate',
             'overallCount', 'usersCount', 'guestsCount',
             'categoryCounts', 'locationCounts',
-            'departmentCounts'
+            'departmentCounts', 'researchCategoryCounts'
         ));
     }
 

@@ -8,7 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     {{-- Chart.js --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="{{ asset('js/chart.js') }}"></script>
+
 
     <style>
         body {
@@ -20,9 +21,18 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             margin-bottom: 25px;
+            overflow: visible;
+        }
+        .card canvas {
+            max-height: 400px; /* Optional limit */
+            width: 100%;
         }
         .card-body h5 {
             font-weight: 600;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
         }
         .stats-number {
             font-size: 2.5rem;
@@ -92,18 +102,32 @@
         </div>
     </div>
 
+    <div class="col-md-12 mt-4">
+        <div class="card p-4">
+            <h5 class="mb-3">Research Count per Category</h5>
+            <ul class="list-group">
+                @foreach($researchCategoryCounts as $category => $count)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ $category ?? 'Uncategorized' }}
+                        <span class="badge bg-info rounded-pill">{{ $count }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
     {{-- Pie Charts --}}
     <div class="row">
         <div class="col-md-6">
             <div class="card p-4">
                 <h5 class="mb-3">eBook Categories</h5>
-                <canvas id="categoryChart" height="300"></canvas>
+                <canvas id="categoryChart"></canvas>
             </div>
         </div>
         <div class="col-md-6">
             <div class="card p-4">
                 <h5 class="mb-3">eBook Locations</h5>
-                <canvas id="locationChart" height="300"></canvas>
+                <canvas id="locationChart"></canvas>
             </div>
         </div>
 
@@ -160,10 +184,14 @@
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'bottom',
+                    position: 'right',
+                    labels: {
+                        boxWidth: 20,
+                        padding: 15
+                    }
                 },
                 title: {
-                    display: false,
+                    display: false
                 }
             }
         }
@@ -185,10 +213,14 @@
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'bottom',
+                    position: 'right',
+                    labels: {
+                        boxWidth: 20,
+                        padding: 15
+                    }
                 },
                 title: {
-                    display: false,
+                    display: false
                 }
             }
         }
