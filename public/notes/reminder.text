@@ -1,0 +1,48 @@
+C:/xampp/apache/conf/httpd.conf{
+check "Listen 8001"
+}
+
+C:/xampp/apache/conf/extra/httpd-vhosts.conf{
+
+change the DocumentRoot and Directory
+
+this file path is the folder of your project change when needed:
+
+C:/xampp/htdocs/OLPConnect2/public
+
+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+<VirtualHost *:8001>
+            ServerAdmin webmaster@localhost
+            DocumentRoot "C:/xampp/htdocs/OLPConnect2/public"
+            ServerName olpconnect.test
+            <Directory "C:/xampp/htdocs/OLPConnect2/public">
+                Options Indexes FollowSymLinks
+                AllowOverride All
+                Require all granted
+            </Directory>
+        </VirtualHost>
+
+note: the ServerName is the same as the hosts.conf
+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
+}
+
+
+C:/windows/system32/drivers/etc/hosts.conf{
+
+    change:
+    127.0.0.1       localhost
+    to:
+    10.0.0.43       olpconnect.test
+
+note: do ipconfig to see the IPv4 Address
+note: the ServerName is the same as the hhttpd-vhosts.conf
+note: everychange you must restart the xampp "apache"
+}
+
+.env{
+    comment or replace the link with IPv4 Address
+    like:
+    # APP_URL=http://localhost
+    APP_URL=http://10.0.0.43
+}
