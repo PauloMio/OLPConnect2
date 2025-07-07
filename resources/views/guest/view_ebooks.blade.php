@@ -112,7 +112,7 @@
                 @if($ebook->coverage)
                     <img src="{{ asset('storage/' . $ebook->coverage) }}" alt="Cover Image" class="cover-image">
                 @else
-                    <img src="{{ asset('storage/icons/defaultcover.png') }}" alt="Default Cover" class="cover-image">
+                    <img src="{{ asset('icons/defaultcover.png') }}" alt="Default Cover" class="cover-image">
                 @endif
 
                 <h3>{{ $ebook->title }}</h3>

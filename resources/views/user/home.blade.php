@@ -142,18 +142,18 @@
             <h2>Meet Our Members</h2>
             <div class="members">
                 <div class="card">
-                    <img src="{{ asset('storage/members/Librarian.jpg') }}" alt="Member 1">
-                    <h3>Runo Misaki</h3>
+                    <img src="{{ asset('members/Librarian.jpg') }}" alt="Member 1">
+                    <h3>Evelyn O'Connell</h3>
                     <p>Librarian</p>
                 </div>
                 <div class="card">
-                    <img src="{{ asset('storage/members/Tech.jpg') }}" alt="Member 2">
+                    <img src="{{ asset('members/Tech.jpg') }}" alt="Member 2">
                     <h3>Paulo Mio Panopio</h3>
                     <p>Developer</p>
                 </div>
                 <div class="card">
-                    <img src="{{ asset('storage/members/Frodo.jpg') }}" alt="Member 3">
-                    <h3>Mike Johnson</h3>
+                    <img src="{{ asset('members/Frodo.jpg') }}" alt="Member 3">
+                    <h3>Frodo Baggins</h3>
                     <p>Project Manager</p>
                 </div>
             </div>

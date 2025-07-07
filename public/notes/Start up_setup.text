@@ -1,0 +1,45 @@
+1.)
+Command:
+    "composer install"
+
+2.) 
+command:
+    "php artisan key:generate"
+
+3.)
+command:
+    "php artisan storage:link"
+
+4.)
+command:
+    "cp .env.example .env"
+
+5.)
+change the database:
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=olpconnect2
+    DB_USERNAME=root
+    DB_PASSWORD=
+
+6.)
+command:
+    "php artisan migrate"
+    "php artisan seed"
+
+7.)
+Finding the middleware declaration file:
+    C:\xampp\htdocs\OLPConnect2\vendor\laravel\framework\src\Illuminate\Foundation\Http
+
+    open "Kernel.php" file
+
+
+Find the:
+    protected $routeMiddleware = [];
+
+    and put this in it's content:
+        'account.auth' => \App\Http\Middleware\AccountAuth::class, 
+        'account.guest' => \App\Http\Middleware\RedirectIfAccountAuthenticated::class,
+        'admin.guest' => \App\Http\Middleware\RedirectIfAuthenticatedAdmin::class,
+

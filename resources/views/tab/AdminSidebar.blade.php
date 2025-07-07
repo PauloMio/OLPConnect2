@@ -12,39 +12,39 @@
 
     <ul class="menu">
         <li><a href="{{ route('admin.dashboard') }}">
-            <img src="{{ asset('storage/icons/dashboard.png') }}" class="icon" alt="">
+            <img src="{{ asset('icons/dashboard.png') }}" class="icon" alt="">
             <span class="label">Dashboard</span>
         </a></li>
 
         <li><a href="{{ route('admin.ebook.list') }}">
-            <img src="{{ asset('storage/icons/Books.png') }}" class="icon" alt="">
+            <img src="{{ asset('icons/Books.png') }}" class="icon" alt="">
             <span class="label">eBook Setup</span>
         </a></li>
 
         <li><a href="{{ route('admin.accounts') }}">
-            <img src="{{ asset('storage/icons/admin_setup.png') }}" class="icon" alt="">
+            <img src="{{ asset('icons/admin_setup.png') }}" class="icon" alt="">
             <span class="label">Admin Accounts</span>
         </a></li>
 
         <li><a href="{{ route('admin.useraccounts.index') }}">
-            <img src="{{ asset('storage/icons/user_setup.png') }}" class="icon" alt="">
+            <img src="{{ asset('icons/user_setup.png') }}" class="icon" alt="">
             <span class="label">User Accounts</span>
         </a></li>
 
         <li><a href="{{ route('admin.research.index') }}">
-            <img src="{{ asset('storage/icons/research.png') }}" class="icon" alt="">
+            <img src="{{ asset('icons/research.png') }}" class="icon" alt="">
             <span class="label">Research</span>
         </a></li>
 
         <li><a href="{{ route('guest.logs') }}">
-            <img src="{{ asset('storage/icons/log.png') }}" class="icon" alt="">
+            <img src="{{ asset('icons/log.png') }}" class="icon" alt="">
             <span class="label">Guest Log</span>
         </a></li>
 
         <!-- Dropdown -->
         <li class="dropdown">
             <a href="javascript:void(0);" class="dropdown-toggle">
-                <img src="{{ asset('storage/icons/Setup.png') }}" class="icon" alt="">
+                <img src="{{ asset('icons/Setup.png') }}" class="icon" alt="">
                 <span class="label">Setup</span>
             </a>
             <ul class="submenu">
