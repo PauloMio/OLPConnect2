@@ -50,7 +50,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('/admin/useraccounts', [AccountController::class, 'store'])->name('admin.useraccounts.store');
     Route::put('/admin/useraccounts/{id}', [AccountController::class, 'update'])->name('admin.useraccounts.update');
     Route::delete('/admin/useraccounts/{id}', [AccountController::class, 'destroy'])->name('admin.useraccounts.delete');
-    
+
     // ✅ Ebook Categories Routes
     Route::get('/admin/ebook-categories', [EbookCategoryController::class, 'index'])->name('admin.ebook_categories.index');
     Route::get('/admin/ebook-categories/create', [EbookCategoryController::class, 'create'])->name('admin.ebook_categories.create');
@@ -67,10 +67,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/admin/program-user', action: [ProgramUserController::class, 'index'])->name('admin.program_user.index');
     Route::get('/admin/program-user/create', [ProgramUserController::class, 'create'])->name('admin.program_user.create');
     Route::post('/admin/program-user/store', [ProgramUserController::class, 'store'])->name('admin.program_user.store');
-    Route::delete('/admin/program-user/{id}', [ProgramUserController::class, 'destroy'])->name('admin.program_user.destroy');   
+    Route::delete('/admin/program-user/{id}', [ProgramUserController::class, 'destroy'])->name('admin.program_user.destroy');
 
     // Announcement Routes
-    Route::get('/admin/announcement',[AnnouncementController::class, 'index'])->name('announcements.index');
+    Route::get('/admin/announcement', [AnnouncementController::class, 'index'])->name('announcements.index');
     Route::post('/admin/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
     Route::delete('/admin/announcements/{id}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
 
@@ -93,7 +93,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/admin/research-category', action: [ResearchCategoryController::class, 'index'])->name('admin.research-category.index');
     Route::get('/admin/research-category/create', [ResearchCategoryController::class, 'create'])->name('admin.research-category.create');
     Route::post('/admin/research-category/store', [ResearchCategoryController::class, 'store'])->name('admin.research-category.store');
-    Route::delete('/admin/research-category/{id}', [ResearchCategoryController::class, 'destroy'])->name('admin.research-category.destroy');   
+    Route::delete('/admin/research-category/{id}', [ResearchCategoryController::class, 'destroy'])->name('admin.research-category.destroy');
 });
 
 
@@ -132,4 +132,7 @@ Route::get('/guest/ebooks/{id}', [GuestLogController::class, 'showEbook'])->name
 Route::get('/guest/research', [ResearchController::class, 'guestView'])->name('guest.research');
 
 
+Route::get('/phpinfo', function () {
+    phpinfo();
+});
 
