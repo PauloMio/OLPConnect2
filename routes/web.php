@@ -38,6 +38,8 @@ Route::middleware(['auth:web'])->group(function () {
 
     Route::delete('/admin/ebook/{id}/destroy', [EbookController::class, 'destroy'])->name('admin.ebook.destroy');
 
+    Route::post('/admin/ebooks/chunk-upload', [EbookController::class, 'handleChunkUpload']);
+
     Route::get('/admin/accounts', [UserController::class, 'indexAdmins'])->name('admin.accounts');
     Route::get('/admin/accounts/{id}/edit', [UserController::class, 'editAdmin'])->name('admin.accounts.edit');
     Route::put('/admin/accounts/{id}', [UserController::class, 'updateAdmin'])->name('admin.accounts.update');

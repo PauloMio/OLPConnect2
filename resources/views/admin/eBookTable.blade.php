@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>eBook Management</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         body {
             font-family: sans-serif;
@@ -208,10 +209,10 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('addModal')">&times;</span>
             <h3>Add New eBook</h3>
-            <form action="{{ route('ebook.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="ebookForm" action="{{ route('ebook.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @include('admin.partials.ebook-form-fields', ['categories' => $categories, 'locations' => $locations])
-                <button type="submit">Add eBook</button>
+                <button type="button" onclick="uploadInChunks()">Add eBook</button>
             </form>
         </div>
     </div>
@@ -267,9 +268,66 @@
     const resizeObserver = new ResizeObserver(() => {
         const width = sidebar.offsetWidth;
         mainContent.style.marginLeft = width + 'px';
+
+        
     });
 
     resizeObserver.observe(sidebar);
+
+
+    // upload
+    async function uploadInChunks() {
+        const fileInput = document.getElementById('pdf');
+        const hiddenFileNameInput = document.getElementById('pdf_chunked_filename');
+
+        if (!fileInput || !hiddenFileNameInput) {
+            alert('File input or hidden input is missing.');
+            return;
+        }
+
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('Please select a file.');
+            return;
+        }
+
+        const chunkSize = 2 * 1024 * 1024; // 2MB
+        const totalChunks = Math.ceil(file.size / chunkSize);
+        const fileName = file.name;
+
+        hiddenFileNameInput.value = fileName; // Fill hidden input
+
+        for (let i = 0; i < totalChunks; i++) {
+            const start = i * chunkSize;
+            const end = Math.min(file.size, start + chunkSize);
+            const chunk = file.slice(start, end);
+
+            const formData = new FormData();
+            formData.append('chunk', chunk);
+            formData.append('file_name', fileName);
+            formData.append('chunk_index', i);
+            formData.append('total_chunks', totalChunks);
+
+            try {
+                await fetch('/admin/ebooks/chunk-upload', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: formData
+                });
+            } catch (error) {
+                console.error('Chunk upload failed:', error);
+                alert('Failed to upload chunk ' + (i + 1));
+                return;
+            }
+        }
+
+        alert('File uploaded in chunks successfully.');
+
+        // Optionally: Now submit the rest of the form (metadata etc)
+        document.getElementById('ebookForm').submit();
+    }
     </script>
 </body>
 </html>

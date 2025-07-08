@@ -22,56 +22,73 @@ class EbookController extends Controller
         return view('admin.eBookTable');
     }
 
-    public function store(Request $request)
-    {
-        $validLocations = EbookLocation::pluck('location')->toArray();
-        
-        $request->validate([
-            'title' => 'nullable|string|max:200',
-            'description' => 'nullable|string',
-            'author' => 'nullable|string|max:100',
-            'coverage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048000',
-            'pdf' => 'nullable|file|mimes:pdf|max:2048000',
-            'category' => 'nullable|string|max:100',
-            'edition' => 'nullable|string|max:50',
-            'publisher' => 'nullable|string|max:100',
-            'copyrightyear' => 'nullable|integer',
-            'location' => 'nullable|string|max:100',
-            'class' => 'nullable|string|max:255',
-            'subject' => 'nullable|string|max:255',
-            'doi' => 'nullable|string|max:255',
-        ]);
+public function store(Request $request)
+{
+    $validLocations = EbookLocation::pluck('location')->toArray();
 
-        $pdfPath = null;
-        $coverPath = null;
+    $request->validate([
+        'title' => 'nullable|string|max:200',
+        'description' => 'nullable|string',
+        'author' => 'nullable|string|max:100',
+        'coverage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048000',
+        // No direct validation for 'pdf' if chunked
+        'pdf_chunked_filename' => 'nullable|string',
+        'category' => 'nullable|string|max:100',
+        'edition' => 'nullable|string|max:50',
+        'publisher' => 'nullable|string|max:100',
+        'copyrightyear' => 'nullable|integer',
+        'location' => 'nullable|string|max:100',
+        'class' => 'nullable|string|max:255',
+        'subject' => 'nullable|string|max:255',
+        'doi' => 'nullable|string|max:255',
+    ]);
 
-        if ($request->hasFile('pdf')) {
-            $pdfPath = $request->file('pdf')->store('ebooks', 'public');
+    $pdfPath = null;
+    $coverPath = null;
+
+    // ✅ 1. Handle PDF if uploaded via chunked upload
+    if ($request->filled('pdf_chunked_filename')) {
+        $filename = $request->input('pdf_chunked_filename');
+        $sourcePath = storage_path("app/public/ebooks/{$filename}"); // Final assembled path
+        $destinationPath = "ebooks/{$filename}";
+
+        if (file_exists($sourcePath)) {
+            // Store path as relative for DB
+            $pdfPath = $destinationPath;
         }
-
-        if ($request->hasFile('coverage')) {
-            $coverPath = $request->file('coverage')->store('coverage', 'public');
-        }
-
-        Ebook::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'author' => $request->author,
-            'coverage' => $coverPath,
-            'pdf' => $pdfPath,
-            'category' => $request->category,
-            'edition' => $request->edition,
-            'publisher' => $request->publisher,
-            'copyrightyear' => $request->copyrightyear,
-            'location' => $request->location,
-            'class' => $request->class,
-            'subject' => $request->subject,
-            'doi' => $request->doi,
-        ]);
-
-
-        return redirect()->route('admin.ebook.list')->with('success', 'eBook updated successfully!');
     }
+
+    // ✅ 2. Handle normal (non-chunked) upload as fallback
+    elseif ($request->hasFile('pdf')) {
+        $pdfPath = $request->file('pdf')->store('ebooks', 'public');
+    }
+
+    // ✅ 3. Handle coverage image
+    if ($request->hasFile('coverage')) {
+        $coverPath = $request->file('coverage')->store('coverage', 'public');
+    }
+
+    // ✅ 4. Save eBook
+    Ebook::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'author' => $request->author,
+        'coverage' => $coverPath,
+        'pdf' => $pdfPath,
+        'category' => $request->category,
+        'edition' => $request->edition,
+        'publisher' => $request->publisher,
+        'copyrightyear' => $request->copyrightyear,
+        'location' => $request->location,
+        'class' => $request->class,
+        'subject' => $request->subject,
+        'doi' => $request->doi,
+    ]);
+
+    return redirect()->route('admin.ebook.list')->with('success', 'eBook uploaded successfully!');
+}
+
+
 
     public function index(Request $request)
     {
@@ -192,6 +209,41 @@ class EbookController extends Controller
 
         return redirect()->route('admin.ebook.list')->with('success', 'eBook deleted successfully!');
     }
+
+    public function handleChunkUpload(Request $request)
+    {
+        $chunk = $request->file('chunk');
+        $fileName = $request->input('file_name');
+        $chunkIndex = $request->input('chunk_index');
+        $totalChunks = $request->input('total_chunks');
+
+        $tempDir = storage_path('app/chunks/' . $fileName);
+
+        if (!file_exists($tempDir)) {
+            mkdir($tempDir, 0777, true);
+        }
+
+        $chunk->move($tempDir, 'chunk_' . $chunkIndex);
+
+        // If last chunk received
+        if ((int)$chunkIndex + 1 == (int)$totalChunks) {
+            $finalPath = storage_path('app/public/ebooks/' . $fileName);
+            $output = fopen($finalPath, 'w');
+
+            for ($i = 0; $i < $totalChunks; $i++) {
+                $chunkPath = $tempDir . '/chunk_' . $i;
+                $data = file_get_contents($chunkPath);
+                fwrite($output, $data);
+                unlink($chunkPath);
+            }
+
+            fclose($output);
+            rmdir($tempDir);
+        }
+
+        return response()->json(['status' => 'chunk received']);
+    }
+
 
 
 

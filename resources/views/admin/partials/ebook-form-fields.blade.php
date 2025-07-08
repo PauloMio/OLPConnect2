@@ -122,7 +122,9 @@
 
     <div class="form-group">
         <label>PDF File</label>
-        <input type="file" name="pdf">
+        <input type="file" id="pdf">
+        <input type="hidden" name="pdf_chunked_filename" id="pdf_chunked_filename">
+        <progress id="progressBar" max="100" value="0"></progress>
     </div>
 
     <div class="form-group">
@@ -140,3 +142,8 @@
         <textarea name="doi" rows="2"></textarea>
     </div>
 </div>
+
+<script>
+
+</script>
+
