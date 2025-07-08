@@ -231,6 +231,25 @@
         </div>
     </div>
     <div>
+
+        <div id="loadingOverlay" style="
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        ">
+            <div>
+                📚 The eBook is being uploaded... Please wait.
+            </div>
+        </div>
+
     
 
     <script>
@@ -275,10 +294,11 @@
     resizeObserver.observe(sidebar);
 
 
-    // upload
+    // upload in chunks
     async function uploadInChunks() {
         const fileInput = document.getElementById('pdf');
         const hiddenFileNameInput = document.getElementById('pdf_chunked_filename');
+        const overlay = document.getElementById('loadingOverlay');
 
         if (!fileInput || !hiddenFileNameInput) {
             alert('File input or hidden input is missing.');
@@ -291,11 +311,13 @@
             return;
         }
 
+        overlay.style.display = 'flex'; // Show loading message
+
         const chunkSize = 2 * 1024 * 1024; // 2MB
         const totalChunks = Math.ceil(file.size / chunkSize);
         const fileName = file.name;
 
-        hiddenFileNameInput.value = fileName; // Fill hidden input
+        hiddenFileNameInput.value = fileName;
 
         for (let i = 0; i < totalChunks; i++) {
             const start = i * chunkSize;
@@ -319,13 +341,14 @@
             } catch (error) {
                 console.error('Chunk upload failed:', error);
                 alert('Failed to upload chunk ' + (i + 1));
+                overlay.style.display = 'none'; // Hide on error
                 return;
             }
         }
 
+        overlay.style.display = 'none'; // Hide after success
         alert('File uploaded in chunks successfully.');
 
-        // Optionally: Now submit the rest of the form (metadata etc)
         document.getElementById('ebookForm').submit();
     }
     </script>
