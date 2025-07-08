@@ -232,23 +232,19 @@
     </div>
     <div>
 
-        <div id="loadingOverlay" style="
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-        ">
-            <div>
-                📚 The eBook is being uploaded... Please wait.
-            </div>
-        </div>
+        <!-- Loading Overlay -->
+<div id="loadingOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.6); z-index:2000; justify-content:center; align-items:center; flex-direction:column; color:white; font-family:sans-serif;">
+    <div class="spinner" style="border:6px solid #f3f3f3; border-top:6px solid #007bff; border-radius:50%; width:50px; height:50px; animation:spin 1s linear infinite;"></div>
+    <div style="margin-top:15px; font-size:18px;">The eBook is being uploaded...</div>
+    <div style="margin-top:5px; font-size:13px; color:#ccc;">Large eBook files can take time...</div>
+</div>
+
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
 
     
 
@@ -298,7 +294,6 @@
     async function uploadInChunks() {
         const fileInput = document.getElementById('pdf');
         const hiddenFileNameInput = document.getElementById('pdf_chunked_filename');
-        const overlay = document.getElementById('loadingOverlay');
 
         if (!fileInput || !hiddenFileNameInput) {
             alert('File input or hidden input is missing.');
@@ -311,7 +306,8 @@
             return;
         }
 
-        overlay.style.display = 'flex'; // Show loading message
+        // SHOW loading overlay
+        document.getElementById('loadingOverlay').style.display = 'flex';
 
         const chunkSize = 2 * 1024 * 1024; // 2MB
         const totalChunks = Math.ceil(file.size / chunkSize);
@@ -341,14 +337,13 @@
             } catch (error) {
                 console.error('Chunk upload failed:', error);
                 alert('Failed to upload chunk ' + (i + 1));
-                overlay.style.display = 'none'; // Hide on error
+                document.getElementById('loadingOverlay').style.display = 'none'; // Hide overlay
                 return;
             }
         }
 
-        overlay.style.display = 'none'; // Hide after success
-        alert('File uploaded in chunks successfully.');
-
+        // Hide overlay and submit form
+        document.getElementById('loadingOverlay').style.display = 'none';
         document.getElementById('ebookForm').submit();
     }
     </script>
