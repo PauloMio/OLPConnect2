@@ -98,6 +98,13 @@
 
     <div class="card">
         <h2>User Login</h2>
+
+        @if ($errors->has('login'))
+            <div style="color: red; margin-bottom: 1rem; text-align: center;">
+                {{ $errors->first('login') }}
+            </div>
+        @endif
+
         <form action="{{ route('account.login') }}" method="POST">
             @csrf
 
@@ -118,7 +125,8 @@
             <p>Don't have an account? <a href="{{ route('account.showSignup') }}">Register here</a>.</p>
             <p>Do you want login as guest?<a href="{{ route('guest.login') }}">Click here</a>.</p>
         </div>
-</div>
+    </div>
+
 
 <script>
     // Adjust margin based on sidebar width

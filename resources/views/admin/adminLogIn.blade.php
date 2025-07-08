@@ -57,23 +57,48 @@
     <form action="{{ route('login.submit') }}" method="POST">
         @csrf
         <h2>Admin Log-In</h2>
-        <input type="text" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
+
+        {{-- Display login error --}}
+        @if($errors->has('email'))
+            <div style="color:red; margin-bottom: 10px;">{{ $errors->first('email') }}</div>
+        @endif
+
+        <input type="text" name="email" placeholder="Email" value="{{ old('email') }}">
+
+        <div style="position: relative;">
+            <input type="password" name="password" id="password" placeholder="Password" style="padding-right: 40px;">
+            <span id="togglePassword" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;">
+                👁️
+            </span>
+        </div>
+
         <button type="submit">Log-In</button>
     </form>        
 </div>
 </div>
 
 <script>
-        // Adjust margin based on sidebar width
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
+    // Adjust margin based on sidebar width
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
 
-        const resizeObserver = new ResizeObserver(() => {
-            const width = sidebar.offsetWidth;
-            mainContent.style.marginLeft = width + 'px';
-        });
+    const resizeObserver = new ResizeObserver(() => {
+        const width = sidebar.offsetWidth;
+        mainContent.style.marginLeft = width + 'px';
+    });
 
-        resizeObserver.observe(sidebar);
+    resizeObserver.observe(sidebar);
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    let isVisible = false;
+
+    togglePassword.addEventListener('click', function () {
+        isVisible = !isVisible;
+        passwordInput.type = isVisible ? 'text' : 'password';
+        togglePassword.textContent = isVisible ? '🙈' : '👁️';
+    });
 </script>
+
 </body>
