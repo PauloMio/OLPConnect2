@@ -135,13 +135,14 @@
   </div>
 
   <!-- PDF.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+  <script src={{ asset('js/pdf.min.js') }}></script>
   <script>
     @if($ebook->pdf)
       const url = "{{ asset('storage/' . $ebook->pdf) }}";
 
       const pdfjsLib = window['pdfjs-dist/build/pdf'];
-      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+      pdfjsLib.GlobalWorkerOptions.workerSrc = "{{ asset('js/pdf.worker.min.js') }}";
+
 
       const container = document.getElementById('pdf-container');
       let scale = 1.25;
