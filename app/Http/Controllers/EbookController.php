@@ -387,39 +387,66 @@ public function store(Request $request)
 
     public function downloadPdf(Request $request)
     {
-        // Gather the data same as dashboard or reuse logic as needed
-        $overallCount = Ebook::count();
+        // Validate date inputs
+        $request->validate([
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+        ]);
 
-        $addedYearCounts = Ebook::selectRaw('YEAR(created_at) as year, COUNT(*) as count')
-            ->groupBy('year')
-            ->orderBy('year', 'desc')
-            ->pluck('count', 'year');
+        $startDate = $request->input('start_date') ? $request->input('start_date') . ' 00:00:00' : null;
+        $endDate = $request->input('end_date') ? $request->input('end_date') . ' 23:59:59' : null;
 
-        $updatedYearCounts = Ebook::selectRaw('YEAR(updated_at) as year, COUNT(*) as count')
-            ->groupBy('year')
-            ->orderBy('year', 'desc')
-            ->pluck('count', 'year');
+        $ebookQuery = Ebook::query();
+        $accountQuery = Account::query();
+        $guestlogQuery = GuestLog::query();
+        $researchQuery = Research::query();
 
-        $categoryCounts = Ebook::select('category')
+        if ($startDate && $endDate) {
+            $ebookQuery->whereBetween('created_at', [$startDate, $endDate]);
+            $accountQuery->whereBetween('created_at', [$startDate, $endDate]);
+            $guestlogQuery->whereBetween('created_at', [$startDate, $endDate]);
+            $researchQuery->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $overallCount = $ebookQuery->count();
+        $usersCount = $accountQuery->count();
+        $guestsCount = $guestlogQuery->count();
+
+        $categoryCounts = $ebookQuery->select('category')
             ->selectRaw('COUNT(*) as count')
             ->groupBy('category')
             ->orderBy('category')
-            ->pluck('count', 'category');
+            ->pluck('count', 'category')->toArray();
 
         $locationCounts = Ebook::select('location')
             ->selectRaw('COUNT(*) as count')
             ->groupBy('location')
             ->orderBy('location')
-            ->pluck('count', 'location');
+            ->pluck('count', 'location')->toArray();
 
-        $data = compact('overallCount', 'addedYearCounts', 'updatedYearCounts', 'categoryCounts', 'locationCounts');
+        $departmentCounts = $researchQuery->select('Department')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('Department')
+            ->orderBy('Department')
+            ->pluck('count', 'Department')->toArray();
 
-        // Load a Blade view for PDF output, pass $data
+        $researchCategoryCounts = $researchQuery->select('category')
+            ->selectRaw('COUNT(*) as count')
+            ->groupBy('category')
+            ->orderBy('category')
+            ->pluck('count', 'category')->toArray();
+
+        $data = compact(
+            'startDate', 'endDate',
+            'overallCount', 'usersCount', 'guestsCount',
+            'categoryCounts', 'locationCounts',
+            'departmentCounts', 'researchCategoryCounts'
+        );
+
         $pdf = PDF::loadView('admin.ebookOverviewPdf', $data);
-
-        // Return the generated PDF for download
         return $pdf->download('ebook-overview.pdf');
     }
+
 
     
 

@@ -80,6 +80,11 @@
         <button type="submit" class="btn btn-primary px-4">Filter</button>
     </form>
 
+    <a href="{{ route('admin.dashboard.pdf', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}"
+        class="btn btn-danger mb-4">
+        Download PDF Summary
+    </a>
+
     {{-- Stats --}}
     <div class="row text-center mb-5">
         <div class="col-md-4">
