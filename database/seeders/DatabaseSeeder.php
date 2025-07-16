@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(EbookLocationSeeder::class);
         $this->call(ProgramUserSeeder::class);
         $this->call(DepartmentSeeder::class);
+        $this->call(ResearchCategory::class);
     }
 }
