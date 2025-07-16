@@ -30,6 +30,7 @@
                 <th>Credit</th>
                 <th>School ID</th>
                 <th>Status</th>
+                <th>Program</th>
                 <th>Birthdate</th>
                 <th>Actions</th>
             </tr>
@@ -63,10 +64,16 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
+                                <label for="">First Name</label>
                                 <input type="text" name="firstname" class="form-control mb-2" value="{{ $account->firstname }}" placeholder="Firstname">
+                                
+                                <label for="">Last Name</label>
                                 <input type="text" name="lastname" class="form-control mb-2" value="{{ $account->lastname }}" placeholder="Lastname">
+                                
+                                <label for="">School ID</label>
                                 <input type="text" name="schoolid" class="form-control mb-2" value="{{ $account->schoolid }}" placeholder="School ID">
 
+                                <label for="">Program</label>
                                 <select name="program" class="form-control mb-2">
                                     <option value="">Select Program</option>
                                     @foreach($programs as $program)
@@ -76,6 +83,7 @@
                                     @endforeach
                                 </select>
 
+                                <label for="">Birth Date</label>
                                 <input type="date" name="birthdate" class="form-control mb-2" value="{{ $account->birthdate ? $account->birthdate->format('Y-m-d') : '' }}">
                                 <select name="status" class="form-control mb-2">
                                     <option value="active" {{ $account->status == 'active' ? 'selected' : '' }}>Active</option>
@@ -129,10 +137,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
+                    <label for="">First Name</label>
                     <input type="text" name="firstname" class="form-control mb-2" placeholder="Firstname">
+
+                    <label for="">Last Name</label>
                     <input type="text" name="lastname" class="form-control mb-2" placeholder="Lastname">
+
+                    <label for="">School ID</label>
                     <input type="text" name="schoolid" class="form-control mb-2" placeholder="School ID">
 
+                    <label for="">Program</label>
                     <select name="program" class="form-control mb-2">
                         <option value="">Select Program</option>
                         @foreach($programs as $program)
@@ -140,6 +154,7 @@
                         @endforeach
                     </select>
 
+                    <label for="">Birth Date</label>
                     <input type="date" name="birthdate" class="form-control mb-2">
                     <select name="status" class="form-control mb-2">
                         <option value="inactive">Inactive</option>

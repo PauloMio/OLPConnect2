@@ -142,19 +142,24 @@
             <h2>Meet Our Members</h2>
             <div class="members">
                 <div class="card">
-                    <img src="{{ asset('members/Librarian.jpg') }}" alt="Member 1">
-                    <h3>Evelyn O'Connell</h3>
-                    <p>Librarian</p>
+                    <h4>Myrna L. Macarubbo, RL, MSLS</h4>
+                    <p>Cheif Librarian</p>
                 </div>
                 <div class="card">
-                    <img src="{{ asset('members/Tech.jpg') }}" alt="Member 2">
-                    <h3>Paulo Mio Panopio</h3>
-                    <p>Developer</p>
+                    <h4>Jona V. Castilla, RL, LPT</h4>
+                    <p>Librarian Elementary Department</p>
                 </div>
                 <div class="card">
-                    <img src="{{ asset('members/Frodo.jpg') }}" alt="Member 3">
-                    <h3>Frodo Baggins</h3>
-                    <p>Project Manager</p>
+                    <h4>Rhea Jane L. Tumaliuan, RL, MLIS</h4>
+                    <p>Technical Librarian College-Graduate School Department</p>
+                </div>
+                <div class="card">
+                    <h4>Jamaica B. Magmanlac</h4>
+                    <p>Assistant Librarian College Department</p>
+                </div>
+                <div class="card">
+                    <h4>Rugene M. Mejia, jr., LPT</h4>
+                    <p>Support Staff College Department</p>
                 </div>
             </div>
         </section>
@@ -164,16 +169,16 @@
             <h2>Our Services</h2>
             <div class="services">
                 <div class="card">
-                    <h3>Web Design</h3>
-                    <p>Clean and responsive websites.</p>
+                    <h3>Book Circulation</h3>
+                    <p>Borrowing and returning of books.</p>
                 </div>
                 <div class="card">
-                    <h3>App Development</h3>
-                    <p>Mobile apps for iOS and Android.</p>
+                    <h3>OLP Connect</h3>
+                    <p>Website viewing of eBooks.</p>
                 </div>
                 <div class="card">
-                    <h3>Consulting</h3>
-                    <p>Tech strategy and planning.</p>
+                    <h3>Internet Library</h3>
+                    <p>Public access computers for students to use.</p>
                 </div>
             </div>
         </section>
