@@ -145,6 +145,9 @@
                     <h4>Myrna L. Macarubbo, RL, MSLS</h4>
                     <p>Cheif Librarian</p>
                 </div>
+            </div>
+            <p></p>
+            <div class="members">
                 <div class="card">
                     <h4>Jona V. Castilla, RL, LPT</h4>
                     <p>Librarian Elementary Department</p>
