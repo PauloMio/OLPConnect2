@@ -120,10 +120,6 @@ public function store(Request $request)
 
         return view('admin.eBookTable', compact('ebooks', 'user', 'categories', 'locations'));
     }
-
-
-
-
     
     public function edit($id)
     {
