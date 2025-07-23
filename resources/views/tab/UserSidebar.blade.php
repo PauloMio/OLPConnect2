@@ -15,19 +15,19 @@
     <ul class="menu">
         <li>
             <a href="{{ route('user.ebooks') }}">
-                <img src="{{ asset('icons/Books.png') }}" class="icon" alt="eBooks">
+                <img src="{{ url('icons/Books.png') }}" class="icon" alt="eBooks">
                 <span class="label">eBooks</span>
             </a>
         </li>
         <li>
             <a href="{{ route('user.favorites') }}">
-                <img src="{{ asset('icons/favorite.png') }}" class="icon" alt="Favorites">
+                <img src="{{ url('icons/favorite.png') }}" class="icon" alt="Favorites">
                 <span class="label">Favorites</span>
             </a>
         </li>
         <li>
             <a href="{{ route('user.research') }}">
-                <img src="{{ asset('icons/research.png') }}" class="icon" alt="Research">
+                <img src="{{ url('icons/research.png') }}" class="icon" alt="Research">
                 <span class="label">Research</span>
             </a>
         </li>

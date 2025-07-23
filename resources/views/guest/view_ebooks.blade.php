@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Guest eBooks View</title>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url('css/bootstrap.min.css') }}" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -110,9 +110,9 @@
         @foreach($ebooks as $ebook)
             <div class="ebook-card">
                 @if($ebook->coverage)
-                    <img src="{{ asset('storage/' . $ebook->coverage) }}" alt="Cover Image" class="cover-image">
+                    <img src="{{ url('storage/' . $ebook->coverage) }}" alt="Cover Image" class="cover-image">
                 @else
-                    <img src="{{ asset('icons/defaultcover.png') }}" alt="Default Cover" class="cover-image">
+                    <img src="{{ url('icons/defaultcover.png') }}" alt="Default Cover" class="cover-image">
                 @endif
 
                 <h3>{{ $ebook->title }}</h3>
@@ -126,6 +126,6 @@
         @endforeach
     </div>
 
-    <script src={{ asset('js/bootstrap.bundle.min.js') }}></script>
+    <script src={{ url('js/bootstrap.bundle.min.js') }}></script>
 </body>
 </html>

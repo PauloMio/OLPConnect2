@@ -119,7 +119,7 @@
         <ul class="announcement-list">
             @foreach($announcements as $announcement)
                 <li>
-                    <img src="{{ asset('storage/' . $announcement->image_path) }}" alt="Announcement Image" width="100">
+                    <img src="{{ url('storage/' . $announcement->image_path) }}" alt="Announcement Image" width="100">
                     <form action="{{ route('announcements.destroy', $announcement->id) }}" method="POST" onsubmit="return confirm('Delete this image?')">
                         @csrf
                         @method('DELETE')

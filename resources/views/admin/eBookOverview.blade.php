@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>eBook Dashboard</title>
     {{-- Bootstrap CSS --}}
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url('css/bootstrap.min.css') }}" rel="stylesheet">
 
     {{-- Chart.js --}}
-   <script src="{{ asset('js/chart.js') }}"></script>
+   <script src="{{ url('js/chart.js') }}"></script>
 
 
     <style>

@@ -1,5 +1,5 @@
 <head>
-    <link href={{ asset('css/bootstrap.min.css') }} rel="stylesheet">
+    <link href={{ url('css/bootstrap.min.css') }} rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -122,7 +122,7 @@
                 <div class="carousel-inner h-100">
                         @foreach($announcements as $index => $announcement)
                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                <img src="{{ asset('storage/' . $announcement->image_path) }}" class="d-block w-100" alt="Announcement Image">
+                                <img src="{{ url('storage/' . $announcement->image_path) }}" class="d-block w-100" alt="Announcement Image">
                             </div>
                         @endforeach
                     </div>
@@ -202,5 +202,5 @@
 </div>
 
 
-<script src={{ asset('js/bootstrap.bundle.min.js') }}></script>
+<script src={{ url('js/bootstrap.bundle.min.js') }}></script>
 </body>

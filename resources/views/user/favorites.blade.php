@@ -25,9 +25,9 @@
     @foreach($favorites as $ebook)
         <div class="card card1">
             @if($ebook->coverage)
-                <img src="{{ asset('storage/' . $ebook->coverage) }}" alt="Cover Photo" class="cover-photo">
+                <img src="{{ url('storage/' . $ebook->coverage) }}" alt="Cover Photo" class="cover-photo">
             @else
-                <img src="{{ asset('icons/defaultcover.png') }}" alt="Default Cover" class="cover-photo">
+                <img src="{{ url('icons/defaultcover.png') }}" alt="Default Cover" class="cover-photo">
             @endif
 
             <div class="details">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Research Repository - Guest View</title>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url('css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
 <body class="bg-light">
 

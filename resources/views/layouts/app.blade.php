@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel</title>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url('css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
 <body>
 
     @yield('content')
 
-    <script src={{ asset('js/bootstrap.bundle.min.js') }}></script>
+    <script src={{ url('js/bootstrap.bundle.min.js') }}></script>
 </body>
 </html>
 

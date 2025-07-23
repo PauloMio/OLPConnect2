@@ -102,9 +102,9 @@
 
   <div class="card card1">
     @if($ebook->coverage)
-      <img src="{{ asset('storage/' . $ebook->coverage) }}" alt="Cover Photo" class="cover-photo">
+      <img src="{{ url('storage/' . $ebook->coverage) }}" alt="Cover Photo" class="cover-photo">
     @else
-      <img src="{{ asset('icons/defaultcover.png') }}" alt="Default Cover" class="cover-photo">
+      <img src="{{ url('icons/defaultcover.png') }}" alt="Default Cover" class="cover-photo">
     @endif
 
     <div class="details">
@@ -138,7 +138,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
   <script>
     @if($ebook->pdf)
-      const url = "{{ asset('storage/' . $ebook->pdf) }}";
+      const url = "{{ url('storage/' . $ebook->pdf) }}";
 
       const pdfjsLib = window['pdfjs-dist/build/pdf'];
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
