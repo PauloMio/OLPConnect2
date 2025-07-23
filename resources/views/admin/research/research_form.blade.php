@@ -26,7 +26,7 @@
 
 <div class="mb-3">
     <label class="form-label">Category</label>
-    <select name="category" class="form-select" required>
+    <select name="category" class="form-select">
         <option value="">-- Select Category --</option>
         @foreach ($categories as $category)
             <option value="{{ $category->category }}"
@@ -40,7 +40,7 @@
 
 <div class="mb-3">
     <label class="form-label">Program</label>
-    <select name="program" class="form-select" required>
+    <select name="program" class="form-select">
         <option value="">-- Select Program --</option>
         @foreach($programs as $prog)
             <option value="{{ $prog->program }}"
@@ -53,7 +53,7 @@
 
 <div class="mb-3">
     <label class="form-label">Department</label>
-    <select name="Department" class="form-select" required>
+    <select name="Department" class="form-select">
         <option value="">-- Select Department --</option>
         @foreach($departments as $dept)
             <option value="{{ $dept->department }}"

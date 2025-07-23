@@ -12,7 +12,7 @@ class EbookCategorySeeder extends Seeder
         $categories = [
             'Generalities',
             'Philosophy & Psychology',
-            'Relogion',
+            'Religion',
             'Social Sciences',
             'Language',
             'Natural Sciences',

@@ -51,5 +51,14 @@ class UserSeeder extends Seeder
             'status' => 'inactive',
             'remember_token' => Str::random(10),
         ]);
+
+        User::create([
+            'username' => 'Olpcc College Library',
+            'email' => 'olpcccollegelibrary@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('Olpcc1949'), // Always hash passwords
+            'status' => 'inactive',
+            'remember_token' => Str::random(10),
+        ]);
     }
 }

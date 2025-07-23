@@ -27,7 +27,6 @@
                 <th>ID</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
-                <th>Credit</th>
                 <th>School ID</th>
                 <th>Status</th>
                 <th>Program</th>
@@ -41,7 +40,6 @@
                 <td>{{ $account->id }}</td>
                 <td>{{ $account->firstname }}</td>
                 <td>{{ $account->lastname }}</td>
-                <td>{{ $account->credit }}</td>
                 <td>{{ $account->schoolid }}</td>
                 <td>{{ $account->status }}</td>
                 <td>{{ $account->program }}</td>

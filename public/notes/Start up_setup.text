@@ -26,7 +26,7 @@ change the database:
 6.)
 command:
     "php artisan migrate"
-    "php artisan seed"
+    "php artisan db:seed"
 
 7.)
 Finding the middleware declaration file:
