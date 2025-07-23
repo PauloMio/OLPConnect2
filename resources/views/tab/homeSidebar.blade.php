@@ -15,25 +15,25 @@
     <ul class="menu">
         <li>
             <a href="{{ route('user.home') }}">
-                <img src="{{ asset('icons/home.png') }}" alt="Home" class="icon">
+                <img src="{{ asset('imgcons/home.png') }}" alt="Home" class="icon">
                 <span class="label">Home</span>
             </a>
         </li>
         <li>
             <a href="{{ route('account.showLogin') }}">
-                <img src="{{ asset('icons/login.png') }}" alt="Login" class="icon">
+                <img src="{{ asset('imgcons/login.png') }}" alt="Login" class="icon">
                 <span class="label">Login</span>
             </a>
         </li>
         <li>
             <a href="{{ route('account.showSignup') }}">
-                <img src="{{ asset('icons/signup.png') }}" alt="Sign Up" class="icon">
+                <img src="{{ asset('imgcons/signup.png') }}" alt="Sign Up" class="icon">
                 <span class="label">Sign Up</span>
             </a>
         </li>
         <li>
             <a href="{{ route('login') }}">
-                <img src="{{ asset('icons/admin.png') }}" alt="Admin" class="icon">
+                <img src="{{ asset('imgcons/admin.png') }}" alt="Admin" class="icon">
                 <span class="label">Admin</span>
             </a>
         </li>

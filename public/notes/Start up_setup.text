@@ -25,7 +25,7 @@ change the database:
 
 6.)
 command:
-    "php artisan migrate"
+    "`php artisan migrate`"
     "php artisan db:seed"
 
 7.)
