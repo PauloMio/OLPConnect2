@@ -43,3 +43,10 @@ Find the:
         'account.guest' => \App\Http\Middleware\RedirectIfAccountAuthenticated::class,
         'admin.guest' => \App\Http\Middleware\RedirectIfAuthenticatedAdmin::class,
 
+
+8.)
+install node js and npm:
+
+
+npm install filepond filepond-plugin-file-validate-type filepond-plugin-file-validate-size
+npm run build

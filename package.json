@@ -12,5 +12,10 @@
         "laravel-vite-plugin": "^1.2.0",
         "tailwindcss": "^4.0.0",
         "vite": "^6.2.4"
+    },
+    "dependencies": {
+        "filepond": "^4.32.8",
+        "filepond-plugin-file-validate-size": "^2.2.8",
+        "filepond-plugin-file-validate-type": "^1.2.9"
     }
 }
